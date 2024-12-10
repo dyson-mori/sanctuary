@@ -8,6 +8,7 @@ sanctuary will be an open source project for the community
   git push -u origin <branch>
 
   icons:
-    - ✏️ :pencil2:
-    - 📦 :package:
-    - 🛠️	:hammer_and_wrench:
+    - ✏️ `:pencil2:` <br />
+    - 📦 `:package:` <br />
+    - 🛠️	`:hammer_and_wrench:` <br />
+    - 🧪 `:test_tube:`
