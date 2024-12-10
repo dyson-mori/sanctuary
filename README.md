@@ -7,8 +7,10 @@ sanctuary will be an open source project for the community
   git remote add origin git@github.com:dyson-mori/sanctuary.git
   git push -u origin <branch>
 
-  icons:
+  icons: <br />
     - ✏️ `:pencil2:` <br />
     - 📦 `:package:` <br />
     - 🛠️	`:hammer_and_wrench:` <br />
-    - 🧪 `:test_tube:`
+    - 🧪 `:test_tube:` <br />
+    - ✨ `:sparkles:` new feature <br />
+    - 🔨 `:hammer:` refactor
