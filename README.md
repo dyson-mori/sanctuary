@@ -6,3 +6,8 @@ sanctuary will be an open source project for the community
   git commit -m "<icon - description>"
   git remote add origin git@github.com:dyson-mori/sanctuary.git
   git push -u origin <branch>
+
+  icons:
+    - ✏️ :pencil2:
+    - 📦 :package:
+    - 🛠️	:hammer_and_wrench:
