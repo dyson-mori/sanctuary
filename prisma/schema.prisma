@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Creator {
+  id String @id @unique @default(uuid())
+
+  description String
+  name        String
+  photo       String
+  public      Boolean @default(true)
+
+  social_media String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post Post[]
+
+  @@map("creator")
+}
+
+model Post {
+  id         String @id @unique @default(uuid())
+  creator_id String
+
+  width         Int
+  height        Int
+  url_video     String
+  url_pre_video String
+  url_pre_image String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  like       Like[]
+  save       Save[]
+  view       View[]
+  categories Category[]
+
+  participant Creator[]
+
+  @@map("post")
+}
+
+model Category {
+  id String @id @unique @default(cuid())
+
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post Post[]
+
+  @@map("category")
+}
+
+model View {
+  id String @id @unique @default(uuid())
+
+  post_id String
+  // user_id String
+
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // user User @relation(fields: [user_id], references: [id])
+
+  @@index([post_id])
+}
+
+model Like {
+  id String @id @unique @default(uuid())
+
+  post_id String
+  // user_id String
+
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // user User @relation(fields: [user_id], references: [id])
+
+  @@index([post_id])
+}
+
+model Save {
+  id String @id @unique @default(uuid())
+
+  post_id String
+  // user_id String
+
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // user User @relation(fields: [user_id], references: [id])
+
+  @@index([post_id])
+}
