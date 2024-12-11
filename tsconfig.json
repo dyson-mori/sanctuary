@@ -7,6 +7,7 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -19,7 +20,21 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@common/*": [
+        "./src/common/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@global/*": [
+        "./src/global/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@utils": [
+        "./src/utils"
+      ],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
