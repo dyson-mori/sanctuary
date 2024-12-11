@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  sanctuary:
+    build: .
+    container_name: sanctuary
+    ports:
+      - "3001:3000"
+    environment:
+      - DATABASE_URL=postgresql://sanctuary:password@localhost:5432/sanctuary
+      - NEXTBASE_URL="http://localhost:3001/api"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: sanctuary-db
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: sanctuary
+      POSTGRES_DB: student
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./sql/setup.sql:/docker-entrypoint-initdb.d/init.sql
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - sanctuary
+
+volumes:
+  postgres:
