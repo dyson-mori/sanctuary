@@ -14,3 +14,7 @@ sanctuary will be an open source project for the community
     - 🧪 `:test_tube:` <br />
     - ✨ `:sparkles:` new feature <br />
     - 🔨 `:hammer:` refactor
+    - 💥 `:boom:`
+
+    https://supabase.com/
+    https://github.com/iuricode/padroes-de-commits
