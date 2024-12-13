@@ -5,7 +5,7 @@ import type { Metadata, Viewport } from 'next';
 import { api } from '@services/api';
 
 export const metadata: Metadata = {
-  title: 'test',
+  title: 'sanctuary | feed',
   description: 'The official Next.js Learn Dashboard built with App Router.',
 };
 

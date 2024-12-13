@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useRef } from "react";
+import { CSSProperties, FC, useEffect, useRef } from "react";
 
 import { Container, Content } from "./styles";
 import { useClickOutside } from "@hooks/useClickOutside";

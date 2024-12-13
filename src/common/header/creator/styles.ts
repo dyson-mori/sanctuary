@@ -6,12 +6,21 @@ export const Container = styled.div`
   flex-direction: column;
 
   width: 100%;
+
+  height: 350px;
+  overflow-y: hidden;
+
+  h2 {
+    font-size: 15px;
+    color: #303030;
+    margin: 5px 0;
+  }
 `;
 
-export const Items = styled.div`
+export const Option = styled.button`
   display: flex;
 
-  margin: 5px 0;
+  padding: 5px 0;
 
   img {
     object-fit: cover;
@@ -50,6 +59,8 @@ export const Items = styled.div`
   .upside > p:nth-child(1) {
     font-size: 12px;
     font-weight: 500;
+
+    font-family: var(--font-montserrat);
   };
 
   .upside > p:nth-child(3) {

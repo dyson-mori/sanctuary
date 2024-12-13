@@ -5,12 +5,13 @@ export const Container = styled.div`
   display: flex;
 
   height: 50px;
+  min-height: 50px;
 
   overflow: hidden;
 
   ${({ theme }) => css`
-    /* box-shadow: ${theme.settings.box.input}; */
-    /* border-radius: ${theme.settings.border.radius.small}; */
+    box-shadow: ${theme.box.shadow.input};
+    border-radius: ${theme.border.small};
   `};
 
   span {

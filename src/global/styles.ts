@@ -15,7 +15,7 @@ export default createGlobalStyle`
     `};
   };
 
-  p, h3 {
+  p, h2, h3, input {
     font-family: var(--font-montserrat-alternates), sans-serif;
   };
 
@@ -23,6 +23,7 @@ export default createGlobalStyle`
     border: 0;
     outline: 0;
     cursor: pointer;
+    background-color: transparent;
   };
 
   /* width */
