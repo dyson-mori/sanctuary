@@ -50,7 +50,7 @@ export const PostVideo = ({ post, size, navigate }: Props) => {
         <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.url_pre_video} type='video/webm' />
       </video>
       <Footer>
-        <h3>{post?.participant.find(row => row.name)?.name ?? ''}</h3>
+        {/* <h3>{post?.participant.find(row => row.name)?.name ?? ''}</h3> */}
       </Footer>
     </Container>
   );

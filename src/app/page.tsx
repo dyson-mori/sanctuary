@@ -12,8 +12,8 @@ const DynamicPageWithNoSSR = dynamic(() => import('./posts'), {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Fans | Home',
-    description: ''
+    title: 'Sanctuary',
+    description: 'images hub'
   }
 }
 
@@ -22,7 +22,6 @@ export default async function Posts() {
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      {/* <Header /> */}
       <DynamicPageWithNoSSR posts={post} />
     </Suspense>
   );

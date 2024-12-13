@@ -6,6 +6,8 @@ export const Container = styled.div`
 
   align-items: center;
 
+  height: 100%;
+
   border: 0;
   background-color: transparent;
 
@@ -25,7 +27,9 @@ export const Controller = styled.div`
 
   background-color: #0000001a;
 
-  bottom: 13px;
+  border-radius: 9px;
+
+  bottom: 10px;
 `;
 
 export const Timeline = styled.div`

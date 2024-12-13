@@ -39,7 +39,6 @@ export async function POST(request: NextRequest) {
       photo,
       description,
       social_media: social_media.toString(),
-      public: true
     }
   });
 

@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 
 import themes from "@global/theme";
 import Global from "@global/styles";
+import { Header } from "@common/header";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -12,6 +13,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
       <html lang="en">
         <body className={`${montserrat.variable} ${montserrat_alternates.variable} ${my_soul.variable}`}>
+          <Header />
           {children}
         </body>
       </html>

@@ -19,6 +19,12 @@ export default createGlobalStyle`
     font-family: var(--font-montserrat-alternates), sans-serif;
   };
 
+  button {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+  };
+
   /* width */
   ::-webkit-scrollbar {
     width: 1px;

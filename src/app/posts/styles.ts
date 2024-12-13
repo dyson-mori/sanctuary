@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.main`
   display: flex;
@@ -7,7 +7,7 @@ export const Container = styled.main`
 
   width: 100%;
 
-  margin: 10px 0;
+  margin: 5px 0;
 
   div {
     width: 100%;
@@ -15,4 +15,20 @@ export const Container = styled.main`
 
     background-color: #ddd;
   }
+`;
+
+export const Upload = styled.button`
+  position: absolute;
+
+  bottom: 20px;
+  right: 20px;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+
+  ${({ theme }) => css`
+    box-shadow: ${theme.box.shadow.default};
+    background-color: ${theme.colors.primary};
+  `};
 `;

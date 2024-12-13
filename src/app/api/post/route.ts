@@ -15,9 +15,9 @@ export async function GET() {
   const cookie = await cookies();
   const session_id = cookie.get('session_id');
 
-  if (!session_id) {
-    return NextResponse.json(false, { status: 404, statusText: 'session not found!' });
-  };
+  // if (!session_id) {
+  //   return NextResponse.json(false, { status: 404, statusText: 'session not found!' });
+  // };
 
   const post = await prisma.post.findMany({
     orderBy: {

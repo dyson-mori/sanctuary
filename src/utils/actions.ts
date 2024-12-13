@@ -9,7 +9,7 @@ export const serverActionCookie = async (name: 'search', value: string) => {
     return await coo.delete({
       name,
       httpOnly: true,
-      path: '/search'
+      path: '/s'
     });
   };
 
@@ -17,6 +17,6 @@ export const serverActionCookie = async (name: 'search', value: string) => {
     name,
     value,
     httpOnly: true,
-    path: '/search'
+    path: '/s'
   });
 };
