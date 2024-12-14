@@ -8,10 +8,10 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const creator = url.searchParams.get("name");
 
-  const data = await prisma.creator.findFirst({
-    where: {
-      name: creator ?? undefined
-    },
+  const data = await prisma.creator.findMany({
+  // where: {
+  //   name: creator ?? undefined
+  // },
     include: {
       post: {
         select: {
@@ -21,13 +21,13 @@ export async function GET(request: NextRequest) {
     }
   });
 
-  const row = {
-    ...data,
-    post: undefined,
-    tags: [...new Set(data?.post.map(row => row.categories.map(item => item.name)).flat())]
-  };
+  // const row = {
+  //   ...data,
+  //   post: undefined,
+  //   tags: [...new Set(data?.post.map(row => row.categories.map(item => item.name)).flat())]
+  // };
 
-  return NextResponse.json(row, { status: 201, statusText: 'done' })
+  return NextResponse.json(data, { status: 201, statusText: 'done' })
 };
 
 export async function POST(request: NextRequest) {

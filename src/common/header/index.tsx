@@ -29,7 +29,9 @@ export const Header: FC = () => {
 
   const [open, setOpen] = useState(false);
 
-  return path !== '/s' && (
+  const hide = path.includes('/s') || path.includes('/upload');
+
+  return !hide && (
     <Fragment>
       <Container>
         <LogoStyled>

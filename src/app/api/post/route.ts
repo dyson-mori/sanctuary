@@ -41,15 +41,23 @@ export async function GET() {
 };
 
 export async function POST(request: NextRequest) {
-  const { width, height, url_pre_image, url_pre_video, url_video, creator_id, categories } = await request.json() as PostsProps;
+  const { creator_id, categories } = await request.json() as PostsProps;
+
+  const upload = {
+    width: 0,
+    height: 0,
+    url_pre_image: '',
+    url_pre_video: '',
+    url_video: '',
+  };
 
   const post = await prisma.post.create({
     data: {
-      width,
-      height,
-      url_pre_image,
-      url_pre_video,
-      url_video,
+      width: upload.width,
+      height: upload.height,
+      url_pre_image: upload.url_pre_image,
+      url_pre_video: upload.url_pre_video,
+      url_video: upload.url_video,
       creator_id,
       categories: {
         connect: categories.map(id => ({ id }))

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import styled, { css } from "styled-components";
 
 export const Container = styled.main`
@@ -17,8 +19,13 @@ export const Container = styled.main`
   }
 `;
 
-export const Upload = styled.button`
+export const Upload = styled(Link)`
   position: absolute;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
 
   bottom: 20px;
   right: 20px;

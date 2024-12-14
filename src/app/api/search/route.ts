@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import prisma from "@services/prisma";
 import { PostProps } from "@global/interface";
+import prisma from "@services/prisma";
 
 export async function GET() {
   const coo = await cookies();
