@@ -19,7 +19,7 @@ interface Props {
   categories: CategoryProps[];
 };
 
-export default function AppUpload({ creators, categories }: Props) {
+export default function AppUpload({ creators = [], categories = [] }: Props) {
   const [file, setFile] = useState<FileProps | null>(null);
   const [data, setDate] = useState({
     creator: null as { id: string, label: string } | null,

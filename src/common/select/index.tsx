@@ -21,8 +21,8 @@ export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, defau
   const theme = useTheme();
 
   const [search, setSearch] = useState('');
-  const [open, setOpen] = useState(false);
 
+  const dropRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const hideInputRef = useRef<HTMLInputElement>(null);
 
@@ -33,13 +33,11 @@ export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, defau
   const filter = select.filter(row => row.label.toLowerCase().includes(search.toLowerCase()));
 
   useClickOutside(inputRef, () =>
-    setOpen(false)
-    // document.getElementById('dropdown')?.classList.remove('open')
+    dropRef.current?.classList.remove('open')
   );
 
   function handleFocus() {
-    setOpen(true)
-    // document.getElementById('dropdown')?.classList.add('open');
+    dropRef.current?.classList.add('open')
   };
 
   const handleSelect = (select: { id: string, label: string }) => {
@@ -72,7 +70,7 @@ export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, defau
 
       <input ref={hideInputRef} style={{ display: 'none' }} {...rest} />
 
-      <DropDown id='dropdown' className={open ? 'open' : 'close'} style={styles}>
+      <DropDown ref={dropRef} style={styles}>
         {filter?.map((row, index) => (
           <button key={index} type='button' onClick={() => handleSelect(row)}>
             {row.label}
