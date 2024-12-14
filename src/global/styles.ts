@@ -15,7 +15,7 @@ export default createGlobalStyle`
     `};
   };
 
-  p, h2, h3, input {
+  p, h2, h3, input, label, button {
     font-family: var(--font-montserrat-alternates), sans-serif;
   };
 
@@ -25,6 +25,10 @@ export default createGlobalStyle`
     cursor: pointer;
     background-color: transparent;
   };
+
+  input[type="file"] {
+    display: none;
+  }
 
   /* width */
   ::-webkit-scrollbar {
