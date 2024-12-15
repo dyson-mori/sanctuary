@@ -21,7 +21,7 @@ export default function Post({ posts, creators }: Props) {
       <Container>
         <Masonry posts={posts} />
 
-        <Upload href={{ pathname: '/upload' }}>
+        <Upload href={{ pathname: '/posts/upload' }}>
           <UploadSvg width={25} height={25} stroke='white' strokeWidth={2} />
         </Upload>
       </Container>
