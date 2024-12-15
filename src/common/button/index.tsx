@@ -20,16 +20,13 @@ const Button: React.FC<ButtonProps> = ({ children, width = 200, color = 'primary
 
   return (
     <Container style={styles} {...rest}>
-      {/* {
+      {
         loading ? (
           <Loading>
-            <div />
-            <div />
-            <div />
+            <div className="lds-dual-ring"></div>
           </Loading>
         ) : children
-      } */}
-      {children}
+      }
     </Container>
   )
 };

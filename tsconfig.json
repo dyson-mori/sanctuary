@@ -20,17 +20,17 @@
       }
     ],
     "paths": {
-      "@common/*": [
-        "./src/common/*"
+      "@common": [
+        "./src/common"
       ],
-      "@hooks/*": [
-        "./src/hooks/*"
+      "@hooks": [
+        "./src/hooks"
       ],
       "@global/*": [
         "./src/global/*"
       ],
-      "@services/*": [
-        "./src/services/*"
+      "@services": [
+        "./src/services"
       ],
       "@utils": [
         "./src/utils"
@@ -41,5 +41,16 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "parser": "@typescript-eslint/parser"
+    }
+  ]
 }

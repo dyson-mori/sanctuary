@@ -8,6 +8,12 @@ import { ReactComponent as Upload } from './upload.svg';
 import { ReactComponent as Tag } from './tag.svg';
 import { ReactComponent as User } from './user.svg';
 import { ReactComponent as Collaborators } from './collaborators.svg';
+import { ReactComponent as Settings } from './settings.svg';
+import { ReactComponent as ArrowLeft } from './arrow-left.svg';
+import { ReactComponent as ArrowRight } from './arrow-right.svg';
+import { ReactComponent as Video } from './video.svg';
+import { ReactComponent as Image } from './image.svg';
+import { ReactComponent as Description } from './description.svg';
 
 export {
   Add,
@@ -19,5 +25,11 @@ export {
   Upload,
   Tag,
   User,
-  Collaborators
+  Collaborators,
+  Settings,
+  ArrowLeft,
+  ArrowRight,
+  Video,
+  Image,
+  Description
 }

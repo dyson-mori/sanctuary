@@ -17,6 +17,7 @@ export const fetcher = async ({ url, method, next, body }: Props) => {
     cache: 'no-cache',
     // @ts-expect-error: ignore header type
     headers: {
+      'Content-type': 'application/json',
       Cookie: await cookies()
     },
     body: JSON.stringify(body)

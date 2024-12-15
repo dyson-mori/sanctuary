@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
-import { api } from "@services/api";
+import { api } from "@services";
 
 const DynamicPageWithNoSSR = dynamic(() => import('./main'), {
   ssr: true
@@ -15,10 +15,11 @@ export const metadata: Metadata = {
 
 export default async function Category() {
   const category = await api.category.list();
+  const creators = await api.creator.list();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <DynamicPageWithNoSSR categories={category} />
+      <DynamicPageWithNoSSR categories={category} creators={creators} />
     </Suspense>
   );
 };

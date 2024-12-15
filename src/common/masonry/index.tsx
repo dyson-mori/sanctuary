@@ -1,13 +1,23 @@
 import { useRouter } from "next/navigation";
 
-import { useWindowSize } from "@hooks/useWindowSize";
-import { PostVideo } from "@common/videos/post";
-import { PostProps } from "@global/interface";
+import { useWindowSize } from "@hooks";
 import { serverActionCookie } from "@utils";
+
+import { PostVideo } from "./_components/video";
 
 import { Column } from "./styles";
 
-export default function Masonry({ posts }: { posts: PostProps[] }) {
+export interface MasonryProps {
+  url_pre_video: string;
+  width: number;
+  height: number;
+  id: string;
+  creator: {
+    name: string;
+  };
+};
+
+export function Masonry({ posts }: { posts: MasonryProps[] }) {
   const route = useRouter();
   const size = useWindowSize();
 

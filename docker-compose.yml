@@ -1,28 +1,40 @@
 version: '3.9'
 
 services:
-  sanctuary:
-    build: .
-    container_name: sanctuary
-    ports:
-      - "3001:3000"
-    environment:
-      - DATABASE_URL=postgresql://sanctuary:password@localhost:5432/sanctuary
-      - NEXTBASE_URL="http://localhost:3001/api"
-    depends_on:
-      - postgres
-
   postgres:
     image: postgres:latest
-    container_name: sanctuary-db
+    container_name: database
+    restart: always
+    # network_mode: "host"
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: sanctuary
-      POSTGRES_DB: student
+      POSTGRES_DB: sanctuary-db
     ports:
-      - '5432:5432'
+      - '5434:5432'
+    # networks:
+    #   - app-network
     volumes:
       - ./sql/setup.sql:/docker-entrypoint-initdb.d/init.sql
+
+  sanctuary:
+    build: .
+    container_name: front-end
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://sanctuary:password@localhost:5434/sanctuary-db
+      - NEXTBASE_URL=http://localhost:3030/api
+      - NEXT_PUBLIC_CLOUDINARY_NAME=dyrtdrnky
+      - NEXT_PUBLIC_CLOUDINARY_API_KEY=612131724343469
+      - NEXT_PUBLIC_CLOUDINARY_API_SECRET=kX0WugDYFyw2oVaG6a9FzB5NNN8
+    ports:
+    - "3030:3030"
+    # network_mode: "host"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    command: yarn start
 
   nginx:
     image: nginx:alpine
@@ -36,3 +48,6 @@ services:
 
 volumes:
   postgres:
+
+networks:
+  app-network:

@@ -1,12 +1,12 @@
-import { CSSProperties, FC, useEffect, useRef } from "react";
+import { CSSProperties, FC, ReactNode, useRef } from "react";
 
 import { Container, Content } from "./styles";
-import { useClickOutside } from "@hooks/useClickOutside";
+import { useClickOutside } from "@hooks";
 
 interface Props {
   open: boolean;
-  onClickOutside: () => void;
-  children: any;
+  onClickOutside: (b: boolean) => void;
+  children: ReactNode;
   style?: CSSProperties;
 };
 
@@ -18,7 +18,7 @@ export const Modal: FC<Props> = ({ open, onClickOutside, children, style }) => {
     opacity: open ? 1 : 0,
   };
 
-  useClickOutside(contentRef, onClickOutside);
+  useClickOutside(contentRef, () => onClickOutside(false));
 
   return (
     <Container style={content_style}>

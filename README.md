@@ -21,3 +21,12 @@ sanctuary will be an open source project for the community
     https://supabase.com/
     
     https://github.com/iuricode/padroes-de-commits
+
+## Docker
+  docker images
+  
+  docker ps
+  docker exec -it ######### sh
+
+  docker compose up -d
+  docker compose down && docker compose up --build -d

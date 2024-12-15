@@ -26,37 +26,37 @@ export const Container = styled.button`
 
 export const Loading = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  div {
+  width: 100%;
+  height: 100%;
+
+  .lds-dual-ring,
+  .lds-dual-ring:after {
+    box-sizing: border-box;
+  }
+  .lds-dual-ring {
     display: inline-block;
-    width: 2px;
-    height: 5px;
-    background: white;
-    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-  };
-
-  div:nth-child(1) {
-    margin-left: 0px;
-    animation-delay: -0.24s;
+    width: 20px;
+    height: 20px;
   }
-  div:nth-child(2) {
-    margin-left: 5px;
-    animation-delay: -0.12s;
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2.5px solid currentColor;
+    border-color: currentColor transparent currentColor transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
   }
-  div:nth-child(3) {
-    margin-left: 5px;
-    animation-delay: 0s;
-  }
-  @keyframes lds-facebook {
+  @keyframes lds-dual-ring {
     0% {
-      top: 8px;
-      height: 30px;
+      transform: rotate(0deg);
     }
-    50%, 100% {
-      top: 24px;
-      height: 0px;
+    100% {
+      transform: rotate(360deg);
     }
   }
 `;

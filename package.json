@@ -5,18 +5,22 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3030",
     "lint": "next lint",
-    "generate": "npx prisma generate"
+    "vercel-build": "npx prisma generate && npx prisma migrate deploy && next build"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@prisma/client": "^6.0.1",
     "axios": "^1.7.9",
+    "cloudinary": "^2.5.1",
     "next": "15.1.0",
     "next-plugin-svgr": "^1.1.10",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "styled-components": "^6.1.13"
+    "react-hook-form": "^7.54.1",
+    "styled-components": "^6.1.13",
+    "yup": "^1.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -1,3 +1,5 @@
+"use client"
+
 import { FC, Fragment, useState } from 'react';
 
 import Link from 'next/link';
@@ -5,12 +7,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'styled-components';
 
-import { Logo, Search } from '@svg';
+import { Logo, Search, Settings as SettingsSvg } from '@svg';
+
+import { CreatorProps } from '@global/interface';
 
 import { Container, Logo as LogoStyled, Nav, Button } from './styles';
 
 import { Modal } from '../modal';
+
 import { Creator } from './creator';
+import { Settings } from './settings';
 
 const links = [
   {
@@ -20,14 +26,23 @@ const links = [
   {
     path: '/category',
     name: 'Categories'
+  },
+  {
+    path: '/creators',
+    name: 'Creators'
   }
 ];
 
-export const Header: FC = () => {
+interface HeaderProps {
+  creators: CreatorProps[]
+};
+
+export const Header: FC<HeaderProps> = ({ creators }) => {
   const theme = useTheme();
   const path = usePathname();
 
-  const [open, setOpen] = useState(false);
+  const [modalCreator, setModalCreator] = useState(false);
+  const [modalSettings, setModalSettings] = useState(false);
 
   const hide = path.includes('/s') || path.includes('/upload');
 
@@ -53,16 +68,22 @@ export const Header: FC = () => {
               </Link>
             ))
           }
-          {/* <Link href={{ pathname: '/' }}>Donate Me</Link> */}
         </Nav>
 
-        <Button onClick={() => setOpen(true)}>
-          <Search width={22} height={22} stroke='#707070aa' strokeWidth={1.5} />
+        <Button onClick={() => setModalCreator(true)}>
+          <Search width={22} height={22} stroke={theme.colors.primary} strokeWidth={1.5} />
+        </Button>
+        <Button onClick={() => setModalSettings(true)}>
+          <SettingsSvg width={22} height={22} stroke={theme.colors.primary} strokeWidth={1.5} />
         </Button>
       </Container>
 
-      <Modal open={open} onClickOutside={() => setOpen(false)}>
-        <Creator />
+      <Modal open={modalCreator} onClickOutside={() => setModalCreator(false)}>
+        <Creator creators={creators} />
+      </Modal>
+
+      <Modal open={modalSettings} onClickOutside={() => setModalSettings(false)}>
+        <Settings />
       </Modal>
     </Fragment>
   )

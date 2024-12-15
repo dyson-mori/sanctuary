@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import prisma from "@services/prisma";
+import { prisma } from "@services";
 import { CategoryProps } from "@global/interface";
 
 export async function GET() {

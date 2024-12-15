@@ -2,17 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { Creator } from "@prisma/client";
 
-import prisma from "@services/prisma";
+import { prisma } from "@services";
 
-export async function GET(request: NextRequest) {
-  const url = new URL(request.url);
-  const creator = url.searchParams.get("name");
-
+export async function GET() {
   const data = await prisma.creator.findMany({
   // where: {
   //   name: creator ?? undefined
   // },
     include: {
+      // _count: {
+      //   select: {
+      //     post: true
+      //   }
+      // },
       post: {
         select: {
           categories: true
@@ -31,13 +33,16 @@ export async function GET(request: NextRequest) {
 };
 
 export async function POST(request: NextRequest) {
-  const { name, photo, description, social_media } = await request.json() as Creator;
+  const { name, photo, description, social_media, width, height, url_pre_video } = await request.json() as Creator;
 
   const post = await prisma.creator.create({
     data: {
       name,
       photo,
       description,
+      height,
+      width,
+      url_pre_video,
       social_media: social_media.toString(),
     }
   });

@@ -16,7 +16,7 @@ export const Container = styled.div`
     border-radius: ${theme.border.small};
   `};
 
-  span {
+  span, button {
     min-width: 50px;
     height: 50px;
     background-color: #fff;

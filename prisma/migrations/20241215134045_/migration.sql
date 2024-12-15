@@ -1,10 +1,13 @@
 -- CreateTable
 CREATE TABLE "creator" (
     "id" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "description" CHAR(80) NOT NULL,
     "name" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
     "public" BOOLEAN NOT NULL DEFAULT true,
+    "width" INTEGER NOT NULL,
+    "height" INTEGER NOT NULL,
+    "url_pre_video" TEXT NOT NULL,
     "social_media" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -65,14 +68,6 @@ CREATE TABLE "Save" (
 );
 
 -- CreateTable
-CREATE TABLE "_CreatorToPost" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL,
-
-    CONSTRAINT "_CreatorToPost_AB_pkey" PRIMARY KEY ("A","B")
-);
-
--- CreateTable
 CREATE TABLE "_CategoryToPost" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL,
@@ -108,10 +103,10 @@ CREATE UNIQUE INDEX "Save_id_key" ON "Save"("id");
 CREATE INDEX "Save_post_id_idx" ON "Save"("post_id");
 
 -- CreateIndex
-CREATE INDEX "_CreatorToPost_B_index" ON "_CreatorToPost"("B");
-
--- CreateIndex
 CREATE INDEX "_CategoryToPost_B_index" ON "_CategoryToPost"("B");
+
+-- AddForeignKey
+ALTER TABLE "post" ADD CONSTRAINT "post_creator_id_fkey" FOREIGN KEY ("creator_id") REFERENCES "creator"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "View" ADD CONSTRAINT "View_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -121,12 +116,6 @@ ALTER TABLE "Like" ADD CONSTRAINT "Like_post_id_fkey" FOREIGN KEY ("post_id") RE
 
 -- AddForeignKey
 ALTER TABLE "Save" ADD CONSTRAINT "Save_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_CreatorToPost" ADD CONSTRAINT "_CreatorToPost_A_fkey" FOREIGN KEY ("A") REFERENCES "creator"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_CreatorToPost" ADD CONSTRAINT "_CreatorToPost_B_fkey" FOREIGN KEY ("B") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_CategoryToPost" ADD CONSTRAINT "_CategoryToPost_A_fkey" FOREIGN KEY ("A") REFERENCES "category"("id") ON DELETE CASCADE ON UPDATE CASCADE;

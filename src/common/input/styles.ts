@@ -10,7 +10,7 @@ export const Container = styled.div`
   overflow: hidden;
 
   ${({ theme }) => css`
-    box-shadow: ${theme.box.shadow.input};
+    box-shadow: ${theme.box.shadow.default};
     border-radius: ${theme.border.small};
   `};
 

@@ -11,6 +11,7 @@ export const api: ApiProps = {
   creator: {
     list: () => fetcher({ url: '/creator', method: 'GET' }),
     find: (name) => fetcher({ url: `/creator?name=${name}`, method: 'GET' }),
+    create: (body) => fetcher({ url: '/creator', method: 'POST', body }),
   },
 
   search: {

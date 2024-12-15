@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import { CreatorProps } from "@global/interface";
 
 
-import prisma from "@services/prisma";
+import { prisma } from "@services";
 import { Post } from "@prisma/client";
 
 interface PostsProps extends Post {
@@ -12,8 +12,8 @@ interface PostsProps extends Post {
 };
 
 export async function GET() {
-  const cookie = await cookies();
-  const session_id = cookie.get('session_id');
+  // const cookie = await cookies();
+  // const session_id = cookie.get('session_id');
 
   // if (!session_id) {
   //   return NextResponse.json(false, { status: 404, statusText: 'session not found!' });
@@ -24,7 +24,7 @@ export async function GET() {
       createdAt: 'desc',
     },
     include: {
-      participant: {
+      creator: {
         select: {
           name: true,
         }
@@ -41,23 +41,15 @@ export async function GET() {
 };
 
 export async function POST(request: NextRequest) {
-  const { creator_id, categories } = await request.json() as PostsProps;
-
-  const upload = {
-    width: 0,
-    height: 0,
-    url_pre_image: '',
-    url_pre_video: '',
-    url_video: '',
-  };
+  const { creator_id, categories, width, height, url_pre_image, url_pre_video, url_video } = await request.json() as PostsProps;
 
   const post = await prisma.post.create({
     data: {
-      width: upload.width,
-      height: upload.height,
-      url_pre_image: upload.url_pre_image,
-      url_pre_video: upload.url_pre_video,
-      url_video: upload.url_video,
+      width,
+      height,
+      url_pre_image,
+      url_pre_video,
+      url_video,
       creator_id,
       categories: {
         connect: categories.map(id => ({ id }))

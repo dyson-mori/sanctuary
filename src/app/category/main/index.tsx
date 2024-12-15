@@ -6,16 +6,18 @@ import { useRouter } from "next/navigation";
 
 import { useTheme } from "styled-components";
 
-import { CategoryProps } from "@global/interface";
+import { CategoryProps, CreatorProps } from "@global/interface";
 import { serverActionCookie } from "@utils";
 
 import { Button, Container, Footer } from "./styles";
+import { Header } from "@common";
 
 type Props = {
-  categories: CategoryProps[]
+  categories: CategoryProps[];
+  creators: CreatorProps[];
 };
 
-export default function Categories({ categories }: Props) {
+export default function Categories({ categories, creators }: Props) {
   const theme = useTheme();
   const route = useRouter();
 
@@ -42,36 +44,39 @@ export default function Categories({ categories }: Props) {
   };
 
   return (
-    <Container>
-      {categories.map((row, index) => {
-        const find = selected.find(({ id }) => row.id === id);
-        const style = {
-          fontWeight: find ? 600 : 500,
-          backgroundColor: theme.colors[find ? 'primary' : 'white'],
-          color: theme.colors[find ? 'white' : 'text'],
-          cursor: row._count.post === 0 ? 'default' : 'pointer'
-        };
+    <>
+      <Header creators={creators} />
+      <Container>
+        {categories.map((row, index) => {
+          const find = selected.find(({ id }) => row.id === id);
+          const style = {
+            fontWeight: find ? 600 : 500,
+            backgroundColor: theme.colors[find ? 'primary' : 'white'],
+            color: theme.colors[find ? 'white' : 'text'],
+            cursor: row._count.post === 0 ? 'default' : 'pointer'
+          };
 
-        return (
-          <Button key={index} disabled={row._count.post === 0} style={style} onClick={() => handleSelect(row)}>
-            {row?.name.replace('_', ' ')} - {row._count.post}
+          return (
+            <Button key={index} disabled={row._count.post === 0} style={style} onClick={() => handleSelect(row)}>
+              {row?.name.replace('_', ' ')} - {row._count.post}
+            </Button>
+          )
+        })}
+        <Footer>
+          <Button
+            disabled={selected.length === 0}
+            style={{
+              width: 300,
+              height: 40,
+              backgroundColor: theme.colors.primary,
+              color: theme.colors.white,
+            }}
+            onClick={handleSearch}
+          >
+            Search
           </Button>
-        )
-      })}
-      <Footer>
-        <Button
-          disabled={selected.length === 0}
-          style={{
-            width: 300,
-            height: 40,
-            backgroundColor: theme.colors.primary,
-            color: theme.colors.white,
-          }}
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
-      </Footer>
-    </Container>
+        </Footer>
+      </Container>
+    </>
   )
 };

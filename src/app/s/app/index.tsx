@@ -5,10 +5,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 import { PostProps } from '@global/interface';
-import { TargetVideo } from '@common/videos/search';
-import { capitalizeFirstLetter } from '@utils';
+// import { capitalizeFirstLetter } from '@utils';
 
 import { About, Container, Feed, Header, Posts } from './styles';
+import { TargetVideo } from '../_components/video';
 
 interface Props {
   posts: PostProps[];
@@ -16,12 +16,16 @@ interface Props {
 
 export default function Search({ posts }: Props) {
   const contRef = useRef<HTMLDivElement>(null);
-  const postRef = useRef<HTMLDivElement[]>([]);
+  const postRef = useRef<HTMLElement | null>(null);
 
   const [count, setCount] = useState([1, posts.filter((_, i) => i !== 0).map(() => 0)]);
+  console.log(count);
 
   const onScroll = () => {
-    const styles = postRef.current.map(group => {
+    if (!postRef.current) return;
+    const ref = postRef.current as unknown as HTMLDListElement[]
+
+    const styles = ref.map(group => {
       const { y } = group.getBoundingClientRect();
       const rectY = y / window.innerHeight + 1;
 
@@ -41,7 +45,8 @@ export default function Search({ posts }: Props) {
     <Container>
       <Feed ref={contRef}>
         {posts.map((item, index) => (
-          <Posts key={index} ref={(ref: any) => postRef.current[index] = ref}>
+          // <Posts key={index} ref={ref => postRef.current![index] = ref}>
+          <Posts key={index} ref={postRef.current![index]}>
             <TargetVideo posts={item} />
           </Posts>
         ))}
@@ -59,7 +64,7 @@ export default function Search({ posts }: Props) {
                 style={{ borderRadius: 30, objectFit: 'cover' }}
               />
               <div className='info'>
-                <a>Mollyflwer</a>
+                <a>{row.id}</a>
                 {/* <a href={`/creator?name=${posts[0].participant[0].name}`}>Mollyflwer</a> */}
                 {/* <a href={`/creator?name=${posts[0].participant[0].name}`}>{capitalizeFirstLetter(posts[0].participant[0].name)}</a> */}
                 <p>New poll available</p>

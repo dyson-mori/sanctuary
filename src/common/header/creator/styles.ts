@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -46,6 +46,7 @@ export const Option = styled.button`
     padding: 0 10px;
 
     width: 100%;
+    height: 100%;
 
     color: #303030;
   }
@@ -78,6 +79,7 @@ export const Option = styled.button`
   .downside > p:nth-child(1) {
     font-size: 12px;
     font-weight: 500;
+    text-align: start;
   }
 
   .downside > p:nth-child(2) {
