@@ -2,12 +2,25 @@
 
 import { FC } from 'react';
 
-import { Container } from './styles';
+import { Switch } from '../..';
+
+import { Card, Container } from './styles';
 
 export const Settings: FC = () => {
   return (
     <Container>
-      <p>settings</p>
+
+      <Card>
+        <p>video preview enable</p>
+        <Switch setCheck={console.log} />
+      </Card>
+
+      <Card>
+        <p>theme</p>
+        <Switch setCheck={console.log} />
+      </Card>
+
     </Container>
   )
 };
+

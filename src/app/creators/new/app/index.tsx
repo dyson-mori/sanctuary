@@ -114,11 +114,7 @@ export default function AppUpload({ categories = [] }: Props) {
           name="file_image"
           control={control}
           render={({ field: { value, onChange } }) =>
-            <Upload
-              style={{
-                zIndex: 5
-              }}
-            >
+            <Upload>
               <label htmlFor="file" style={{ zIndex: 5 }}>
                 {value ? <img src={value} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 6, opacity: isSubmitting ? .5 : 1 }} /> : 'Choose a Image'}
               </label>

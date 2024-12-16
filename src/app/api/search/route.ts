@@ -57,7 +57,8 @@ export async function GET() {
           id: true,
           name: true,
           photo: true,
-          public: true
+          public: true,
+          description: true,
         }
       },
       categories: {

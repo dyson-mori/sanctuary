@@ -14,6 +14,7 @@ import { ReactComponent as ArrowRight } from './arrow-right.svg';
 import { ReactComponent as Video } from './video.svg';
 import { ReactComponent as Image } from './image.svg';
 import { ReactComponent as Description } from './description.svg';
+import { ReactComponent as ArrowDown } from './arrow-down.svg';
 
 export {
   Add,
@@ -31,5 +32,6 @@ export {
   ArrowRight,
   Video,
   Image,
-  Description
+  Description,
+  ArrowDown
 }

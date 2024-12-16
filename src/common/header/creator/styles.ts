@@ -10,10 +10,33 @@ export const Container = styled.div`
   height: 350px;
   overflow-y: hidden;
 
+  padding: 5px;
+
   h2 {
     font-size: 15px;
     color: #303030;
     margin: 5px 0;
+  }
+`;
+
+export const Tag = styled.div`
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  p {
+    margin: 10px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  span {
+    width: 100%;
+    height: 1px;
+    background-color: #eee;
   }
 `;
 

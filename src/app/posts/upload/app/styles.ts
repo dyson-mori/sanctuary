@@ -51,6 +51,13 @@ export const RightSide = styled.section`
   justify-content: center;
   align-items: center;
 
-  width: calc(100% / 2);
+  width: calc(100% / 3);
   height: 100%;
+  padding: 0 100px;
+`;
+
+export const Div = styled.div`
+  display: flex;
+
+  width: 100%;
 `;

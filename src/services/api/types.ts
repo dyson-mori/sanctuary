@@ -1,10 +1,14 @@
 import { Creator } from "@prisma/client";
 import { CategoryProps, CreatorProps, PostProps } from "@global/interface";
 
+type CreateBodyProps = Pick<PostProps, 'creator_id' | 'width' | 'height' | 'url_pre_image' | 'url_pre_video' | 'url_video'> & {
+  categories: { id: string, name: string }[]
+};
+
 export type ApiProps = {
   posts: {
     list: () => Promise<PostProps[]>;
-    create: (body: Pick<PostProps, 'categories' | 'creator_id' | 'width' | 'height' | 'url_pre_image' | 'url_pre_video' | 'url_video'>) => Promise<boolean>;
+    create: (body: CreateBodyProps) => Promise<boolean>;
   };
   creator: {
     list: () => Promise<CreatorProps[]>;

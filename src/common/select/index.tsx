@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { useClickOutside } from '@hooks';
 
 import { Container, DropDown } from './styles';
-import { Add } from '@svg';
+import { Add, ArrowDown } from '@svg';
 
 interface SelectProps {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -32,7 +32,7 @@ export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, defau
   const hideInputRef = useRef<HTMLInputElement>(null);
 
   const styles: CSSProperties = {
-    minWidth: width === 'small' ? 300 : width === 'medium' ? 400 : '100%',
+    width: width === 'small' ? 300 : width === 'medium' ? 400 : '100%',
   };
 
   const filter = select.filter(row => row.label.toLowerCase().includes(search.toLowerCase()));
@@ -49,7 +49,6 @@ export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, defau
     if (inputRef.current && hideInputRef.current) {
       inputRef.current.value = select.label;
       hideInputRef.current.value = select.label;
-      // hideInputRef.current.dispatchEvent(new Event("change"));
     };
     document.getElementById('dropdown')?.classList.remove('open');
     onChange(select);
@@ -77,6 +76,10 @@ export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, defau
       {onNew && <button type='button' onClick={onNew}>
         <Add width={21} height={21} stroke={theme.colors.primary} strokeWidth={2} />
       </button>}
+
+      <span>
+        <ArrowDown width={21} height={21} stroke={theme.colors.primary} strokeWidth={2} />
+      </span>
 
       <input ref={hideInputRef} style={{ display: 'none' }} {...rest} />
 

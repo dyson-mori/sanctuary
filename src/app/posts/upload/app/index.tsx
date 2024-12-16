@@ -1,19 +1,16 @@
 "use client";
 
-import { useState } from "react";
-
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as yup from "yup";
 
-import { Tag, User, Collaborators } from '@svg';
-import { Button, Input, Modal, Select } from "@common";
+import { User, Collaborators } from '@svg';
+import { Button, Input, Modal, Select, Tags } from "@common";
 import { api, cloudinary } from "@services";
 import { CategoryProps, CreatorProps } from "@global/interface";
 
-import { Container, RightSide, Upload } from "./styles";
-import { Register } from "../_components/register";
+import { Container, Div, RightSide, Upload } from "./styles";
 
 interface Props {
   creators: CreatorProps[];
@@ -21,28 +18,27 @@ interface Props {
 };
 
 export const schema = yup.object({
-  // file: yup.object({
-  file: yup.string(),
-  // }),
+  file: yup.string().required(),
   creator: yup.object({
-    id: yup.string(),
-    label: yup.string(),
+    id: yup.string().required(),
+    label: yup.string().required(),
   }),
   collaborators: yup.object({
     id: yup.string(),
     label: yup.string(),
   }),
-  categories: yup.object({
-    id: yup.string(),
-    label: yup.string(),
-  }),
-  // categories: yup.array().of(yup.string()),
+  categories: yup.array().of(
+    yup.object({
+      id: yup.string().required(),
+      name: yup.string().required()
+    })
+  ),
 });
 
-export default function AppUpload({ creators = [], categories = [] }: Props) {
-  const [add, setAdd] = useState(false);
+type schemaProps = yup.InferType<typeof schema>;
 
-  const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm({
+export default function AppUpload({ creators = [], categories = [] }: Props) {
+  const { control, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -51,17 +47,12 @@ export default function AppUpload({ creators = [], categories = [] }: Props) {
     label: row.name
   }));
 
-  const category = categories.map(row => ({
-    id: row.id,
-    label: row.name
-  }));
-
-  const submit = async (data) => {
+  const submit = async (data: schemaProps) => {
     const { width, height, url_pre_image, url_pre_video, url_video } = await cloudinary.upload(data.file, data.creator.id.split('-')[0]);
 
     await api.posts.create({
       creator_id: data.creator.id,
-      categories: [data.categories.id],
+      categories: data.categories!,
       width,
       height,
       url_pre_image,
@@ -70,7 +61,7 @@ export default function AppUpload({ creators = [], categories = [] }: Props) {
     })
       .then(() => reset({
         file: '',
-        categories: {},
+        categories: [],
         collaborators: {},
         creator: {}
       }))
@@ -109,13 +100,17 @@ export default function AppUpload({ creators = [], categories = [] }: Props) {
       />
 
       <RightSide>
-        <Controller
-          name="creator"
-          control={control}
-          render={({ field: { value, onChange } }) =>
-            <Select icon={User} width="medium" value={value ? value.label : ''} placeholder="creator" select={select} onChange={onChange} onNew={() => setAdd(true)} />
-          }
-        />
+        <Div>
+          <Controller
+            name="creator"
+            control={control}
+            render={({ field: { value, onChange } }) =>
+              <Select icon={User} width="full" value={value ? value.label : ''} placeholder="creator" select={select} onChange={onChange} />
+            }
+          />
+          <div style={{ width: 5 }} />
+          <Tags categories={categories} onChange={evt => setValue('categories', evt)} />
+        </Div>
 
         <div style={{ height: 5 }} />
 
@@ -123,25 +118,14 @@ export default function AppUpload({ creators = [], categories = [] }: Props) {
           name="collaborators"
           control={control}
           render={({ field: { value, onChange } }) =>
-            <Select icon={Collaborators} width="medium" value={value ? value.label : ''} placeholder="collaborators (optional)" select={select} onChange={onChange} />
+            <Select icon={Collaborators} width="full" value={value ? value.label : ''} placeholder="collaborators (optional)" select={select} onChange={onChange} />
           }
         />
 
-        <div style={{ height: 5 }} />
-
-        <Controller
-          name="categories"
-          control={control}
-          render={({ field: { value, onChange } }) =>
-            <Select icon={Tag} width="medium" value={value ? value.label : ''} placeholder="categories" select={category} onChange={onChange} />
-          }
-        />
         <div style={{ height: 5 }} />
 
         <Button type="submit" loading={isSubmitting} disabled={isSubmitting}>upload</Button>
       </RightSide>
-
-      <Register open={add} setClose={setAdd} />
 
     </Container>
   )

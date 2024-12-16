@@ -8,6 +8,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   width?: 50 | 200 | 400 | 600;
   color?: keyof typeof theme.colors;
   loading?: boolean;
+  full?: boolean
 };
 
 const Button: React.FC<ButtonProps> = ({ children, width = 200, color = 'primary', loading, ...rest }) => {
@@ -15,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({ children, width = 200, color = 'primary
     width,
     backgroundColor: theme.colors[color],
     color: '#fff',
-    fontWeight: 600
+    fontWeight: 600,
   };
 
   return (

@@ -15,7 +15,7 @@ export const Container = styled.button`
 
   ${({ theme, disabled }) => css`
     border-radius: ${theme.border.small};
-    box-shadow: ${theme.box.shadow.input};
+    box-shadow: ${theme.box.shadow.default};
     
     ${disabled && css`
       cursor: default;

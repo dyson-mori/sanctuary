@@ -4,17 +4,45 @@ import { Creator } from "@prisma/client";
 
 import { prisma } from "@services";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const creator = url.searchParams.get("name");
+
+  if (!!creator) {
+    const data = await prisma.creator.findFirst({
+      where: {
+        name: creator ?? undefined
+      },
+      include: {
+        post: {
+          select: {
+            categories: true
+          }
+        }
+      }
+    });
+
+    const row = {
+      ...data,
+      post: undefined,
+      tags: [...new Set(data?.post.map(row => row.categories.map(item => item.name)).flat())]
+    };
+
+    return NextResponse.json(row, { status: 201, statusText: 'done' })
+  };
+
   const data = await prisma.creator.findMany({
-  // where: {
-  //   name: creator ?? undefined
-  // },
     include: {
       // _count: {
       //   select: {
       //     post: true
       //   }
       // },
+      _count: {
+        select: {
+          post: true
+        }
+      },
       post: {
         select: {
           categories: true
@@ -22,12 +50,6 @@ export async function GET() {
       }
     }
   });
-
-  // const row = {
-  //   ...data,
-  //   post: undefined,
-  //   tags: [...new Set(data?.post.map(row => row.categories.map(item => item.name)).flat())]
-  // };
 
   return NextResponse.json(data, { status: 201, statusText: 'done' })
 };

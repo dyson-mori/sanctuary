@@ -46,7 +46,7 @@ export const PostVideo = ({ post, size, navigate }: Props) => {
   };
 
   return (
-    <Container style={styles} as="button" onClick={() => navigate(post.id)}>
+    <Container style={styles} as="button" onClick={() => navigate(post.name ?? post.creator.name)}>
       <video ref={videoRef} style={{ ...styles, filter: 'blur(0px)' }} preload='load' muted loop playsInline>
         <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.url_pre_video} type='video/webm' />
       </video>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 import { Header, Masonry } from '@common';
 
@@ -14,11 +15,17 @@ interface Props {
 };
 
 export default function Post({ creators }: Props) {
+  const route = useRouter();
+
+  const navigate = (name: string) => {
+    return route.push(`/creators/${name}`);
+  };
+
   return (
     <>
       <Header creators={creators} />
       <Container>
-        <Masonry posts={creators} />
+        <Masonry posts={creators} navigate={navigate} />
 
         <Upload href='/creators/new'>
           <User width={25} height={25} stroke='white' strokeWidth={2} />

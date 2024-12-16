@@ -7,7 +7,9 @@ import { prisma } from "@services";
 import { Post } from "@prisma/client";
 
 interface PostsProps extends Post {
-  categories: string[];
+  categories: {
+    id: string;
+  }[];
   creator: CreatorProps
 };
 
@@ -26,6 +28,8 @@ export async function GET() {
     include: {
       creator: {
         select: {
+          photo: true,
+          description: true,
           name: true,
         }
       },
@@ -52,7 +56,7 @@ export async function POST(request: NextRequest) {
       url_video,
       creator_id,
       categories: {
-        connect: categories.map(id => ({ id }))
+        connect: categories.map(({ id }) => ({ id }))
       }
     }
   });
@@ -82,7 +86,7 @@ export async function PUT(request: NextRequest) {
       url_video,
       creator_id,
       categories: {
-        connect: categories.map(id => ({ id }))
+        connect: categories.map(({ id }) => ({ id }))
       }
     }
   });

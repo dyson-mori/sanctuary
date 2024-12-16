@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
 import { api } from "@services";
+import { ComponentTest } from "./components";
 
 const DynamicPageWithNoSSR = dynamic(() => import('./posts'), {
   ssr: true

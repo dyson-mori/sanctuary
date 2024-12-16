@@ -5,3 +5,5 @@ export * from './masonry';
 export * from './modal';
 export * from './select';
 export * from './steps';
+export * from './switch';
+export * from './tag';

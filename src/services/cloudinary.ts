@@ -47,17 +47,19 @@ export const cloudinary = {
     const { secure_url, width, height, public_id } = await v2.uploader
       .upload(
         fileUri, {
-        invalidate: true,
-        resource_type: "auto",
-        filename_override: fileName,
-        folder: `community${folder ? '/' + folder : ''}`,
-        // use_filename: true,
-      });
+          invalidate: true,
+          resource_type: "auto",
+          filename_override: fileName,
+          use_filename: true,
+          folder: `community${folder ? '/' + folder : ''}`,
+      }
+      );
 
     const url_pre_image =
       secure_url
-        .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', '')
-        .replace('mp4', 'webp');
+        .replace('https://res.cloudinary.com/dyrtdrnky/image/upload/', '')
+        .replace('png', 'webp')
+        .replace('jpg', 'webp')
 
     return {
       secure_url,

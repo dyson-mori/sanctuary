@@ -17,16 +17,15 @@ export interface MasonryProps {
   };
 };
 
-export function Masonry({ posts }: { posts: MasonryProps[] }) {
-  const route = useRouter();
+export function Masonry({ posts, navigate }: { posts: MasonryProps[], navigate(name: string): void }) {
   const size = useWindowSize();
 
   const dimension = size.width <= 600 ? 2 : 6;
 
-  const navigate = (id: string) => {
-    serverActionCookie('search', `id=${id}`);
-    return route.push('/s');
-  };
+  // const navigate = (id: string) => {
+  //   serverActionCookie('search', `id=${id}`);
+  //   return route.push('/s');
+  // };
 
   return Array.from({ length: dimension }).map((_, index) => (
     <Column key={index}>

@@ -2,16 +2,6 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   position: relative;
-  display: flex;
-
-  align-items: center;
-
-  height: 100%;
-
-  border: 0;
-  background-color: transparent;
-
-  overflow: hidden;
 `;
 
 export const Controller = styled.div`
@@ -29,7 +19,7 @@ export const Controller = styled.div`
 
   border-radius: 9px;
 
-  bottom: 10px;
+  /* bottom: 10px; */
 `;
 
 export const Timeline = styled.div`
