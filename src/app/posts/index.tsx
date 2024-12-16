@@ -19,7 +19,7 @@ interface Props {
 export default function Post({ posts, creators }: Props) {
   const route = useRouter();
 
-  const navigate = (name: string) => {
+  const navigate = () => {
     return route.push(`/s`);
   };
 

@@ -1,7 +1,4 @@
-import { useRouter } from "next/navigation";
-
 import { useWindowSize } from "@hooks";
-import { serverActionCookie } from "@utils";
 
 import { PostVideo } from "./_components/video";
 

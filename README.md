@@ -15,7 +15,7 @@ sanctuary will be an open source project for the community
     - ✨ `:sparkles:` new feature <br />
     - 🔨 `:hammer:` refactor <br />
     - 💥 `:boom:` <br />
-    - 🚧`:construction:` <br />
+    - 🚧 `:construction:` <br />
 
     
     https://supabase.com/

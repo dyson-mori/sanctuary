@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { Container, Controller, Timeline } from './styles';
 import { PostProps } from '@global/interface';
-import { useWindowSize } from '@hooks';
+// import { useWindowSize } from '@hooks';
 
 interface Props {
   posts: PostProps;
@@ -15,7 +15,7 @@ export const TargetVideo = ({ posts }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
 
-  const size = useWindowSize();
+  // const size = useWindowSize();
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {

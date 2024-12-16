@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { Metadata, ResolvingMetadata } from 'next';
+import type { Metadata } from 'next';
 
 import { api } from '@services';
 
@@ -38,8 +38,8 @@ type Props = {
 //   }
 // }
 
-export default async function Upload({ searchParams }: Props) {
-  const { type } = await searchParams;
+export default async function Upload({ }: Props) {
+  // const { type } = await searchParams;
 
   const creators = await api.creator.list();
   const categories = await api.category.list();

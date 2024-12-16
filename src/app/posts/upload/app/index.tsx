@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import { User, Collaborators } from '@svg';
-import { Button, Input, Modal, Select, Tags } from "@common";
+import { Button, Select, Tags } from "@common";
 import { api, cloudinary } from "@services";
 import { CategoryProps, CreatorProps } from "@global/interface";
 

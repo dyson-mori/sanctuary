@@ -10,7 +10,7 @@ import { capitalizeFirstLetter } from "@utils";
 import { Masonry } from "@common";
 import { Onlyfans, Twitter } from "@svg";
 
-import { Banner, Column, Container, Content, Social } from "./styles";
+import { Banner, Container, Content, Social } from "./styles";
 
 interface Props {
   creator: Creator;

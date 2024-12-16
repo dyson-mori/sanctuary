@@ -25,6 +25,7 @@ export default function Post({ creators }: Props) {
     <>
       <Header creators={creators} />
       <Container>
+        {/* @ts-expect-error: ksoa */}
         <Masonry posts={creators} navigate={navigate} />
 
         <Upload href='/creators/new'>

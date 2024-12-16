@@ -8,10 +8,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as yup from "yup";
 
-import { ArrowLeft, ArrowRight, Tag, User, Upload as UplaodStyled, Description } from "@svg";
+import { ArrowLeft, ArrowRight, User, Upload as UplaodStyled, Description } from "@svg";
 import { CategoryProps } from "@global/interface";
 import { api, cloudinary } from "@services";
-import { Input, Proccess, Select } from "@common";
+import { Input, Proccess } from "@common";
 
 import { Container, Content, Footer, Form, Upload } from "./styles";
 import { steps } from "./constants";
@@ -31,7 +31,7 @@ export const schema = yup.object({
 type schemaProps = yup.InferType<typeof schema>;
 type FieldName = keyof schemaProps;
 
-export default function AppUpload({ categories = [] }: Props) {
+export default function AppUpload({ }: Props) {
   const { control, handleSubmit, trigger, formState: { isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
@@ -39,11 +39,6 @@ export default function AppUpload({ categories = [] }: Props) {
   const [currentStep, setCurrentStep] = useState(0);
 
   const theme = useTheme();
-
-  const category = categories.map(row => ({
-    id: row.id,
-    label: row.name
-  }));
 
   const processForm: SubmitHandler<schemaProps> = async (data: schemaProps) => {
     try {
@@ -142,7 +137,7 @@ export default function AppUpload({ categories = [] }: Props) {
             <Controller
               name="name"
               control={control}
-              render={({ field: { value, onChange } }) =>
+              render={({ field: { onChange } }) =>
                 <Input icon={User} placeholder="name" onChange={onChange} />
               }
             />
@@ -150,16 +145,8 @@ export default function AppUpload({ categories = [] }: Props) {
             <Controller
               name="description"
               control={control}
-              render={({ field: { value, onChange } }) =>
+              render={({ field: { onChange } }) =>
                 <Input icon={Description} placeholder="description" onChange={onChange} />
-              }
-            />
-            <div style={{ height: 10 }} />
-            <Controller
-              name="categories"
-              control={control}
-              render={({ field: { value, onChange } }) =>
-                <Select icon={Tag} placeholder="categories" onChange={console.log} select={category} />
               }
             />
           </Form>
@@ -174,7 +161,7 @@ export default function AppUpload({ categories = [] }: Props) {
             opacity: currentStep === 0 ? 0 : 1,
             cursor: currentStep === 0 ? 'default' : 'pointer'
           }}
-          onClick={evt => {
+          onClick={() => {
             setCurrentStep(step => step === 2 ? step - 1 : 0)
           }}
         >

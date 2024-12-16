@@ -18,6 +18,7 @@ export default function Search({ posts }: Props) {
   const postRef = useRef<HTMLElement[]>([]);
 
   const [count, setCount] = useState([1, posts.filter((_, i) => i !== 0).map(() => 0)]);
+  console.log(count);
 
   const onScroll = () => {
     if (!postRef.current) return;
@@ -42,7 +43,8 @@ export default function Search({ posts }: Props) {
     <Container>
       <Feed ref={contRef}>
         {posts.map((item, index) => (
-          <Posts key={index} ref={postRef.current[index] as any}>
+          // @ts-expect-error: ksoa
+          <Posts key={index} ref={postRef.current[index]}>
             <TargetVideo posts={item} />
           </Posts>
         ))}

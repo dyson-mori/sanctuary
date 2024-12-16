@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { Metadata, ResolvingMetadata } from 'next';
+import type { Metadata } from 'next';
 
 import { api } from '@services';
 
@@ -17,7 +17,7 @@ type Props = {
   // searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 };
 
-export default async function Upload({ searchParams }: Props) {
+export default async function Upload({ }: Props) {
   const categories = await api.category.list();
 
   return <App categories={categories} />
