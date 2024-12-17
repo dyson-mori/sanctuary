@@ -1,14 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
+
+import Image from 'next/image';
+
+import { PostProps } from '@global/interface';
 
 import { Container, Controller, Timeline } from './styles';
-import { PostProps } from '@global/interface';
 // import { useWindowSize } from '@hooks';
 
 interface Props {
   posts: PostProps;
 };
 
-export const TargetVideo = ({ posts }: Props) => {
+export const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLElement>) => {
   let isScrubbing = false;
   let wasPaused = false;
 
@@ -98,26 +101,34 @@ export const TargetVideo = ({ posts }: Props) => {
   }, []);
 
   return (
-    <Container
-      style={{
-        // height: videoRef.current?.clientHeight
-        // height: post.height / post.width * (size.width <= 600 ? size.width / 2.1 : size.width / 6.2)
-      }}
-    >
-      <video ref={videoRef} width="100%" height="100%" muted loop playsInline onTimeUpdate={timeUpdate}>
+    <Container ref={ref}>
+      <video ref={videoRef} width={posts.width >= posts.height ? '99%' : 'auto'} height='auto' muted loop playsInline onTimeUpdate={timeUpdate}>
         <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + posts.url_video} type='video/webm' />
       </video>
-      <Controller
-      // style={{
-      //   bottom: size.height - videoRef.current?.clientHeight
-      // }}
-      >
+
+      <Controller>
         <Timeline ref={timelineRef}>
           <div className='timeline'>
             <div className="thumb-indicator" />
           </div>
         </Timeline>
       </Controller>
+
+      <Image
+        style={{
+          position: 'absolute',
+          objectFit: 'cover',
+          filter: 'blur(5px)',
+          zIndex: 0,
+          transition: '.1s',
+          width: '100%',
+          height: '100%'
+        }}
+        src={`https://res.cloudinary.com/dyrtdrnky/video/upload/${posts.url_pre_image}`}
+        width={50}
+        height={50}
+        alt={'item.creator.name'}
+      />
     </Container>
   )
-};
+})

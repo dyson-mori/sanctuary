@@ -7,7 +7,25 @@ export default {
 
     white: '#FFF',
 
-    text: '#707070'
+    text: '#707070',
+
+    success: '#41B06E',
+    error: '#F93176',
+
+    dark_charcoal: '#303030',
+    granite_gray: '#606060',
+    philippine_gray: '#909090',
+  },
+  font: {
+    size: {
+      medium: '12px',
+      large: '14px'
+    },
+    weight: {
+      regular: 400,
+      medium: 500,
+      semi_bold: 600
+    }
   },
   border: {
     small: '3px',

@@ -7,7 +7,9 @@ import { PostProps } from '@global/interface';
 import { TargetVideo } from '../_components/video';
 import { HeaderAside } from '../_components/header';
 
-import { About, Container, Feed, Posts } from './styles';
+import { About, Container, Feed } from './styles';
+import { SectionTag } from '../_components/tags';
+import { Comments } from '../_components/comments';
 
 interface Props {
   posts: PostProps[];
@@ -17,62 +19,46 @@ export default function Search({ posts }: Props) {
   const contRef = useRef<HTMLDivElement>(null);
   const postRef = useRef<HTMLElement[]>([]);
 
-  const [count, setCount] = useState([1, posts.filter((_, i) => i !== 0).map(() => 0)]);
-  console.log(count);
+  // const [count, setCount] = useState([1, ...posts.filter((_, i) => i !== 0).map(() => 0)]);
+  // console.log(count);
 
-  const onScroll = () => {
-    if (!postRef.current) return;
+  // const onScroll = () => {
+  //   if (!postRef.current) return;
 
-    const styles = postRef.current.map(group => {
-      const { y } = group.getBoundingClientRect();
-      const rectY = y / window.innerHeight + 1;
+  //   const styles = postRef.current.map(group => {
+  //     const { y } = group.getBoundingClientRect();
+  //     const rectY = y / window.innerHeight + 1;
 
-      if (rectY >= 1 && rectY <= 2) return Math.abs(rectY - 2)
+  //     if (rectY >= 1 && rectY <= 2) return Math.abs(rectY - 2)
 
-      if (rectY <= 0 || rectY >= 2) return 0;
+  //     if (rectY <= 0 || rectY >= 2) return 0;
 
-      return rectY;
-    });
+  //     return rectY;
+  //   });
 
-    setCount(styles);
-  };
+  //   setCount(styles);
+  // };
 
-  useEffect(() => contRef.current?.addEventListener('scroll', onScroll), []);
+  // useEffect(() => contRef.current?.addEventListener('scroll', onScroll), []);
 
   return (
     <Container>
       <Feed ref={contRef}>
-        {posts.map((item, index) => (
-          // @ts-expect-error: ksoa
-          <Posts key={index} ref={postRef.current[index]}>
-            <TargetVideo posts={item} />
-          </Posts>
-        ))}
+        {posts.map((item, index) =>
+          <TargetVideo
+            posts={item}
+        // @ts-expect-error: ksoa
+            ref={ref => postRef.current[index] = ref}
+            key={index}
+          />
+        )}
       </Feed>
 
       <About>
         <HeaderAside posts={posts} />
+        <SectionTag tags={posts[0].categories} />
+        <Comments comments={[]} />
       </About>
-
-      {/* tentar fazer isso dentro do componente video
-      {posts.map((item, index) => (
-        <Image
-          style={{
-            position: 'fixed',
-            objectFit: 'cover',
-            filter: 'blur(10px)',
-            opacity: count[index ?? 0],
-            transition: '.1s',
-            width: window.innerWidth,
-            height: window.innerHeight
-          }}
-          key={index}
-          src={`https://res.cloudinary.com/dyrtdrnky/video/upload/${item.url_pre_image}`}
-          width={50}
-          height={50}
-          alt={'item.creator.name'}
-        />
-      ))} */}
 
     </Container>
   );

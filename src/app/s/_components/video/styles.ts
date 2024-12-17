@@ -1,7 +1,24 @@
 import styled, { css } from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.section`
+  display: flex;
   position: relative;
+
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 100vh;
+
+  scroll-snap-align: start;
+
+  video {
+    /* width: calc(100% / 1.01); */
+    height: calc(100% / 1.01);
+    border-radius: 9px;
+    z-index: 1;
+  };
 `;
 
 export const Controller = styled.div`
@@ -12,12 +29,14 @@ export const Controller = styled.div`
 
   bottom: 0;
 
-  width: 100%;
+  width: 370px;
   height: 50px;
 
   background-color: #0000001a;
 
   border-radius: 9px;
+
+  z-index: 1;
 
   /* bottom: 10px; */
 `;
