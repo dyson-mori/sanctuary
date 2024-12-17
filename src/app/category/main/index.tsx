@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 
 import { useTheme } from "styled-components";
 
+import { Header, Input, Modal, Button } from "@common";
 import { CategoryProps, CreatorProps } from "@global/interface";
 import { serverActionCookie } from "@utils";
+import { Tag } from "@svg";
 
-import { Button, Container, Footer } from "./styles";
-import { Header } from "@common";
+import { Button as ButtonStyled, Container, Footer, NewCategory } from "./styles";
+import { api } from "@services";
 
 type Props = {
   categories: CategoryProps[];
@@ -22,7 +24,10 @@ export default function Categories({ categories, creators }: Props) {
   const route = useRouter();
 
   const [selected, setSelected] = useState([] as CategoryProps[]);
-
+  const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState<string | null>(null);
+  
   const handleSelect = async (row: CategoryProps) => {
     // navigator.clipboard.writeText(row.id)
     //   .then(() => setSelected(prev => [...prev, row]))
@@ -43,9 +48,23 @@ export default function Categories({ categories, creators }: Props) {
     return route.push('/search');
   };
 
+  async function register() {
+    setLoading(true)
+    try {
+      await api.category.create({
+        name: name!
+      }).then(() => setModal(false))
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <>
       <Header creators={creators} />
+
       <Container>
         {categories.map((row, index) => {
           const find = selected.find(({ id }) => row.id === id);
@@ -63,7 +82,7 @@ export default function Categories({ categories, creators }: Props) {
           )
         })}
         <Footer>
-          <Button
+          <ButtonStyled
             disabled={selected.length === 0}
             style={{
               width: 300,
@@ -74,9 +93,21 @@ export default function Categories({ categories, creators }: Props) {
             onClick={handleSearch}
           >
             Search
-          </Button>
+          </ButtonStyled>
         </Footer>
       </Container>
+
+      <NewCategory onClick={() => setModal(true)}>
+        <Tag width={25} height={25} stroke='white' strokeWidth={2} />
+      </NewCategory>
+
+      <Modal open={modal} onClickOutside={setModal}>
+        <Input icon={Tag} placeholder="new category" onChange={e => setName(e.target.value)} />
+        <div style={{ height: 20 }} />
+        <Button loading={loading} onClick={register}>
+          Register
+        </Button>
+      </Modal>
     </>
   )
 };

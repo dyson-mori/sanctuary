@@ -20,5 +20,6 @@ export const api: ApiProps = {
 
   category: {
     list: () => fetcher({ url: `/category`, method: 'GET' }),
+    create: (body) => fetcher({ url: `/category`, method: 'POST', body }),
   },
 };

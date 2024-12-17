@@ -17,10 +17,11 @@ const Button: React.FC<ButtonProps> = ({ children, width = 200, color = 'primary
     backgroundColor: theme.colors[color],
     color: '#fff',
     fontWeight: 600,
+    opacity: loading ? .5 : 1
   };
 
   return (
-    <Container style={styles} {...rest}>
+    <Container disabled={loading} style={styles} {...rest}>
       {
         loading ? (
           <Loading>

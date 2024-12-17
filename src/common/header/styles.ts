@@ -24,6 +24,10 @@ export const Logo = styled.div`
 
   /* margin-left: 20px; */
   margin-right: 50px;
+
+  @media only screen and (max-width: 600px) {
+    margin-right: 25px;
+  };
 `;
 
 export const Nav = styled.nav`
@@ -34,7 +38,7 @@ export const Nav = styled.nav`
   height: 50px;
 
   width: 100%;
-
+  
   a {
     padding: 10px;
     font-family: var(--font-montserrat);
@@ -42,7 +46,13 @@ export const Nav = styled.nav`
     font-size: 13px;
     font-weight: 500;
     text-decoration: none;
-  }
+  };
+
+  @media only screen and (max-width: 600px) {
+    a {
+      padding: 10px 5px;
+    }
+  };
 `;
 
 export const Button = styled.button`

@@ -1,4 +1,5 @@
 import { ReactComponent as Add } from './add.svg';
+import { ReactComponent as AddUser } from './add-user.svg';
 import { ReactComponent as Key } from './key.svg';
 import { ReactComponent as Onlyfans } from './onlyfans.svg';
 import { ReactComponent as Search } from './search-normal.svg';
@@ -33,5 +34,6 @@ export {
   Video,
   Image,
   Description,
-  ArrowDown
+  ArrowDown,
+  AddUser
 }
