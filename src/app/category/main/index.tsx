@@ -9,7 +9,7 @@ import { useTheme } from "styled-components";
 import { Header, Input, Modal, Button } from "@common";
 import { CategoryProps, CreatorProps } from "@global/interface";
 import { serverActionCookie } from "@utils";
-import { AddUser, Tag } from "@svg";
+import { Tag } from "@svg";
 
 import { Button as ButtonStyled, Container, Footer, NewCategory } from "./styles";
 import { api } from "@services";
