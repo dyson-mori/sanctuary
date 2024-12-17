@@ -11,7 +11,7 @@ interface Props {
   posts: PostProps;
 };
 
-export const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLElement>) => {
+const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLElement>) => {
   let isScrubbing = false;
   let wasPaused = false;
 
@@ -132,3 +132,7 @@ export const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef
     </Container>
   )
 })
+
+TargetVideo.displayName = 'TargetVideo';
+
+export default TargetVideo;

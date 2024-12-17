@@ -1,9 +1,11 @@
 import { FC } from "react";
 
+import Image from "next/image";
+
 import { CategoryProps } from "@global/interface";
 
-import { Container, Title, Content, User } from "./styles";
-import Image from "next/image";
+import { Container, Title, Content, User, Input } from "./styles";
+import { Description } from "@svg";
 
 type TagsProps = {
   comments: CategoryProps[];
@@ -21,7 +23,7 @@ export const Comments: FC<TagsProps> = ({ comments }) => {
       <Content>
 
         {
-          [0, 1, 2].map((row, index) => (
+          comments.map((row, index) => (
             <User key={index}>
               <Image
                 src='https://res.cloudinary.com/dyrtdrnky/image/upload/v1734292565/community/creator/fh3wlzleycufzikkl5t4.png'
@@ -42,6 +44,12 @@ export const Comments: FC<TagsProps> = ({ comments }) => {
           ))
         }
 
+        <div style={{ height: 5 }} />
+
+        <Input>
+          <Description width={25} height={25} stroke="#000" />
+          <input placeholder="Be careful what you write" />
+        </Input>
       </Content>
     </Container>
   )

@@ -80,3 +80,23 @@ export const User = styled.div`
     `};
   };
 `;
+
+export const Input = styled.div`
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 50px;
+
+  svg {
+    margin: 0 22px;
+  }
+
+  input {
+    border: 0;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+  }
+`;
