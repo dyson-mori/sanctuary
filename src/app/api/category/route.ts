@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@services";
 import { CategoryProps } from "@global/interface";
+import { Category } from "@prisma/client";
 
 export async function GET() {
   const categories = await prisma.category.findMany({
@@ -23,13 +24,19 @@ export async function GET() {
 };
 
 export async function POST(request: NextRequest) {
-  const array = await request.json() as string[];
+  const { name } = await request.json() as Category;
 
-  const admin = await prisma.category.createMany({
-    data: array.map(name => ({ name }))
+  const category = await prisma.category.create({
+    data: {
+      name
+    }
   });
 
-  return NextResponse.json(admin, { status: 201, statusText: 'created' });
+  // const category = await prisma.category.createMany({
+  //   data: array.map(name => ({ name }))
+  // });
+
+  return NextResponse.json(category, { status: 201, statusText: 'created' });
 };
 
 export async function PUT(request: NextRequest) {
