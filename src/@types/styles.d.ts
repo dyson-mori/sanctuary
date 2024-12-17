@@ -1,8 +1,8 @@
-// import 'styled-components';
-// import theme from '../global/theme';
+import 'styled-components';
+import theme from '../global/theme';
 
-// type ThemeProps = typeof theme;
+type ThemeProps = typeof theme;
 
-// declare module 'styled-components' {
-//   export interface DefaultTheme  extends ThemeProps {}
-// }
+declare module 'styled-components' {
+  export interface DefaultTheme extends ThemeProps { }
+}
