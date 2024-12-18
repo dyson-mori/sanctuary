@@ -30,4 +30,8 @@ export const About = styled.aside`
 
   background-color: #f1f1f1;
   width: calc(100% / 2.5);
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  };
 `;

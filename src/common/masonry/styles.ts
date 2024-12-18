@@ -7,4 +7,8 @@ export const Column = styled.section`
   flex-direction: column;
 
   width: calc(100% / 6);
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  };
 `;

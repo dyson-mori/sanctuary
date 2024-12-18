@@ -7,3 +7,4 @@ export * from './select';
 export * from './steps';
 export * from './switch';
 export * from './tag';
+export * from './upload';

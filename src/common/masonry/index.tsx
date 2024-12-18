@@ -19,11 +19,6 @@ export function Masonry({ posts, navigate }: { posts: MasonryProps[], navigate(n
 
   const dimension = size.width <= 600 ? 2 : 6;
 
-  // const navigate = (id: string) => {
-  //   serverActionCookie('search', `id=${id}`);
-  //   return route.push('/s');
-  // };
-
   return Array.from({ length: dimension }).map((_, index) => (
     <Column key={index}>
       {posts.map((row, i) => i % dimension === index &&

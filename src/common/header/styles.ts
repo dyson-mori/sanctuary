@@ -11,6 +11,10 @@ export const Container = styled.header`
     background-color: ${theme.colors.white};
     box-shadow: ${theme.box.shadow.header};
   `};
+
+  @media only screen and (max-width: 600px) {
+    padding: 0 10px;
+  };
 `;
 
 export const Logo = styled.div`

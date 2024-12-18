@@ -11,9 +11,9 @@ import * as yup from "yup";
 import { ArrowLeft, ArrowRight, User, Upload as UplaodStyled, Description } from "@svg";
 import { CategoryProps } from "@global/interface";
 import { api, cloudinary } from "@services";
-import { Input, Proccess } from "@common";
+import { Input, Proccess, Upload } from "@common";
 
-import { Container, Content, Footer, Form, Upload } from "./styles";
+import { Container, Content, Footer, Form } from "./styles";
 import { steps } from "./constants";
 
 interface Props {
@@ -21,10 +21,10 @@ interface Props {
 };
 
 export const schema = yup.object({
-  file_video: yup.string(),
-  file_image: yup.string(),
-  name: yup.string(),
-  description: yup.string(),
+  file_video: yup.string().required(),
+  file_image: yup.string().required(),
+  name: yup.string().required(),
+  description: yup.string().required(),
   categories: yup.string(),
 });
 
@@ -32,18 +32,30 @@ type schemaProps = yup.InferType<typeof schema>;
 type FieldName = keyof schemaProps;
 
 export default function AppUpload({ }: Props) {
-  const { control, handleSubmit, trigger, formState: { isSubmitting } } = useForm({
+  const { control, handleSubmit, trigger, formState: { isSubmitting, isValid, isDirty } } = useForm({
     resolver: yupResolver(schema)
   });
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [message, setMessage] = useState<string | null>(null);
 
   const theme = useTheme();
 
   const processForm: SubmitHandler<schemaProps> = async (data: schemaProps) => {
+    setMessage('enviando');
+
     try {
       const video = await cloudinary.upload(data.file_video!, data.name!, "creator");
+
+      if (video.public_id) {
+        setMessage('video salvo com sucesso');
+      };
+
       const image = await cloudinary.uploadImage(data.file_image!, data.name!, "creator");
+
+      if (image.public_id) {
+        setMessage('image salva com sucesso');
+      };
 
       await api.creator.create({
         width: video.width,
@@ -53,7 +65,7 @@ export default function AppUpload({ }: Props) {
         name: data.name!,
         photo: image.url_pre_image,
         description: data.description!,
-      })
+      }).then(() => setMessage('formulário salvo com sucesso'))
 
     } catch (error) {
       console.log(error);
@@ -61,47 +73,26 @@ export default function AppUpload({ }: Props) {
   };
 
   const next = async () => {
-    const fields = steps[currentStep].fields
+    const fields = steps[currentStep].fields;
     const output = await trigger(fields as FieldName[], { shouldFocus: true });
 
     if (!output) return;
 
     if (currentStep === 2) return handleSubmit(processForm)();
 
-    return setCurrentStep(step => step <= 2 ? step + 1 : 2);
+    return setCurrentStep(step => step + 1);
   };
 
   return (
     <Container>
 
       <Proccess step={currentStep} />
-
       <Content>
-
         {currentStep === 0 && <Controller
           name="file_video"
           control={control}
           render={({ field: { value, onChange } }) =>
-            <Upload>
-              <label htmlFor="file" style={{ zIndex: 0 }}>
-                {value ? <video src={value} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 6, opacity: isSubmitting ? .5 : 1 }} /> : 'Choose a Video'}
-              </label>
-              <input
-                style={{
-                  cursor: isSubmitting ? 'default' : 'pointer'
-                }}
-                type="file"
-                name="file"
-                id="file"
-                accept="video/mp4, video/webp"
-                onChange={evt => {
-                  const reader = new FileReader();
-
-                  reader.readAsDataURL(evt.target.files![0]);
-                  reader.onloadend = () => onChange(reader.result as string);
-                }}
-              />
-            </Upload>
+            <Upload type="video" label='Choose a Video' value={value} onChange={onChange} disable={false} />
           }
         />}
 
@@ -109,26 +100,7 @@ export default function AppUpload({ }: Props) {
           name="file_image"
           control={control}
           render={({ field: { value, onChange } }) =>
-            <Upload>
-              <label htmlFor="file" style={{ zIndex: 5 }}>
-                {value ? <img src={value} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 6, opacity: isSubmitting ? .5 : 1 }} /> : 'Choose a Image'}
-              </label>
-              <input
-                style={{
-                  cursor: isSubmitting ? 'default' : 'pointer'
-                }}
-                type="file"
-                name="file"
-                id="file"
-                accept="image/*"
-                onChange={evt => {
-                  const reader = new FileReader();
-
-                  reader.readAsDataURL(evt.target.files![0]);
-                  reader.onloadend = () => onChange(reader.result as string);
-                }}
-              />
-            </Upload>
+            <Upload type="image" label='Choose a Image' value={value} onChange={onChange} disable={false} />
           }
         />}
 
@@ -168,7 +140,20 @@ export default function AppUpload({ }: Props) {
           <ArrowRight width={15} height={15} stroke={theme.colors.text} strokeWidth={2} />
           back
         </button>
-        <button type="button" onClick={next}>
+
+        <p>{message}</p>
+
+        <button
+          style={{
+            opacity: (isSubmitting || currentStep === 2 && !isValid && !isDirty) ? .5 : 1,
+            cursor: (isSubmitting || currentStep === 2 && !isValid && !isDirty) ? 'default' : 'pointer'
+          }}
+          disabled={
+            isSubmitting || currentStep === 2 && !isValid && !isDirty
+          }
+          type="button"
+          onClick={next}
+        >
           {currentStep === 2 ? 'Upload' : 'next'}
           {currentStep === 2 ? (
             <UplaodStyled width={15} height={15} stroke={theme.colors.text} strokeWidth={2} />

@@ -4,24 +4,30 @@ import { Container, Loading } from './styles';
 import theme from '../../global/theme';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  // secondary?: boolean | string;
-  width?: 50 | 200 | 400 | 600;
-  color?: keyof typeof theme.colors;
+  variant?: 'primary' | 'select';
+  selected?: boolean;
   loading?: boolean;
-  full?: boolean
 };
 
-const Button: React.FC<ButtonProps> = ({ children, width = 200, color = 'primary', loading, ...rest }) => {
-  const styles: CSSProperties = {
-    width,
-    backgroundColor: theme.colors[color],
-    color: '#fff',
-    fontWeight: 600,
-    opacity: loading ? .5 : 1
+const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', selected, loading, style, ...rest }) => {
+  const styles = {
+    primary: {
+      backgroundColor: theme.colors.primary,
+      color: theme.colors.white,
+      fontWeight: 600,
+      width: 250,
+      ...style
+    } as CSSProperties,
+    select: {
+      backgroundColor: theme.colors[selected ? 'primary' : 'white'],
+      color: theme.colors[selected ? 'white' : 'text'],
+      fontWeight: 600,
+      ...style
+    } as CSSProperties
   };
 
   return (
-    <Container disabled={loading} style={styles} {...rest}>
+    <Container style={styles[variant]} {...rest}>
       {
         loading ? (
           <Loading>

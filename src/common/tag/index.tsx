@@ -52,9 +52,6 @@ export const Tags: FC<Props> = ({ categories, onChange }) => {
         {categories.map((row, index) => {
           const find = selected.find(({ id }) => row.id === id);
           const style = {
-            fontWeight: find ? 600 : 500,
-            backgroundColor: theme.colors[find ? 'primary' : 'white'],
-            color: theme.colors[find ? 'white' : 'text'],
             flexGrow: 1,
             margin: 2,
             padding: '0 5px',
@@ -62,7 +59,7 @@ export const Tags: FC<Props> = ({ categories, onChange }) => {
           };
 
           return (
-            <Button key={index} type="button" style={style} onClick={() => handleSelect(row)}>
+            <Button key={index} variant="select" selected={!!find} type="button" style={style} onClick={() => handleSelect(row)}>
               {row?.name.replace('_', ' ')}
             </Button>
           )

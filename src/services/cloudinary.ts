@@ -14,7 +14,7 @@ export const cloudinary = {
         invalidate: true,
         resource_type: "auto",
         filename_override: fileName,
-        folder: `community${folder ? '/' + folder : ''}`,
+          folder: `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER}${folder ? '/' + folder : ''}`,
         use_filename: true,
       });
 
@@ -25,7 +25,7 @@ export const cloudinary = {
 
     const url_pre_video =
       secure_url
-        .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', 'du_2.0')
+        .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', 'du_2.0/')
         .replace('mp4', 'webm');
 
     const url_video =
@@ -51,7 +51,7 @@ export const cloudinary = {
           resource_type: "auto",
           filename_override: fileName,
           use_filename: true,
-          folder: `community${folder ? '/' + folder : ''}`,
+          folder: `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER}${folder ? '/' + folder : ''}`,
       }
       );
 
