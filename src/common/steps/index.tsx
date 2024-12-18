@@ -1,7 +1,7 @@
 "use client"
 import { FC } from "react";
 
-import { Image, Upload, Video } from "@svg";
+import { Image as ImageSvg, Upload, Video } from "@svg";
 
 import { Container, Progress, Pulse } from "./styles";
 
@@ -47,7 +47,7 @@ export const Proccess: FC<Props> = ({ step = 0 }) => {
       </Progress>
 
       <Pulse background={secondStep.pulse}>
-        <Image width={25} height={25} stroke={secondStep.stroke} strokeWidth={2} />
+        <ImageSvg width={25} height={25} stroke={secondStep.stroke} strokeWidth={2} />
       </Pulse>
 
       <Progress progress={String(step === 2)}>

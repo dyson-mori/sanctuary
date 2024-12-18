@@ -33,43 +33,6 @@ export const Content = styled.form`
   height: 450px;
 `;
 
-export const Upload = styled.div`
-  display: flex;
-  position: absolute;
-
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  width: 50%;
-  /* height: 100%; */
-
-  overflow: hidden;
-
-  padding: 20px 40px;
-
-  transition: .5s;
-
-  label {
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    width: 400px;
-    height: 400px;
-
-    cursor: pointer;
-
-    background-color: #fff;
-
-    ${({ theme }) => css`
-      box-shadow: ${theme.box.shadow.default};
-      border-radius: ${theme.border.middle};
-    `};
-  };
-`;
-
 export const Form = styled.section`
   display: flex;
 
@@ -85,10 +48,15 @@ export const Footer = styled.footer`
   display: flex;
 
   justify-content: space-between;
+  align-items: center;
 
   width: 400px;
 
-  button {
+  p {
+    font-size: 12px;
+  }
+
+  button, p {
     display: flex;
 
     justify-content: center;
@@ -100,6 +68,6 @@ export const Footer = styled.footer`
 
     ${({ theme }) => css`
       color: ${theme.colors.text};
-    `}
-  }
+    `};
+  };
 `;

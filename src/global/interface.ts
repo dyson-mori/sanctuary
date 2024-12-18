@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import { Category, Creator, Post } from "@prisma/client";
 
 export interface PostProps extends Post {
