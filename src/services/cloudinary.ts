@@ -51,7 +51,7 @@ export const cloudinary = {
           resource_type: "auto",
           filename_override: fileName,
           use_filename: true,
-          folder: `community${folder ? '/' + folder : ''}`,
+          folder: `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER}${folder ? '/' + folder : ''}`,
       }
       );
 
