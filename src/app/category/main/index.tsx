@@ -55,7 +55,7 @@ export default function Categories({ categories, creators }: Props) {
           const find = !!selected.find(({ id }) => row.id === id);
 
           return (
-            <Button key={index} variant="select" disabled={row._count.post === 0} selected={find} style={{ height: 40 }} onClick={() => handleSelect(row)}>
+            <Button key={index} variant="select" disabled={row._count.post === 0} selected={find} style={{ height: 40, margin: 2, flexGrow: 1 }} onClick={() => handleSelect(row)}>
               {row?.name.replace('_', ' ')} - {row._count.post}
             </Button>
           )

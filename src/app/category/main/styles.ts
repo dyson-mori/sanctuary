@@ -6,9 +6,9 @@ export const Container = styled.main`
   justify-content: center;
   flex-wrap: wrap;
 
-  width: 100%;
+  width: auto;
 
-  padding: 5px 0;
+  padding: 5px;
 `;
 
 export const Footer = styled.footer`

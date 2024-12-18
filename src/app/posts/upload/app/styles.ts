@@ -7,6 +7,11 @@ export const Container = styled.form`
   align-items: center;
 
   height: 100%;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    height: 100%;
+  };
 `;
 
 export const Upload = styled.div`
@@ -23,6 +28,12 @@ export const Upload = styled.div`
 
   margin: 0 0 5px 0;
   padding: 20px 40px;
+
+  @media only screen and (max-width: 600px) {
+    width: 70%;
+    padding: 0px 40px;
+    height: auto;
+  };
 
   label {
     display: flex;
@@ -54,6 +65,11 @@ export const RightSide = styled.section`
   width: calc(100% / 3);
   height: 100%;
   padding: 0 100px;
+
+  @media only screen and (max-width: 600px) {
+    width: 92%;
+    height: auto;
+  };
 `;
 
 export const Div = styled.div`

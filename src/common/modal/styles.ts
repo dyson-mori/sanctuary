@@ -37,4 +37,8 @@ export const Content = styled.div`
   padding: 1em 2em;
 
   transition: .5s;
+
+  @media only screen and (max-width: 600px) {
+    margin: 10px;
+  };
 `;

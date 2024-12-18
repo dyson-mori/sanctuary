@@ -6,6 +6,10 @@ export const Container = styled.div`
   flex-direction: column;
 
   height: 100%;
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  };
 `;
 
 export const Title = styled.div`
