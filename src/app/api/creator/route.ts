@@ -32,6 +32,9 @@ export async function GET(request: NextRequest) {
   };
 
   const data = await prisma.creator.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    },
     include: {
       // _count: {
       //   select: {
