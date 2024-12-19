@@ -4,13 +4,15 @@ import { Container, Content } from "./styles";
 import { useClickOutside } from "@hooks";
 
 interface Props {
+  as?: 'form',
   open: boolean;
   onClickOutside: (b: boolean) => void;
   children: ReactNode;
   style?: CSSProperties;
+  onSubmit?: () => void;
 };
 
-export const Modal: FC<Props> = ({ open, onClickOutside, children, style }) => {
+export const Modal: FC<Props> = ({ open, onClickOutside, children, ...rest }) => {
   const contentRef = useRef(null);
 
   const content_style: CSSProperties = {
@@ -22,7 +24,7 @@ export const Modal: FC<Props> = ({ open, onClickOutside, children, style }) => {
 
   return (
     <Container style={content_style}>
-      <Content style={style} ref={contentRef}>
+      <Content ref={contentRef} {...rest}>
         {children}
       </Content>
     </Container>

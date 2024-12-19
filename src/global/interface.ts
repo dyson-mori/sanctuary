@@ -15,7 +15,7 @@ export interface CategoryProps extends Category {
 };
 
 export interface CreatorProps extends Creator {
-  posts: Post[];
+  post: PostProps[];
   _count: {
     post: number;
   };

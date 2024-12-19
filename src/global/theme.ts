@@ -18,7 +18,7 @@ export default {
   },
   font: {
     size: {
-      medium: '12px',
+      medium: '13px',
       large: '14px'
     },
     weight: {

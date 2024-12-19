@@ -82,7 +82,7 @@ export const Header: FC<HeaderProps> = ({ creators }) => {
         <Creator creators={creators} />
       </Modal>
 
-      <Modal open={modalSettings} onClickOutside={() => setModalSettings(false)}>
+      <Modal open={modalSettings} onClickOutside={() => setModalSettings(false)} style={{ padding: 50 }}>
         <Settings />
       </Modal>
     </Fragment>

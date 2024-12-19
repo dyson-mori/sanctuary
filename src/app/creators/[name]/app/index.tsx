@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Creator } from "@prisma/client";
 
-import { PostProps } from "@global/interface";
+import { CreatorProps } from "@global/interface";
 import { useWindowSize } from "@hooks";
 import { capitalizeFirstLetter } from "@utils";
 
@@ -13,11 +12,10 @@ import { Onlyfans, Twitter } from "@svg";
 import { Banner, Container, Content, Social } from "./styles";
 
 interface Props {
-  creator: Creator;
-  posts: PostProps[];
+  creator: CreatorProps;
 };
 
-export default function Main({ creator, posts }: Props) {
+export default function Main({ creator }: Props) {
   const { width, height } = useWindowSize();
 
   return (
@@ -56,7 +54,7 @@ export default function Main({ creator, posts }: Props) {
       </Options> */}
 
       <Content>
-        <Masonry posts={posts} navigate={console.log} />
+        <Masonry posts={creator.post} navigate={console.log} />
       </Content>
 
     </Container>

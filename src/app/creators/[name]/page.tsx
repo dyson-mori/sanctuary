@@ -25,15 +25,14 @@ export async function generateMetadata(
     description: product.description,
     openGraph: {
       images: ['/some-specific-page-image.jpg', ...previousImages],
-    },
-  }
-}
+    }
+  };
+};
 
 export default async function CreatorName({ params }: Props) {
   const { name } = await params;
 
   const creator = await api.creator.find(name);
-  const posts = await api.posts.list();
 
-  return <App creator={creator} posts={posts} />;
+  return <App creator={creator} />;
 }

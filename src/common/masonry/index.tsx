@@ -1,4 +1,4 @@
-import { useWindowSize } from "@hooks";
+import { useStorage, useWindowSize } from "@hooks";
 
 import { PostVideo } from "./_components/video";
 
@@ -15,6 +15,7 @@ export interface MasonryProps {
 };
 
 export function Masonry({ posts, navigate }: { posts: MasonryProps[], navigate(name: string): void }) {
+  const [storage] = useStorage('@preview-videos', true);
   const size = useWindowSize();
 
   const dimension = size.width <= 600 ? 2 : 6;
@@ -22,7 +23,7 @@ export function Masonry({ posts, navigate }: { posts: MasonryProps[], navigate(n
   return Array.from({ length: dimension }).map((_, index) => (
     <Column key={index}>
       {posts.map((row, i) => i % dimension === index &&
-        <PostVideo key={i} post={row} size={size} navigate={navigate} />
+        <PostVideo show={storage} key={i} post={row} size={size} navigate={navigate} />
       )}
     </Column>
   ))

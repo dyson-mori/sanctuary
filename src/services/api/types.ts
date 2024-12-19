@@ -12,7 +12,7 @@ export type ApiProps = {
   };
   creator: {
     list: () => Promise<CreatorProps[]>;
-    find: (name: string) => Promise<Creator>;
+    find: (name: string) => Promise<CreatorProps>;
     create: (body: Omit<Creator, 'id' | 'updatedAt' | 'createdAt' | 'public'>) => Promise<boolean>
   };
   search: {

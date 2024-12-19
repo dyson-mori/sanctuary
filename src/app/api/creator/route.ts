@@ -15,8 +15,9 @@ export async function GET(request: NextRequest) {
       },
       include: {
         post: {
-          select: {
-            categories: true
+          include: {
+            categories: true,
+            creator: true
           }
         }
       }
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     const row = {
       ...data,
-      post: undefined,
+      // post: undefined,
       tags: [...new Set(data?.post.map(row => row.categories.map(item => item.name)).flat())]
     };
 
