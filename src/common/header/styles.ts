@@ -8,8 +8,8 @@ export const Container = styled.header`
   padding: 0 25px;
 
   ${({ theme }) => css`
-    background-color: ${theme.colors.white};
-    box-shadow: ${theme.box.shadow.header};
+    background-color: ${theme.header.background};
+    box-shadow: ${theme.header.box_shadow};
   `};
 
   @media only screen and (max-width: 600px) {
@@ -26,7 +26,6 @@ export const Logo = styled.div`
   width: 50px;
   height: 50px;
 
-  /* margin-left: 20px; */
   margin-right: 50px;
 
   @media only screen and (max-width: 600px) {
@@ -42,15 +41,15 @@ export const Nav = styled.nav`
   height: 50px;
 
   width: 100%;
+
+  ${({ theme }) => css`
+    a {
+      padding: 10px;
+      font-size: 13px;
+      text-decoration: none;
+    };
+  `};
   
-  a {
-    padding: 10px;
-    font-family: var(--font-montserrat);
-    color: #707070;
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-  };
 
   @media only screen and (max-width: 600px) {
     a {
@@ -73,6 +72,4 @@ export const Button = styled.button`
 
   width: 50px;
   height: 50px;
-
-  /* margin-right: 20px; */
 `;

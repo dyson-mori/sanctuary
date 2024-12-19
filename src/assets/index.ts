@@ -17,6 +17,8 @@ import { ReactComponent as Image } from './image.svg';
 import { ReactComponent as Description } from './description.svg';
 import { ReactComponent as ArrowDown } from './arrow-down.svg';
 import { ReactComponent as Sun } from './sun.svg';
+import { ReactComponent as Check } from './check.svg';
+import { ReactComponent as Link } from './link.svg';
 
 export {
   Add,
@@ -37,5 +39,7 @@ export {
   Description,
   ArrowDown,
   AddUser,
-  Sun
+  Sun,
+  Check,
+  Link
 }

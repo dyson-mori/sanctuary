@@ -3,12 +3,15 @@
 import { Montserrat, Montserrat_Alternates, My_Soul } from "next/font/google";
 import { ThemeProvider } from "styled-components";
 
+import { useStorage } from "@hooks";
 import themes from "@global/theme";
 import Global from "@global/styles";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const [storage] = useStorage('@dark-mode', false);
+
   return (
-    <ThemeProvider theme={themes}>
+    <ThemeProvider theme={themes[storage ? 'dark' : 'light']}>
 
       <html lang="en">
         <body className={`${montserrat.variable} ${montserrat_alternates.variable} ${my_soul.variable}`}>

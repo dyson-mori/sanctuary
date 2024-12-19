@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { ArrowLeft, ArrowRight, User, Upload as UplaodStyled, Description } from "@svg";
 import { CategoryProps } from "@global/interface";
 import { api, cloudinary } from "@services";
-import { Input, Proccess, Upload } from "@common";
+import { Input, Notification, Proccess, Upload } from "@common";
 
 import { Container, Content, Footer, Form } from "./styles";
 import { steps } from "./constants";
@@ -162,6 +162,8 @@ export default function AppUpload({ }: Props) {
           )}
         </button>
       </Footer>
+
+      {/* <Notification show /> */}
 
     </Container>
   )

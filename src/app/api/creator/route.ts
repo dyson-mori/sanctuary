@@ -33,6 +33,9 @@ export async function GET(request: NextRequest) {
   };
 
   const data = await prisma.creator.findMany({
+    where: {
+      public: true
+    },
     orderBy: {
       createdAt: 'desc'
     },
