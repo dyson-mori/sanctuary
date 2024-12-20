@@ -18,18 +18,12 @@ export const Notification: FC<Props> = ({ show, url }) => {
   const route = useRouter();
 
   const styles: CSSProperties = {
-    bottom: open ? 20 : -200
+    bottom: show ? 20 : -200
   };
 
   function handleLink() {
     route.push('')
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setOpen(false)
-    }, 3000);
-  }, [show]);
 
   return (
     <Container style={styles}>

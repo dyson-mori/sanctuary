@@ -113,6 +113,8 @@ export async function DELETE(request: NextRequest) {
     }
   });
 
+  // delete file here
+
   if (!admin.id) {
     return NextResponse.json(false, { status: 401, statusText: 'this post cannot deleted' })
   }

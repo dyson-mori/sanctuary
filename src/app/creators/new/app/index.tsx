@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useTheme } from "styled-components";
 
@@ -37,24 +37,24 @@ export default function AppUpload({ }: Props) {
   });
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [message, setMessage] = useState<string | null>(null);
+  const [notification, setNotification] = useState(false);
 
   const theme = useTheme();
 
   const processForm: SubmitHandler<schemaProps> = async (data: schemaProps) => {
-    setMessage('enviando');
+    // setMessage('enviando');
 
     try {
       const video = await cloudinary.upload(data.file_video!, data.name!, "creator");
 
       if (video.public_id) {
-        setMessage('video salvo com sucesso');
+        // setMessage('video salvo com sucesso');
       };
 
       const image = await cloudinary.uploadImage(data.file_image!, data.name!, "creator");
 
       if (image.public_id) {
-        setMessage('image salva com sucesso');
+        // setMessage('image salva com sucesso');
       };
 
       await api.creator.create({
@@ -65,7 +65,7 @@ export default function AppUpload({ }: Props) {
         name: data.name!,
         photo: image.url_pre_image,
         description: data.description!,
-      }).then(() => setMessage('formulário salvo com sucesso'))
+      }).then(() => setNotification(true))
 
     } catch (error) {
       console.log(error);
@@ -82,6 +82,16 @@ export default function AppUpload({ }: Props) {
 
     return setCurrentStep(step => step + 1);
   };
+
+  useEffect(() => {
+    if (!notification) return;
+
+    setNotification(true);
+
+    setTimeout(() => {
+      setNotification(false);
+    }, 2000);
+  }, [notification]);
 
   return (
     <Container>
@@ -141,7 +151,7 @@ export default function AppUpload({ }: Props) {
           back
         </button>
 
-        <p>{message}</p>
+        {/* <p>{message}</p> */}
 
         <button
           style={{
@@ -163,7 +173,7 @@ export default function AppUpload({ }: Props) {
         </button>
       </Footer>
 
-      {/* <Notification show /> */}
+      <Notification show={notification} />
 
     </Container>
   )
