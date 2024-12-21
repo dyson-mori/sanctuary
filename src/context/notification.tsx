@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useState } from 'react';
 
 interface NotificationProps {
   notification: boolean;
@@ -9,7 +9,7 @@ export const NotificationContext = createContext({} as NotificationProps);
 
 const Notification: React.FC<{ children: ReactNode }> = ({ children }) => {
 
-  const [state, setState] = useState<any>(() => {
+  const [state] = useState(() => {
     const storageValue = typeof window !== "undefined" ? localStorage.getItem('@marks: cart') : false;
 
     if (storageValue) {

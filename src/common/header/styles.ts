@@ -42,13 +42,11 @@ export const Nav = styled.nav`
 
   width: 100%;
 
-  ${({ theme }) => css`
     a {
       padding: 10px;
       font-size: 13px;
       text-decoration: none;
     };
-  `};
   
 
   @media only screen and (max-width: 600px) {

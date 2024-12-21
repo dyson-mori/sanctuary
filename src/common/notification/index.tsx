@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useEffect, useState } from "react";
+import { CSSProperties, FC } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "styled-components";
 
@@ -12,8 +12,6 @@ interface Props {
 };
 
 export const Notification: FC<Props> = ({ show, url }) => {
-  const [open, setOpen] = useState(show);
-
   const theme = useTheme();
   const route = useRouter();
 

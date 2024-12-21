@@ -8,12 +8,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as yup from "yup";
 
-import { ArrowLeft, ArrowRight, User, Upload as UplaodSvg, Description, Link } from "@svg";
+import { User, Upload as UplaodSvg, Description } from "@svg";
 import { CategoryProps } from "@global/interface";
 import { api, cloudinary } from "@services";
-import { Button, Input, Notification, Proccess, Upload } from "@common";
+import { Button, Input, Notification, Upload } from "@common";
 
-import { Container, Content, Footer, Form } from "./styles";
+import { Container, Content } from "./styles";
 import { steps } from "./constants";
 
 interface Props {
@@ -33,7 +33,7 @@ type schemaProps = yup.InferType<typeof schema>;
 type FieldName = keyof schemaProps;
 
 export default function AppUpload({ }: Props) {
-  const { control, handleSubmit, trigger, formState: { isSubmitting, isValid, isDirty } } = useForm({
+  const { control, handleSubmit, trigger } = useForm({
     resolver: yupResolver(schema)
   });
 
