@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { Creator } from "@prisma/client";
 
-import { prisma } from "@services";
+import { cloudinary, prisma } from "@services";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
 };
 
 export async function POST(request: NextRequest) {
-  const { name, photo, description, social_media, width, height, url_pre_video } = await request.json() as Creator;
+  const { name, photo, description, social_media, width, height, url_pre_video, public_id } = await request.json() as Creator;
 
   const post = await prisma.creator.create({
     data: {
@@ -73,6 +73,7 @@ export async function POST(request: NextRequest) {
       width,
       url_pre_video,
       social_media: social_media.toString(),
+      public_id
     }
   });
 
@@ -118,5 +119,14 @@ export async function DELETE(request: NextRequest) {
     }
   });
 
-  return NextResponse.json(remove, { status: 201, statusText: 'deleted' })
+  if (!remove!.id) {
+    return NextResponse.json(false, { status: 401, statusText: 'failed when trying to delete' })
+  };
+
+  const publics_id = JSON.parse(remove!.public_id);
+
+  const vid = await cloudinary.destroy(publics_id.public_video_id, "video");
+  const img = await cloudinary.destroy(publics_id.public_image_id, 'image');
+
+  return NextResponse.json({ img: img.result, vid: vid.result }, { status: 201, statusText: 'deleted' })
 };

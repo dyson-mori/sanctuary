@@ -44,7 +44,8 @@ export const cloudinary = {
     }
   },
   uploadImage: async (fileUri: string, fileName: string, folder?: 'creator' | null) => {
-    const { secure_url, width, height, public_id } = await v2.uploader
+    const data = await v2.uploader
+    // const { secure_url, width, height, public_id } = await v2.uploader
       .upload(
         fileUri, {
           invalidate: true,
@@ -56,17 +57,22 @@ export const cloudinary = {
       );
 
     const url_pre_image =
-      secure_url
+      data.secure_url
         .replace('https://res.cloudinary.com/dyrtdrnky/image/upload/', '')
         .replace('png', 'webp')
         .replace('jpg', 'webp')
 
     return {
-      secure_url,
-      width,
-      height,
-      public_id,
+      secure_url: data.secure_url,
+      width: data.width,
+      height: data.height,
+      public_id: data.public_id,
       url_pre_image,
     }
+  },
+
+  destroy: async (fileUri: string, type: 'image' | 'video') => {
+    const data = await v2.uploader.destroy(fileUri, { resource_type: type });
+    return data;
   }
-}
+};
