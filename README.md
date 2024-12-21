@@ -7,20 +7,20 @@ sanctuary will be an open source project for the community
   git remote add origin git@github.com:dyson-mori/sanctuary.git <br />
   git push -u origin <branch>
 
+  https://github.com/iuricode/padroes-de-commits
+
   icons: <br />
     - ✏️ `:pencil2:` <br />
     - 📦 `:package:` add new package <br />
     - 🛠️	`:hammer_and_wrench:` <br />
     - 🧪 `:test_tube:` <br />
     - ✨ `:sparkles:` new feature <br />
-    - 🔨 `:hammer:` refactor <br />
+    - ♻️ `:recycle:` refactor <br />
     - 💥 `:boom:` <br />
     - 🚧 `:construction:` <br />
 
-    
-    https://supabase.com/
-    
-    https://github.com/iuricode/padroes-de-commits
+## Front Deploy
+  https://render.com/
 
 ## Docker
   docker images

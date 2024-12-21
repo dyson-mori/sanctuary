@@ -22,6 +22,11 @@ export async function GET() {
   // };
 
   const post = await prisma.post.findMany({
+    where: {
+      creator: {
+        public: true
+      }
+    },
     orderBy: {
       createdAt: 'desc',
     },
@@ -107,6 +112,8 @@ export async function DELETE(request: NextRequest) {
       id: post_id!
     }
   });
+
+  // delete file here
 
   if (!admin.id) {
     return NextResponse.json(false, { status: 401, statusText: 'this post cannot deleted' })

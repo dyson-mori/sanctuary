@@ -24,6 +24,7 @@ model Creator {
   height        Int
   url_pre_video String
   social_media  String
+  public_id     String  @default("{}")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

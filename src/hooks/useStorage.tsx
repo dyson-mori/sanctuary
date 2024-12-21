@@ -5,7 +5,7 @@ type Response = [
   Dispatch<SetStateAction<boolean>>
 ];
 
-export function useStorage<T>(key: '@preview-videos', initialState: T): Response {
+export function useStorage<T>(key: '@preview-videos' | '@dark-mode', initialState: T): Response {
   const [state, setState] = useState(() => {
     if (typeof window === "undefined") return;
 

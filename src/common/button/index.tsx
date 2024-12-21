@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, CSSProperties } from 'react';
+import { useTheme } from 'styled-components';
 
 import { Container, Loading } from './styles';
-import theme from '../../global/theme';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'select';
@@ -10,6 +10,8 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', selected, loading, style, ...rest }) => {
+  const theme = useTheme();
+
   const styles = {
     primary: {
       backgroundColor: theme.colors.primary,

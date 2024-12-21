@@ -22,15 +22,47 @@ export const Container = styled.main`
 `;
 
 export const Content = styled.form`
-  position: relative;
-
   display: flex;
 
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
 
-  width: 100%;
-  height: 450px;
+  width: 400px;
+
+  padding: 20px;
+
+  .header {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 10px;
+  };
+
+  .header > .label {
+    padding: 0 15px;
+
+    > h4 {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+  }
+
+  ${({ theme }) => css`
+    background-color: ${theme.colors.white};
+    border-radius: ${theme.border.large};
+    box-shadow: ${theme.box.shadow.input};
+
+    h4 {
+      color: ${theme.colors.dark_charcoal};
+    };
+
+    p {
+      color: ${theme.colors.philippine_gray};
+      font-size: ${theme.font.size.large};
+    }
+  `};
 `;
 
 export const Form = styled.section`
