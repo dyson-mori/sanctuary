@@ -11,9 +11,6 @@ export interface MasonryTProps {
   width: number;
   height: number;
   id: string;
-  creator: {
-    nickname: string;
-  };
 };
 
 interface MasonryProps {

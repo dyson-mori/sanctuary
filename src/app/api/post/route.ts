@@ -27,11 +27,6 @@ export async function GET() {
   // });
 
   const post = await prisma.post.findMany({
-    // where: {
-    //   creator: {
-    //     public: true
-    //   }
-    // },
     orderBy: {
       createdAt: 'desc',
     },

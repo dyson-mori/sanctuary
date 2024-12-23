@@ -15,11 +15,6 @@ export type ApiProps = {
     list: () => Promise<PostProps[]>;
     create: (body: CreatePostProps) => Promise<boolean>;
   };
-  // creator: {
-  //   list: () => Promise<CreatorProps[]>;
-  //   find: (name: string) => Promise<CreatorProps>;
-  //   create: (body: Omit<Creator, 'id' | 'updatedAt' | 'createdAt' | 'public'>) => Promise<boolean>
-  // };
   search: {
     list: () => Promise<PostProps[]>;
   };

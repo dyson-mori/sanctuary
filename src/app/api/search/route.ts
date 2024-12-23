@@ -52,15 +52,6 @@ export async function GET() {
     //   }
     // },
     include: {
-      creator: {
-        select: {
-          id: true,
-          nickname: true,
-          cloudinary_photo: true,
-          public: true,
-          description: true,
-        }
-      },
       categories: {
         select: {
           name: true
