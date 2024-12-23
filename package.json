@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma db push && next build",
-    "start": "npx prisma db push && next start",
+    "build": "npx prisma db push --force-reset && next build",
+    "start": "npx prisma db push --force-reset && next start",
     "lint": "next lint"
   },
   "dependencies": {
