@@ -76,7 +76,7 @@ export default function Authentication() {
         />
         <div style={{ height: 10 }} />
 
-        <Link href='/register' style={{ textAlign: 'end', width: '100%' }}>I don't have an account yet</Link>
+        <Link href='/register' style={{ textAlign: 'end', width: '100%' }}>I dont have an account yet</Link>
 
         <div style={{ height: 5 }} />
 

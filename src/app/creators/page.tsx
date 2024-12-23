@@ -2,8 +2,6 @@ import { Suspense } from "react";
 
 import type { Metadata } from "next";
 
-import { api } from "@services";
-
 import App from "./app";
 
 export const metadata: Metadata = {

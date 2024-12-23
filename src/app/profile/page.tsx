@@ -13,13 +13,12 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   const users = await api.user.list();
-  const posts = await api.post.list();
   const user = await api.auth.find();
   const category = await api.category.list();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <App user={user} users={users} category={category} posts={posts} />
+      <App user={user} users={users} category={category} />
     </Suspense>
   );
 }

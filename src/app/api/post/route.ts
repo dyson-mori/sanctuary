@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { Post } from "@prisma/client";
+import { Hide, Post } from "@prisma/client";
 
 import { prisma } from "@services";
 
 interface PostsProps extends Post {
+  hide: Hide[];
   categories: {
     id: string;
   }[];
@@ -19,11 +20,11 @@ export async function GET() {
   //   return NextResponse.json(false, { status: 404, statusText: 'session not found!' });
   // };
 
-  const verifys = await prisma.user.findFirst({
-    where: {
-      id: token?.value ?? undefined
-    }
-  });
+  // const verifys = await prisma.user.findFirst({
+  //   where: {
+  //     id: token?.value ?? undefined
+  //   }
+  // });
 
   const post = await prisma.post.findMany({
     // where: {
@@ -127,14 +128,13 @@ export async function PUT(request: NextRequest) {
   const url = new URL(request.url);
   const post_id = url.searchParams.get("postId");
 
-  const { cloudinary_video, categories } = await request.json() as PostsProps;
+  const { categories } = await request.json() as PostsProps;
 
   const update = await prisma.post.update({
     where: {
       id: post_id!
     },
     data: {
-      cloudinary_video,
       categories: {
         connect: categories.map(({ id }) => ({ id }))
       }

@@ -2,25 +2,22 @@
 
 import Image from "next/image";
 
-import { User } from "@prisma/client";
-import { CategoryProps, PostProps, UserProps } from "@global/interface";
+import { CategoryProps, UserProps } from "@global/interface";
 import { useWindowSize } from "@hooks";
 import { capitalizeFirstLetter } from "@utils";
-
 import { Masonry } from "@common";
 
 import Register from "../_components/register";
 
-import { Banner, Container, Options, Article, Content } from "./styles";
+import { Banner, Container, Article, Content } from "./styles";
 
 interface Props {
-  user: User;
+  user: UserProps;
   users: UserProps[];
   category: CategoryProps[];
-  posts: PostProps[];
 };
 
-export default function AppProfile({ user, users, category, posts }: Props) {
+export default function AppProfile({ user, users, category }: Props) {
   const { width, height } = useWindowSize();
 
   return (

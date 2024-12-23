@@ -4,7 +4,7 @@ export interface PostProps extends Post {
   categories: CategoryProps[];
   hide: boolean | Array<Hide>;
   // category: Category;
-  user: User;
+  user: UserProps;
 };
 
 export interface CategoryProps extends Category {

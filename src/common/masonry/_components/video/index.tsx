@@ -1,6 +1,5 @@
-import React, { use, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import { MasonryTProps } from '../..';
 import { Container, Footer } from './styles';
 
 import { PostProps } from '@global/interface';

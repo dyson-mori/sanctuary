@@ -1,8 +1,7 @@
 "use client"
 
-import { FC, Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 import { useTheme } from 'styled-components';
@@ -14,11 +13,10 @@ import { Container, Option, Tag, Button } from './styles';
 import { UserProps } from '@global/interface';
 
 interface ModalProps {
-  users: UserProps[]
+  users: UserProps[];
 };
 
 export default function Creator({ users }: ModalProps) {
-  const route = useRouter();
   const theme = useTheme();
 
   const [search, setSearch] = useState('');
@@ -26,7 +24,7 @@ export default function Creator({ users }: ModalProps) {
 
   const filter = users.filter(f => f.nickname.includes(search.toLowerCase()));
 
-  function handleCreator(name: string) {
+  function handleCreator() {
     // route.push(`/creators/${name}`)
   };
 
@@ -48,7 +46,7 @@ export default function Creator({ users }: ModalProps) {
             filter.map((row, index) => {
               // const image = JSON.parse(row.cloudinary_photo);
               return (
-                <Option key={index} onClick={() => handleCreator(row.nickname)}>
+                <Option key={index} onClick={() => handleCreator()}>
                   <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + row.photo} width={50} height={50} alt={index.toString()} />
                   <div className='sides'>
                     <div className='upside'>
