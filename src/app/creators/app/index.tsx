@@ -18,7 +18,6 @@ export default function Post({ creators }) {
     <>
       <Container>
         <Masonry posts={creators} navigate={navigate} />
-
       </Container>
     </>
   );

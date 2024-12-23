@@ -8,7 +8,7 @@ export type ApiProps = {
     list: () => Promise<UserProps[]>;
   },
   auth: {
-    find: () => Promise<User>;
+    find: () => Promise<UserProps>;
     auth: (body: Pick<User, 'nickname' | 'password'>) => Promise<string | null>;
   },
   post: {

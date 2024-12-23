@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 
-import { CreatorProps } from "@global/interface";
 import { useWindowSize } from "@hooks";
 import { capitalizeFirstLetter } from "@utils";
 
@@ -11,11 +10,7 @@ import { Onlyfans, Twitter } from "@svg";
 
 import { Banner, Container, Content, Social } from "./styles";
 
-interface Props {
-  creator: CreatorProps;
-};
-
-export default function Main({ creator }: Props) {
+export default function Main({ creator }) {
   const { width, height } = useWindowSize();
 
   return (

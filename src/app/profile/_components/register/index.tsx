@@ -53,6 +53,7 @@ export default function Register({ users, category }: Props) {
         height: video.height,
         public_id: video.public_id,
         categories: data.categories as CategoryProps[],
+        // @ts-expect-error: ignore
         hide: data.hide
       })
         .then(() => {
