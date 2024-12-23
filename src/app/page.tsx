@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Posts() {
-  const post = await api.posts.list();
+  const post = await api.post.list();
   const users = await api.user.list();
   const user = await api.auth.find();
 

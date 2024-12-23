@@ -1,23 +1,28 @@
 "use client"
 
-import { FC, useState } from 'react';
+import { FC, Fragment, useState } from 'react';
+
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import { Input } from '@common';
+import { useTheme } from 'styled-components';
+
+import { Input, Modal } from '@common';
 import { Search } from '@svg';
 
-import { Container, Option, Tag } from './styles';
+import { Container, Option, Tag, Button } from './styles';
 import { UserProps } from '@global/interface';
-import { useRouter } from 'next/navigation';
 
 interface ModalProps {
   users: UserProps[]
 };
 
-export const Creator: FC<ModalProps> = ({ users }) => {
+export default function Creator({ users }: ModalProps) {
   const route = useRouter();
+  const theme = useTheme();
 
   const [search, setSearch] = useState('');
+  const [modal, setModal] = useState(false);
 
   const filter = users.filter(f => f.nickname.includes(search.toLowerCase()));
 
@@ -26,33 +31,40 @@ export const Creator: FC<ModalProps> = ({ users }) => {
   };
 
   return (
-    <Container>
-      <Input icon={Search} placeholder='search about...' width='full' onChange={evt => setSearch(evt.target.value)} />
-      <Tag>
-        <span />
-        <p>Creators</p>
-        <span />
-      </Tag>
-      {
-        filter.map((row, index) => {
-          // const image = JSON.parse(row.cloudinary_photo);
-          return (
-            <Option key={index} onClick={() => handleCreator(row.nickname)}>
-              <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + row.photo} width={50} height={50} alt={index.toString()} />
-              <div className='sides'>
-                <div className='upside'>
-                  <p>{row.nickname}</p>
-                </div>
-                <div className='downside'>
-                  <p>row.description</p>
-                  <p>{row._count.post} posts</p>
-                </div>
-              </div>
-            </Option>
-          )
-        })
-      }
+    <Fragment>
+      <Button onClick={() => setModal(true)}>
+        <Search width={22} height={22} stroke={theme.colors.primary} strokeWidth={1.5} />
+      </Button>
 
-    </Container>
+      <Modal open={modal} onClickOutside={setModal}>
+        <Container>
+          <Input icon={Search} placeholder='search about...' width='full' onChange={evt => setSearch(evt.target.value)} />
+          <Tag>
+            <span />
+            <p>Creators</p>
+            <span />
+          </Tag>
+          {
+            filter.map((row, index) => {
+              // const image = JSON.parse(row.cloudinary_photo);
+              return (
+                <Option key={index} onClick={() => handleCreator(row.nickname)}>
+                  <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + row.photo} width={50} height={50} alt={index.toString()} />
+                  <div className='sides'>
+                    <div className='upside'>
+                      <p>{row.nickname}</p>
+                    </div>
+                    <div className='downside'>
+                      <p>row.description</p>
+                      <p>{row._count.post} posts</p>
+                    </div>
+                  </div>
+                </Option>
+              )
+            })
+          }
+        </Container>
+      </Modal>
+    </Fragment>
   )
 };

@@ -43,11 +43,16 @@ export default function Register({ users, category }: Props) {
     try {
       const video = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
 
-      await api.posts.create({
+      await api.post.create({
         title: data.title,
         description: data.description,
+        pre_image: video.pre_image,
+        pre_video: video.pre_video,
+        url_video: video.url_video,
+        width: video.width,
+        height: video.height,
+        public_id: video.public_id,
         categories: data.categories as CategoryProps[],
-        cloudinary_video: JSON.stringify(video),
         hide: data.hide
       })
         .then(() => {

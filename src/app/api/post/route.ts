@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { Post } from "@prisma/client";
 
 import { prisma } from "@services";
-import { convertUrlToBlob } from "@utils";
 
 interface PostsProps extends Post {
   categories: {
@@ -19,6 +18,12 @@ export async function GET() {
   // if (!session_id) {
   //   return NextResponse.json(false, { status: 404, statusText: 'session not found!' });
   // };
+
+  const verifys = await prisma.user.findFirst({
+    where: {
+      id: token?.value ?? undefined
+    }
+  });
 
   const post = await prisma.post.findMany({
     // where: {
@@ -49,17 +54,20 @@ export async function GET() {
     }
   });
 
-  const find_to_hide = post.map((row) => ({
-    ...row,
-    // cloudinary_video: JSON.stringify(
-    //   JSON.parse(row.cloudinary_video)
-    // ),
-    // url: await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/v1734896528/community/luna_chainz_d5becs.mp4'),
-    hide: row.hide.find(r => {
+  const find_to_hide = post.map((row) => {
+    const verify = row.hide.find(r => {
       if (r.user_id === token?.value) return true;
-      if (!token && r.user_id) return true;
-    })
-  }))
+      if (!token?.value && r.user_id) return true;
+
+      return false
+    });
+
+    return {
+      ...row,
+      url_video: verify?.id ? 'so_0.001/e_blur:800,c_fit,h_700,w_700/c_pad/q_auto:low/' + row.url_video : row.url_video,
+      hide: !!verify
+    }
+  })
 
   return NextResponse.json(find_to_hide, { status: 201, statusText: 'done' });
 };
@@ -68,7 +76,7 @@ export async function POST(request: NextRequest) {
   const cookie = await cookies();
   const token = cookie.get('auth-token');
 
-  const { title, description, categories, cloudinary_video, hide } = await request.json() as PostsProps;
+  const { title, description, categories, pre_image, pre_video, url_video, width, height, public_id, hide } = await request.json() as PostsProps;
 
   if (!token) {
     return NextResponse.json(false, { status: 401, statusText: 'token' })
@@ -89,7 +97,12 @@ export async function POST(request: NextRequest) {
       title,
       description,
       user_id: token!.value,
-      cloudinary_video,
+      pre_image,
+      pre_video,
+      url_video,
+      width,
+      height,
+      public_id,
       categories: {
         connect: categories.map(({ id }) => ({ id }))
       },

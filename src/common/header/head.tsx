@@ -1,11 +1,9 @@
-import { FC, Fragment, Suspense } from 'react';
+import { Fragment } from 'react';
 
 import Link from 'next/link';
 
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'styled-components';
-
-import { UserProps } from '@global/interface';
 
 import { Logo } from '@svg';
 
@@ -29,19 +27,14 @@ const links = [
   // }
 ];
 
-interface Props {
-  user: UserProps;
-  users: UserProps[];
-};
-
-export const Header: FC<Props> = ({ user, users }) => {
+export const Head = () => {
   const theme = useTheme();
   const path = usePathname();
 
   const hide = path.includes('/s') || path.includes('/upload');
 
   return !hide && (
-    <Suspense fallback={<>load</>}>
+    <Fragment>
       <Container>
         <LogoStyled>
           <Logo width={30} height={30} stroke={theme.colors.primary} strokeWidth={15} />
@@ -64,10 +57,10 @@ export const Header: FC<Props> = ({ user, users }) => {
           }
         </Nav>
 
-        <Users users={users} />
-        <Settings user={user} />
+        <Users users={[]} />
+        <Settings user={{ nickname: 'dyson', photo: 'v1734808334/community/users/3afeaec84f4c0bd40fb5a891a7e96edf_apysrz_xfq0rj.jpg' }} />
       </Container>
 
-    </Suspense>
+    </Fragment>
   )
 };

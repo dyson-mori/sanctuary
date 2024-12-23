@@ -16,11 +16,15 @@ datasource db {
 model User {
   id String @id @unique @default(uuid())
 
-  firstname String
-  lastname  String
-  nickname  String
+  firstname String  @db.Char(20)
+  lastname  String  @db.Char(20)
+  nickname  String  @unique @db.Char(20)
   password  String
-  photo     String
+  photo     String?
+  banner    String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   // creator Creator?
   post Post[]
@@ -54,21 +58,29 @@ model Post {
   id      String @id @unique @default(uuid())
   user_id String
 
-  title            String
-  description      String @db.Char(80)
-  cloudinary_video String @default("{}")
+  title       String @db.Char(40)
+  description String @db.Char(80)
+  width       Int
+  height      Int
+  pre_video   String
+  pre_image   String
+  url_video   String
+  public_id   String
+
+  // cloudinary_video String @default("{}")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  like       Like[]
-  save       Save[]
-  view       View[]
+  // like       Like[]
+  // save       Save[]
+  // view       View[]
   hide       Hide[]
   categories Category[]
-  user       User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@map("post")
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("posts")
 }
 
 model Category {
@@ -91,6 +103,7 @@ model Hide {
   user_id String
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   user User @relation(fields: [user_id], references: [id])
@@ -106,7 +119,7 @@ model View {
 
   createdAt DateTime @default(now())
 
-  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   // user User @relation(fields: [user_id], references: [id])
 
   @@index([post_id])
@@ -120,7 +133,7 @@ model Like {
 
   createdAt DateTime @default(now())
 
-  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   // user User @relation(fields: [user_id], references: [id])
 
   @@index([post_id])
@@ -134,7 +147,7 @@ model Save {
 
   createdAt DateTime @default(now())
 
-  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   // user User @relation(fields: [user_id], references: [id])
 
   @@index([post_id])

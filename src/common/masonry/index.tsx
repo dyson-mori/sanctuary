@@ -5,7 +5,7 @@ import { PostVideo } from "./_components/video";
 import { Column } from "./styles";
 import { PostProps } from "@global/interface";
 
-export interface MasonryProps {
+export interface MasonryTProps {
   cloudinary_photo: string;
   cloudinary_video: string;
   width: number;
@@ -16,7 +16,12 @@ export interface MasonryProps {
   };
 };
 
-export function Masonry({ posts, navigate }: { posts: PostProps[], navigate(name: string): void }) {
+interface MasonryProps {
+  posts: PostProps[];
+  navigate(name: string): void;
+};
+
+export function Masonry({ posts, navigate }: MasonryProps) {
   const [storage] = useStorage('@preview-videos', true);
   const size = useWindowSize();
 

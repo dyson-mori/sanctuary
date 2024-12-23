@@ -18,22 +18,27 @@ export const cloudinary = {
         use_filename: true,
       });
 
-    // const url_pre_image =
-    //   secure_url
-    //     .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', '')
-    //     .replace('mp4', 'webp');
+    const pre_image =
+      upload.secure_url
+        .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', '')
+        .replace('mp4', 'webp');
 
-    // const url_pre_video =
-    //   secure_url
-    //     .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', 'du_2.0/')
-    //     .replace('mp4', 'webm');
+    const pre_video =
+      upload.secure_url
+        .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', 'du_2.0/')
+        .replace('mp4', 'webm');
 
-    // const url_video =
-    //   secure_url
-    //     .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', '')
-    //     .replace('mp4', 'webm');
+    const url_video =
+      upload.secure_url
+        .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', '')
+        .replace('mp4', 'webm');
 
-    return upload;
+    return {
+      ...upload,
+      pre_image,
+      pre_video,
+      url_video
+    };
   },
 
   uploadImage: async (fileUri: string, fileName: string, folder?: 'creator' | null) => {

@@ -1,9 +1,7 @@
 import { Category, User } from "@prisma/client";
 import { CategoryProps, PostProps, UserProps } from "@global/interface";
 
-type CreateBodyProps = Pick<PostProps, 'title' | 'description' | 'cloudinary_video' | 'hide'> & {
-  categories: { id: string, name: string }[]
-};
+type CreatePostProps = Omit<PostProps, 'updatedAt' | 'createdAt' | 'id' | 'user' | 'user_id'>;
 
 export type ApiProps = {
   user: {
@@ -13,9 +11,9 @@ export type ApiProps = {
     find: () => Promise<User>;
     auth: (body: Pick<User, 'nickname' | 'password'>) => Promise<string | null>;
   },
-  posts: {
+  post: {
     list: () => Promise<PostProps[]>;
-    create: (body: CreateBodyProps) => Promise<boolean>;
+    create: (body: CreatePostProps) => Promise<boolean>;
   };
   // creator: {
   //   list: () => Promise<CreatorProps[]>;

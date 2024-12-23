@@ -10,7 +10,7 @@ export const api: ApiProps = {
     find: () => fetcher({ url: '/auth', method: 'GET' }),
     auth: (body) => fetcher({ url: '/auth', method: 'POST', body })
   },
-  posts: {
+  post: {
     list: () => fetcher({ url: '/post', method: 'GET' }),
     create: (body) => fetcher({ url: '/post', method: 'POST', body }),
   },

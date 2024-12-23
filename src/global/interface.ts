@@ -1,9 +1,9 @@
-import { Category, Post, User } from "@prisma/client";
+import { Category, Hide, Post, User } from "@prisma/client";
 
 export interface PostProps extends Post {
-  // participant: Creator[];
   categories: CategoryProps[];
-  category: Category;
+  hide: boolean | Array<Hide>;
+  // category: Category;
   user: User;
 };
 

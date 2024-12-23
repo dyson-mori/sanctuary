@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -9,11 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as yup from "yup";
 
-import { Button, Input } from "@common";
-import { Google, Lock, Logo, User } from "@svg";
-
 import { api } from "@services";
+import { Button, Input } from "@common";
 import { serverActionCookie } from "@utils";
+import { Google, Lock, Logo, User } from "@svg";
 
 import { Container, Form } from "./styles";
 
@@ -26,7 +25,6 @@ type schemaProps = yup.InferType<typeof schema>;
 
 export default function Authentication() {
   const route = useRouter();
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema)

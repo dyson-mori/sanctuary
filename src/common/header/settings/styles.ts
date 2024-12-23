@@ -8,6 +8,14 @@ export const Container = styled.div`
 
   width: 100%;
 
+  a {
+    text-decoration: none;
+  };
+
+  .info {
+    text-align: start;
+  }
+
   ${({ theme }) => css`
     h3 {
       color: ${theme.colors.dark_charcoal};
@@ -33,7 +41,7 @@ export const Container = styled.div`
   `};
 `;
 
-export const Card = styled.div`
+export const Card = styled.button`
   display: flex;
 
   align-items: center;
@@ -43,6 +51,8 @@ export const Card = styled.div`
   margin: 5px 0;
 
   height: 70px;
+
+  width: 100%;
 
   ${({ theme }) => css`
     box-shadow: ${theme.box.shadow.default};
@@ -58,5 +68,20 @@ export const Card = styled.div`
       color: ${theme.colors.philippine_gray};
     };
   `};
+`;
 
+export const Button = styled.button`
+  cursor: pointer;
+
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
 `;

@@ -3,9 +3,10 @@
 import { Montserrat, Montserrat_Alternates, My_Soul } from "next/font/google";
 import { ThemeProvider } from "styled-components";
 
-import { useStorage } from "@hooks";
 import themes from "@global/theme";
 import Global from "@global/styles";
+import { useStorage } from "@hooks";
+
 import Notification from "../context/notification";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
