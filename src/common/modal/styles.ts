@@ -15,7 +15,7 @@ export const Container = styled.section`
   background-color: #3030305a;
   transition: .3s;
 
-  z-index: 1;
+  z-index: 2;
 
   backdrop-filter : blur(15px);
 `;

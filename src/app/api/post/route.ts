@@ -1,41 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
-// import { cookies } from "next/headers";
-import { CreatorProps } from "@global/interface";
+import { cookies } from "next/headers";
 
+import { Post } from "@prisma/client";
 
 import { prisma } from "@services";
-import { Post } from "@prisma/client";
+import { convertUrlToBlob } from "@utils";
 
 interface PostsProps extends Post {
   categories: {
     id: string;
   }[];
-  creator: CreatorProps
 };
 
 export async function GET() {
-  // const cookie = await cookies();
-  // const session_id = cookie.get('session_id');
+  const cookie = await cookies();
+  const token = cookie.get('auth-token');
 
   // if (!session_id) {
   //   return NextResponse.json(false, { status: 404, statusText: 'session not found!' });
   // };
 
   const post = await prisma.post.findMany({
-    where: {
-      creator: {
-        public: true
-      }
-    },
+    // where: {
+    //   creator: {
+    //     public: true
+    //   }
+    // },
     orderBy: {
       createdAt: 'desc',
     },
     include: {
-      creator: {
+      hide: true,
+      // hide: {
+      //   where: {
+      //     post_id: token?.value
+      //   }
+      // },
+      user: {
         select: {
-          photo: true,
-          description: true,
-          name: true,
+          nickname: true,
         }
       },
       categories: {
@@ -46,29 +49,63 @@ export async function GET() {
     }
   });
 
-  return NextResponse.json(post, { status: 201, statusText: 'done' });
+  const find_to_hide = post.map((row) => ({
+    ...row,
+    // cloudinary_video: JSON.stringify(
+    //   JSON.parse(row.cloudinary_video)
+    // ),
+    // url: await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/v1734896528/community/luna_chainz_d5becs.mp4'),
+    hide: row.hide.find(r => {
+      if (r.user_id === token?.value) return true;
+      if (!token && r.user_id) return true;
+    })
+  }))
+
+  return NextResponse.json(find_to_hide, { status: 201, statusText: 'done' });
 };
 
 export async function POST(request: NextRequest) {
-  const { creator_id, categories, width, height, url_pre_image, url_pre_video, url_video } = await request.json() as PostsProps;
+  const cookie = await cookies();
+  const token = cookie.get('auth-token');
+
+  const { title, description, categories, cloudinary_video, hide } = await request.json() as PostsProps;
+
+  if (!token) {
+    return NextResponse.json(false, { status: 401, statusText: 'token' })
+  };
+
+  const verify = await prisma.user.findFirst({
+    where: {
+      id: token!.value
+    }
+  });
+
+  if (!verify) {
+    return NextResponse.json(false, { status: 401, statusText: 'user not found' })
+  };
 
   const post = await prisma.post.create({
     data: {
-      width,
-      height,
-      url_pre_image,
-      url_pre_video,
-      url_video,
-      creator_id,
+      title,
+      description,
+      user_id: token!.value,
+      cloudinary_video,
       categories: {
         connect: categories.map(({ id }) => ({ id }))
+      },
+      hide: {
+        createMany: {
+          data: hide.map(({ id }) => ({
+            user_id: id
+          }))
+        }
       }
     }
   });
 
   if (!post.id) {
     return NextResponse.json(false, { status: 401, statusText: 'this post cannot create' })
-  }
+  };
 
   return NextResponse.json(true, { status: 201, statusText: 'created' })
 };
@@ -77,19 +114,14 @@ export async function PUT(request: NextRequest) {
   const url = new URL(request.url);
   const post_id = url.searchParams.get("postId");
 
-  const { width, height, url_pre_image, url_pre_video, url_video, creator_id, categories } = await request.json() as PostsProps;
+  const { cloudinary_video, categories } = await request.json() as PostsProps;
 
   const update = await prisma.post.update({
     where: {
       id: post_id!
     },
     data: {
-      width,
-      height,
-      url_pre_image,
-      url_pre_video,
-      url_video,
-      creator_id,
+      cloudinary_video,
       categories: {
         connect: categories.map(({ id }) => ({ id }))
       }

@@ -9,7 +9,7 @@ import { useTheme } from 'styled-components';
 
 import { Logo, Search, Settings as SettingsSvg } from '@svg';
 
-import { CreatorProps } from '@global/interface';
+import { UserProps } from '@global/interface';
 
 import { Container, Logo as LogoStyled, Nav, Button } from './styles';
 
@@ -17,6 +17,7 @@ import { Modal } from '../modal';
 
 import { Creator } from './creator';
 import { Settings } from './settings';
+import { User } from '@prisma/client';
 
 const links = [
   {
@@ -27,17 +28,18 @@ const links = [
     path: '/category',
     name: 'Categories'
   },
-  {
-    path: '/creators',
-    name: 'Creators'
-  }
+  // {
+  //   path: '/creators',
+  //   name: 'Creators'
+  // }
 ];
 
 interface HeaderProps {
-  creators: CreatorProps[]
+  users: UserProps[];
+  user: User;
 };
 
-export const Header: FC<HeaderProps> = ({ creators }) => {
+export const Header: FC<HeaderProps> = ({ users, user }) => {
   const theme = useTheme();
   const path = usePathname();
 
@@ -79,11 +81,11 @@ export const Header: FC<HeaderProps> = ({ creators }) => {
       </Container>
 
       <Modal open={modalCreator} onClickOutside={() => setModalCreator(false)}>
-        <Creator creators={creators} />
+        <Creator users={users} />
       </Modal>
 
       <Modal open={modalSettings} onClickOutside={() => setModalSettings(false)} style={{ padding: 50 }}>
-        <Settings />
+        <Settings user={user} />
       </Modal>
     </Fragment>
   )

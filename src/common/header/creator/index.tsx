@@ -7,22 +7,22 @@ import { Input } from '@common';
 import { Search } from '@svg';
 
 import { Container, Option, Tag } from './styles';
-import { CreatorProps } from '@global/interface';
+import { UserProps } from '@global/interface';
 import { useRouter } from 'next/navigation';
 
 interface ModalProps {
-  creators: CreatorProps[]
+  users: UserProps[]
 };
 
-export const Creator: FC<ModalProps> = ({ creators }) => {
+export const Creator: FC<ModalProps> = ({ users }) => {
   const route = useRouter();
 
   const [search, setSearch] = useState('');
 
-  const filter = creators.filter(f => f.name.includes(search.toLowerCase()));
+  const filter = users.filter(f => f.nickname.includes(search.toLowerCase()));
 
   function handleCreator(name: string) {
-    route.push(`/creators/${name}`)
+    // route.push(`/creators/${name}`)
   };
 
   return (
@@ -34,20 +34,23 @@ export const Creator: FC<ModalProps> = ({ creators }) => {
         <span />
       </Tag>
       {
-        filter.map((row, index) => (
-          <Option key={index} onClick={() => handleCreator(row.name)}>
-            <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + row.photo} width={50} height={50} alt={index.toString()} />
-            <div className='sides'>
-              <div className='upside'>
-                <p>{row.name}</p>
+        filter.map((row, index) => {
+          // const image = JSON.parse(row.cloudinary_photo);
+          return (
+            <Option key={index} onClick={() => handleCreator(row.nickname)}>
+              <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + row.photo} width={50} height={50} alt={index.toString()} />
+              <div className='sides'>
+                <div className='upside'>
+                  <p>{row.nickname}</p>
+                </div>
+                <div className='downside'>
+                  <p>row.description</p>
+                  <p>{row._count.post} posts</p>
+                </div>
               </div>
-              <div className='downside'>
-                <p>{row.description}</p>
-                <p>{row._count.post} posts</p>
-              </div>
-            </div>
-          </Option>
-        ))
+            </Option>
+          )
+        })
       }
 
     </Container>

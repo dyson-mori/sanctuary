@@ -1,17 +1,20 @@
 "use client"
 
 import { FC } from 'react';
+import Link from 'next/link';
+
+import { User } from '@prisma/client';
+import { useTheme } from 'styled-components';
 
 import { Switch } from '../..';
 
 import { useStorage } from '@hooks';
-import { Sun, User } from '@svg';
+import { Sun, User as UserSvg } from '@svg';
 
 import { Container, Card } from './styles';
-import { useTheme } from 'styled-components';
-import Link from 'next/link';
+import Image from 'next/image';
 
-export const Settings: FC = () => {
+export const Settings: FC<{ user: User }> = ({ user }) => {
   const themes = useTheme();
 
   const [storage, setStorage] = useStorage('@preview-videos', null);
@@ -42,12 +45,18 @@ export const Settings: FC = () => {
 
       <Card>
         <div>
-          <h4>Authentication</h4>
-          <p>login to interact with the videos</p>
+          <h4>{user ? user.nickname : 'Authentication'}</h4>
+          {!user && <p>login to interact with the videos</p>}
         </div>
-        <Link href='/authentication'>
-          <User width={25} height={25} stroke={themes.colors.primary} strokeWidth={2} />
-        </Link>
+        {user ? (
+          <Link href='/profile'>
+            <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + user.photo} width={50} height={50} alt='photo' style={{ borderRadius: 6 }} />
+          </Link>
+        ) : (
+            <Link href='/authentication'>
+              <UserSvg width={25} height={25} stroke={themes.colors.primary} strokeWidth={2} />
+            </Link>
+        )}
       </Card>
 
       <div className='version'>

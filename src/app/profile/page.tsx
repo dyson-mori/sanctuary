@@ -1,27 +1,25 @@
 import { Suspense } from "react";
 
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 
 import { api } from "@services";
 
-const DynamicPageWithNoSSR = dynamic(() => import('./posts'), {
-  ssr: true
-});
+import App from './app'
 
 export const metadata: Metadata = {
-  title: 'sanctuary',
+  title: 'sanctuary | creators',
   description: 'sanctuary.com'
 };
 
-export default async function Posts() {
-  const post = await api.posts.list();
+export default async function ProfilePage() {
   const users = await api.user.list();
+  const posts = await api.posts.list();
   const user = await api.auth.find();
+  const category = await api.category.list();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <DynamicPageWithNoSSR posts={post} users={users} user={user} />
+      <App user={user} users={users} category={category} posts={posts} />
     </Suspense>
   );
 }

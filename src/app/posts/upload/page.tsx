@@ -41,8 +41,7 @@ type Props = {
 export default async function Upload({ }: Props) {
   // const { type } = await searchParams;
 
-  const creators = await api.creator.list();
   const categories = await api.category.list();
 
-  return <App creators={creators} categories={categories} />
+  return <App creators={[]} categories={categories} />
 };

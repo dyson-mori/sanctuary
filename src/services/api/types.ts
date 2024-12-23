@@ -1,20 +1,27 @@
-import { Category, Creator } from "@prisma/client";
-import { CategoryProps, CreatorProps, PostProps } from "@global/interface";
+import { Category, User } from "@prisma/client";
+import { CategoryProps, PostProps, UserProps } from "@global/interface";
 
-type CreateBodyProps = Pick<PostProps, 'creator_id' | 'width' | 'height' | 'url_pre_image' | 'url_pre_video' | 'url_video'> & {
+type CreateBodyProps = Pick<PostProps, 'title' | 'description' | 'cloudinary_video' | 'hide'> & {
   categories: { id: string, name: string }[]
 };
 
 export type ApiProps = {
+  user: {
+    list: () => Promise<UserProps[]>;
+  },
+  auth: {
+    find: () => Promise<User>;
+    auth: (body: Pick<User, 'nickname' | 'password'>) => Promise<string | null>;
+  },
   posts: {
     list: () => Promise<PostProps[]>;
     create: (body: CreateBodyProps) => Promise<boolean>;
   };
-  creator: {
-    list: () => Promise<CreatorProps[]>;
-    find: (name: string) => Promise<CreatorProps>;
-    create: (body: Omit<Creator, 'id' | 'updatedAt' | 'createdAt' | 'public'>) => Promise<boolean>
-  };
+  // creator: {
+  //   list: () => Promise<CreatorProps[]>;
+  //   find: (name: string) => Promise<CreatorProps>;
+  //   create: (body: Omit<Creator, 'id' | 'updatedAt' | 'createdAt' | 'public'>) => Promise<boolean>
+  // };
   search: {
     list: () => Promise<PostProps[]>;
   };

@@ -5,21 +5,17 @@ import { User } from "@prisma/client";
 import { prisma } from "@services";
 
 export async function GET() {
-  const cookie = await cookies();
-  const userToken = cookie.get('auth-token');
-
-  const user = await prisma.user.findFirst({
-    where: {
-      id: userToken?.value ?? undefined
-    },
-    select: {
-      post: true,
-      photo: true,
-      nickname: true
+  const user = await prisma.user.findMany({
+    include: {
+      _count: {
+        select: {
+          post: true
+        }
+      }
     }
   });
 
-  if (!user || !userToken) {
+  if (!user) {
     return NextResponse.json(false, { status: 401, statusText: 'failed when trying to find' })
   };
 

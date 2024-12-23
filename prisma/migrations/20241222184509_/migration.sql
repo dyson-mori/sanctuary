@@ -1,29 +1,22 @@
 -- CreateTable
-CREATE TABLE "creator" (
+CREATE TABLE "users" (
     "id" TEXT NOT NULL,
-    "description" CHAR(80) NOT NULL,
-    "name" TEXT NOT NULL,
+    "firstname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
+    "nickname" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
-    "public" BOOLEAN NOT NULL DEFAULT true,
-    "width" INTEGER NOT NULL,
-    "height" INTEGER NOT NULL,
-    "url_pre_video" TEXT NOT NULL,
-    "social_media" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "creator_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "post" (
     "id" TEXT NOT NULL,
-    "creator_id" TEXT NOT NULL,
-    "width" INTEGER NOT NULL,
-    "height" INTEGER NOT NULL,
-    "url_video" TEXT NOT NULL,
-    "url_pre_video" TEXT NOT NULL,
-    "url_pre_image" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" CHAR(80) NOT NULL,
+    "cloudinary_video" TEXT NOT NULL DEFAULT '{}',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -38,6 +31,16 @@ CREATE TABLE "category" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "category_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Hide" (
+    "id" TEXT NOT NULL,
+    "post_id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Hide_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -76,13 +79,22 @@ CREATE TABLE "_CategoryToPost" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "creator_id_key" ON "creator"("id");
+CREATE UNIQUE INDEX "users_id_key" ON "users"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "post_id_key" ON "post"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "category_id_key" ON "category"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "category_name_key" ON "category"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Hide_id_key" ON "Hide"("id");
+
+-- CreateIndex
+CREATE INDEX "Hide_post_id_user_id_idx" ON "Hide"("post_id", "user_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "View_id_key" ON "View"("id");
@@ -106,7 +118,13 @@ CREATE INDEX "Save_post_id_idx" ON "Save"("post_id");
 CREATE INDEX "_CategoryToPost_B_index" ON "_CategoryToPost"("B");
 
 -- AddForeignKey
-ALTER TABLE "post" ADD CONSTRAINT "post_creator_id_fkey" FOREIGN KEY ("creator_id") REFERENCES "creator"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "post" ADD CONSTRAINT "post_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Hide" ADD CONSTRAINT "Hide_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Hide" ADD CONSTRAINT "Hide_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "View" ADD CONSTRAINT "View_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "styled-components";
 
 import { Header, Button } from "@common";
-import { CategoryProps, CreatorProps } from "@global/interface";
+import { CategoryProps, UserProps } from "@global/interface";
 import { serverActionCookie } from "@utils";
 
 import Register from "../_components/register";
@@ -16,10 +16,10 @@ import { Container, Footer } from "./styles";
 
 type Props = {
   categories: CategoryProps[];
-  creators: CreatorProps[];
+  users: UserProps[];
 };
 
-export default function Categories({ categories, creators }: Props) {
+export default function Categories({ categories, users }: Props) {
   const theme = useTheme();
   const route = useRouter();
 
@@ -48,14 +48,14 @@ export default function Categories({ categories, creators }: Props) {
 
   return (
     <>
-      <Header creators={creators} />
+      <Header users={users} user={users[0]} />
 
       <Container>
         {categories.map((row, index) => {
           const find = !!selected.find(({ id }) => row.id === id);
 
           return (
-            <Button key={index} variant="select" disabled={row._count.post === 0} selected={find} style={{ height: 40, margin: 2, flexGrow: 1 }} onClick={() => handleSelect(row)}>
+            <Button key={index} variant={find ? "selected" : "select"} disabled={row._count.post === 0} style={{ height: 40, margin: 2, flexGrow: 1 }} onClick={() => handleSelect(row)}>
               {row?.name.replace('_', ' ')} - {row._count.post}
             </Button>
           )

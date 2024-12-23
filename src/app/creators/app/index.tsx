@@ -6,9 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Header, Masonry } from '@common';
 
 import { CreatorProps } from '@global/interface';
-import { User } from '@svg';
-
-import { Container, Upload } from './styles';
+import { Container } from './styles';
 
 interface Props {
   creators: CreatorProps[];
@@ -28,9 +26,6 @@ export default function Post({ creators }: Props) {
         {/* @ts-expect-error: ksoa */}
         <Masonry posts={creators} navigate={navigate} />
 
-        <Upload href='/creators/new'>
-          <User width={25} height={25} stroke='white' strokeWidth={2} />
-        </Upload>
       </Container>
     </>
   );

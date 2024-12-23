@@ -55,8 +55,8 @@ export async function GET() {
       creator: {
         select: {
           id: true,
-          name: true,
-          photo: true,
+          nickname: true,
+          cloudinary_photo: true,
           public: true,
           description: true,
         }

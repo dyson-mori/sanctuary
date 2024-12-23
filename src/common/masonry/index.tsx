@@ -3,18 +3,20 @@ import { useStorage, useWindowSize } from "@hooks";
 import { PostVideo } from "./_components/video";
 
 import { Column } from "./styles";
+import { PostProps } from "@global/interface";
 
 export interface MasonryProps {
-  url_pre_video: string;
+  cloudinary_photo: string;
+  cloudinary_video: string;
   width: number;
   height: number;
   id: string;
   creator: {
-    name: string;
+    nickname: string;
   };
 };
 
-export function Masonry({ posts, navigate }: { posts: MasonryProps[], navigate(name: string): void }) {
+export function Masonry({ posts, navigate }: { posts: PostProps[], navigate(name: string): void }) {
   const [storage] = useStorage('@preview-videos', true);
   const size = useWindowSize();
 

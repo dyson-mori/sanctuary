@@ -11,31 +11,12 @@ import { api, cloudinary } from "@services";
 import { CategoryProps, CreatorProps } from "@global/interface";
 
 import { Container, Div, RightSide, Upload } from "./styles";
+import { schema, schemaProps } from "./schema";
 
 interface Props {
   creators: CreatorProps[];
   categories: CategoryProps[];
 };
-
-export const schema = yup.object({
-  file: yup.string().required(),
-  creator: yup.object({
-    id: yup.string().required(),
-    label: yup.string().required(),
-  }),
-  collaborators: yup.object({
-    id: yup.string(),
-    label: yup.string(),
-  }),
-  categories: yup.array().of(
-    yup.object({
-      id: yup.string().required(),
-      name: yup.string().required()
-    })
-  ),
-});
-
-type schemaProps = yup.InferType<typeof schema>;
 
 export default function AppUpload({ creators = [], categories = [] }: Props) {
   const { control, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm({
@@ -44,27 +25,25 @@ export default function AppUpload({ creators = [], categories = [] }: Props) {
 
   const select = creators.map(row => ({
     id: row.id,
-    label: row.name
+    label: row.nickname
   }));
 
   const submit = async (data: schemaProps) => {
-    const { width, height, url_pre_image, url_pre_video, url_video } = await cloudinary.upload(data.file, data.creator.id.split('-')[0]);
+    const video = await cloudinary.upload(data.file, data.creator.id.split('-')[0]);
 
     await api.posts.create({
       creator_id: data.creator.id,
       categories: data.categories!,
-      width,
-      height,
-      url_pre_image,
-      url_pre_video,
-      url_video,
+      cloudinary_video: JSON.stringify(video)
     })
-      .then(() => reset({
-        file: '',
-        categories: [],
-        collaborators: {},
-        creator: {}
-      }))
+      .then(() =>
+        reset({
+          file: '',
+          categories: [],
+          collaborators: {},
+          creator: {}
+        })
+      )
   };
 
   return (

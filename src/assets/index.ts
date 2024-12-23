@@ -19,6 +19,9 @@ import { ReactComponent as ArrowDown } from './arrow-down.svg';
 import { ReactComponent as Sun } from './sun.svg';
 import { ReactComponent as Check } from './check.svg';
 import { ReactComponent as Link } from './link.svg';
+import { ReactComponent as Google } from './google.svg';
+import { ReactComponent as Lock } from './lock.svg';
+import { ReactComponent as Times } from './times.svg';
 
 export {
   Add,
@@ -41,5 +44,8 @@ export {
   AddUser,
   Sun,
   Check,
-  Link
+  Link,
+  Google,
+  Lock,
+  Times
 }

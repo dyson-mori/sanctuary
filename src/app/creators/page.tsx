@@ -12,11 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Posts() {
-  const creators = await api.creator.list();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <App creators={creators} />
+      <App creators={[]} />
     </Suspense>
   );
 }

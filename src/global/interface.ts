@@ -1,10 +1,10 @@
-import { Category, Creator, Post } from "@prisma/client";
+import { Category, Post, User } from "@prisma/client";
 
 export interface PostProps extends Post {
   // participant: Creator[];
   categories: CategoryProps[];
   category: Category;
-  creator: Creator;
+  user: User;
 };
 
 export interface CategoryProps extends Category {
@@ -14,7 +14,14 @@ export interface CategoryProps extends Category {
   }
 };
 
-export interface CreatorProps extends Creator {
+// export interface CreatorProps extends Creator {
+//   post: PostProps[];
+//   _count: {
+//     post: number;
+//   };
+// };
+
+export interface UserProps extends User {
   post: PostProps[];
   _count: {
     post: number;
