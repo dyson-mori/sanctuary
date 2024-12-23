@@ -30,3 +30,8 @@ sanctuary will be an open source project for the community
 
   docker compose up -d
   docker compose down && docker compose up --build -d
+
+## Generate Key
+  ssh-keygen -f ~/.ssh/id_rsa -y
+  &&
+  ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub

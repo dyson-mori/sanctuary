@@ -15,11 +15,11 @@ export const metadata: Metadata = {
 
 export default async function Category() {
   const category = await api.category.list();
-  const creators = await api.creator.list();
+  const users = await api.user.list();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <DynamicPageWithNoSSR categories={category} creators={creators} />
+      <DynamicPageWithNoSSR categories={category} users={users} />
     </Suspense>
   );
 };

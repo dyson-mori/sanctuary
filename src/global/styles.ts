@@ -31,6 +31,18 @@ export default createGlobalStyle`
     display: none;
   }
 
+  video::-internal-media-controls-download-button {
+    display:none;
+  }
+
+  video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+  }
+
+  video::-webkit-media-controls-panel {
+    width: calc(100% + 30px); /* Adjust as needed */
+  }
+
   /* width */
   ::-webkit-scrollbar {
     width: 1px;

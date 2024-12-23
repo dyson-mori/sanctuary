@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.button`
   position: relative;
 
   border: 0;
@@ -8,9 +8,36 @@ export const Container = styled.div`
 
   margin-bottom: 5px;
 
-  cursor: pointer;
+  ${({ disabled }) => css`
+    cursor: ${disabled ? 'default' : 'pointer'};
+  `};
 
   overflow: hidden;
+
+  span {
+    position: absolute;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    
+    backdrop-filter: blur(10px);
+
+    z-index: 1;
+  }
+
+  button {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    z-index: 1;
+  }
 `;
 
 export const Footer = styled.footer`

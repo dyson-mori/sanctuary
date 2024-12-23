@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.button`
+import { Variant } from '.';
+
+export const Container = styled.button<{ variant: Variant }>`
   display: flex;
   position: relative;
 
@@ -15,14 +17,40 @@ export const Container = styled.button`
 
   cursor: pointer;
 
-  ${({ theme, disabled }) => css`
+  ${({ theme, disabled, variant }) => css`
     border-radius: ${theme.border.small};
     box-shadow: ${theme.box.shadow.default};
     
     ${disabled && css`
       cursor: default;
       opacity: .5;
-    `}
+    `};
+
+    ${variant === 'primary' && css`
+      background-color: ${theme.colors.primary};
+      color: ${theme.colors.white};
+      font-weight: 600;
+      width: 250px;
+    `};
+
+    ${variant === 'error' && css`
+      background-color: ${theme.colors.error};
+      color: ${theme.colors.white};
+      font-weight: 600;
+      width: 250px;
+    `};
+
+    ${variant === 'select' && css`
+      background-color: ${theme.colors.white};
+      color: ${theme.colors.text};
+      font-weight: 600;
+    `};
+
+    ${variant === 'selected' && css`
+      background-color: ${theme.colors.primary};
+      color: ${theme.colors.white};
+      font-weight: 600;
+    `};
   `};
 `;
 

@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 
-import { MasonryProps } from '../..';
 import { Container, Footer } from './styles';
+
+import { PostProps } from '@global/interface';
+import { Lock } from '@svg';
+import { convertUrlToBlob } from '@utils';
 
 interface Props {
   show: boolean;
-  post: MasonryProps & {
-    name?: string;
-  };
+  post: PostProps;
   size: {
     width: number;
     height: number;
@@ -19,9 +20,14 @@ export const PostVideo = ({ post, show, size, navigate }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+    const observer = new IntersectionObserver(async ([entry]) => {
+
+      if (videoRef.current) {
+        videoRef.current.src = await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.url_video);
+      };
+
       if (videoRef.current && entry.isIntersecting && show) {
-        return videoRef.current.play();
+        videoRef.current.play();
       };
 
       if (videoRef.current && !entry.isIntersecting) {
@@ -47,7 +53,12 @@ export const PostVideo = ({ post, show, size, navigate }: Props) => {
   };
 
   return (
-    <Container style={styles} as="button" onClick={() => navigate(post.name ?? post.creator.name)}>
+    <Container style={styles} disabled={!!post.hide} onClick={() => navigate('any')}>
+      {post.hide && (
+        <span>
+          <Lock width={25} height={25} stroke='#fff' strokeWidth={2} />
+        </span>
+      )}
       <video
         ref={videoRef}
         style={{ ...styles, filter: 'blur(0px)' }}
@@ -55,11 +66,13 @@ export const PostVideo = ({ post, show, size, navigate }: Props) => {
         muted
         loop
         playsInline
+        onContextMenu={e => e.preventDefault()}
+        controlsList='nodownload'
       >
-        <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.url_pre_video} type='video/webm' />
+        <source type='video/webm' />
       </video>
       <Footer>
-        <h3>{post.name ?? post.creator.name}</h3>
+        <h3>{post.title.replace('_', ' ')}</h3>
       </Footer>
     </Container>
   );

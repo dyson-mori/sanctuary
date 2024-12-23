@@ -6,17 +6,17 @@ import { useRouter } from 'next/navigation';
 
 import { Header, Masonry } from '@common';
 
-import { CreatorProps, PostProps } from '@global/interface';
-import { Upload as UploadSvg } from '@svg';
+import { PostProps, UserProps } from '@global/interface';
 
-import { Container, Upload } from './styles';
+import { Container } from './styles';
 
 interface Props {
   posts: PostProps[];
-  creators: CreatorProps[];
+  users: UserProps[];
+  user: UserProps;
 };
 
-export default function Post({ posts, creators }: Props) {
+export default function Post({ posts, users, user }: Props) {
   const route = useRouter();
 
   const navigate = () => {
@@ -25,13 +25,9 @@ export default function Post({ posts, creators }: Props) {
 
   return (
     <>
-      <Header creators={creators} />
+      <Header users={users} user={user} />
       <Container>
         <Masonry posts={posts} navigate={navigate} />
-
-        <Upload href={{ pathname: '/posts/upload' }}>
-          <UploadSvg width={25} height={25} stroke='white' strokeWidth={2} />
-        </Upload>
       </Container>
     </>
   );

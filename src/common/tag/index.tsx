@@ -1,8 +1,6 @@
 import { CSSProperties, FC, useEffect, useState } from "react";
 import { useTheme } from "styled-components";
 
-import { Tag } from "@svg";
-
 import { Modal } from "../modal";
 import { Button } from "../button";
 
@@ -14,11 +12,12 @@ type CategoryFilter = {
 };
 
 type Props = {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
   categories: CategoryFilter[];
   onChange: (a: CategoryFilter[]) => void;
 };
 
-export const Tags: FC<Props> = ({ categories, onChange }) => {
+export const Tags: FC<Props> = ({ icon: Icon, categories, onChange }) => {
   const theme = useTheme();
 
   const [open, setopen] = useState(false);
@@ -46,7 +45,7 @@ export const Tags: FC<Props> = ({ categories, onChange }) => {
     <>
       <Container type="button" onClick={() => setopen(true)}>
         <p>{selected.length}</p>
-        <Tag width={21} height={21} stroke={theme.colors.white} strokeWidth={2} />
+        <Icon width={21} height={21} stroke={theme.colors.white} strokeWidth={2} />
       </Container>
       <Modal open={open} onClickOutside={setopen} style={styles}>
         {categories.map((row, index) => {
@@ -59,7 +58,7 @@ export const Tags: FC<Props> = ({ categories, onChange }) => {
           };
 
           return (
-            <Button key={index} variant="select" selected={!!find} type="button" style={style} onClick={() => handleSelect(row)}>
+            <Button key={index} variant={find ? "selected" : "select"} type="button" style={style} onClick={() => handleSelect(row)}>
               {row?.name.replace('_', ' ')}
             </Button>
           )

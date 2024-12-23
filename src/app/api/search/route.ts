@@ -52,15 +52,6 @@ export async function GET() {
     //   }
     // },
     include: {
-      creator: {
-        select: {
-          id: true,
-          name: true,
-          photo: true,
-          public: true,
-          description: true,
-        }
-      },
       categories: {
         select: {
           name: true

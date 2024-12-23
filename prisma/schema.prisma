@@ -13,47 +13,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Creator {
+model User {
   id String @id @unique @default(uuid())
 
-  description   String  @db.Char(80)
-  name          String  @unique
-  photo         String
-  public        Boolean @default(true)
-  width         Int
-  height        Int
-  url_pre_video String
-  social_media  String
-  public_id     String  @default("{}")
+  firstname String  @db.Char(20)
+  lastname  String  @db.Char(20)
+  nickname  String  @unique @db.Char(20)
+  password  String
+  photo     String?
+  banner    String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
+  // creator Creator?
   post Post[]
+  hide Hide[]
 
-  @@map("creator")
+  @@map("users")
 }
 
-model Post {
-  id         String @id @unique @default(uuid())
-  creator_id String
+// model Creator {
+//   id      String @id @unique @default(uuid())
+//   user_id String @unique
 
-  width         Int
-  height        Int
-  url_video     String
-  url_pre_video String
-  url_pre_image String
+//   nickname     String  @unique
+//   description  String  @db.Char(80)
+//   public       Boolean @default(true)
+//   social_media String
+
+//   cloudinary_photo String @default("{}")
+//   cloudinary_video String @default("{}")
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   post Post[]
+//   User User   @relation(fields: [user_id], references: [id])
+
+//   @@map("creator")
+// }
+
+model Post {
+  id      String @id @unique @default(uuid())
+  user_id String
+
+  title       String @db.Char(40)
+  description String @db.Char(80)
+  width       Int
+  height      Int
+  pre_video   String
+  pre_image   String
+  url_video   String
+  public_id   String
+
+  // cloudinary_video String @default("{}")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  like       Like[]
-  save       Save[]
-  view       View[]
+  // like       Like[]
+  // save       Save[]
+  // view       View[]
+  hide       Hide[]
   categories Category[]
-  creator    Creator    @relation(fields: [creator_id], references: [id], onDelete: Cascade)
 
-  @@map("post")
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("posts")
 }
 
 model Category {
@@ -69,6 +96,21 @@ model Category {
   @@map("category")
 }
 
+model Hide {
+  id String @id @unique @default(uuid())
+
+  post_id String
+  user_id String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [id])
+
+  @@index([post_id, user_id])
+}
+
 model View {
   id String @id @unique @default(uuid())
 
@@ -77,7 +119,7 @@ model View {
 
   createdAt DateTime @default(now())
 
-  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   // user User @relation(fields: [user_id], references: [id])
 
   @@index([post_id])
@@ -91,7 +133,7 @@ model Like {
 
   createdAt DateTime @default(now())
 
-  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   // user User @relation(fields: [user_id], references: [id])
 
   @@index([post_id])
@@ -105,7 +147,7 @@ model Save {
 
   createdAt DateTime @default(now())
 
-  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  // post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   // user User @relation(fields: [user_id], references: [id])
 
   @@index([post_id])

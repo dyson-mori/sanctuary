@@ -124,7 +124,7 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
           width: '100%',
           height: '100%'
         }}
-        src={`https://res.cloudinary.com/dyrtdrnky/video/upload/${posts.url_pre_image}`}
+        src={`https://res.cloudinary.com/dyrtdrnky/video/upload/${posts.pre_image}`}
         width={50}
         height={50}
         alt={'item.creator.name'}
