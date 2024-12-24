@@ -24,7 +24,7 @@ export const PostVideo = ({ post, show, enabled, size, onClick }: Props) => {
     const observer = new IntersectionObserver(async ([entry]) => {
 
       if (videoRef.current) {
-        videoRef.current.src = await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.url_video);
+        videoRef.current.src = await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.pre_video);
       };
 
       if (videoRef.current && entry.isIntersecting && show) {
