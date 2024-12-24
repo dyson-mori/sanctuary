@@ -20,7 +20,11 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
   const handleFile = (evt) => {
     const reader = new FileReader();
 
-    setFile(evt.target.files![0])
+    setFile(evt.target.files![0]);
+
+    // if (evt.target.files![0].file >= 4565117) {
+    //   onChange()
+    // };
 
     reader.readAsDataURL(evt.target.files![0]);
     reader.onloadend = () => onChange(reader.result as string);
@@ -75,7 +79,7 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
         type={`file`}
         name={`file-${type}`}
         id={`file-${type}`}
-        accept={type === 'video' ? "video/mp4, video/webp" : "image/*"}
+        accept={type === 'video' ? "video/mp4,video/x-m4v,video/*" : "image/*"}
         onChange={handleFile}
       />
     </Container>

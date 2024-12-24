@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
+
 import Image from "next/image";
 
-import { CategoryProps, UserProps } from "@global/interface";
+import { CategoryProps, PostProps, UserProps } from "@global/interface";
 import { useWindowSize } from "@hooks";
 import { capitalizeFirstLetter } from "@utils";
 import { Masonry } from "@common";
@@ -19,6 +21,8 @@ interface Props {
 
 export default function AppProfile({ user, users, category }: Props) {
   const { width, height } = useWindowSize();
+
+  const [post, setPost] = useState({} as PostProps | undefined);
 
   return (
     <Container>
@@ -50,12 +54,12 @@ export default function AppProfile({ user, users, category }: Props) {
           {/* <Options></Options> */}
 
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <Masonry posts={user.post} navigate={console.log} />
+            <Masonry posts={user.post} onClick={setPost} />
           </div>
         </Content>
       </Article>
 
-      <Register users={users} category={category} />
+      <Register post={post} users={users} category={category} />
 
     </Container>
   )

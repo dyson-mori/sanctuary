@@ -9,14 +9,15 @@ import { convertUrlToBlob } from '@utils';
 interface Props {
   show: boolean;
   post: PostProps;
+  enabled: boolean;
   size: {
     width: number;
     height: number;
   };
-  navigate: (id: string) => void;
+  onClick?: (data: PostProps) => void;
 };
 
-export const PostVideo = ({ post, show, size, navigate }: Props) => {
+export const PostVideo = ({ post, show, enabled, size, onClick }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -49,11 +50,13 @@ export const PostVideo = ({ post, show, size, navigate }: Props) => {
   const styles = {
     width: size.width <= 600 ? size.width / 2.1 : size.width / 6.2,
     height: post.height / post.width * (size.width <= 600 ? size.width / 2.1 : size.width / 6.2),
-    borderRadius: size.width <= 600 ? 12 : 6
+    borderRadius: size.width <= 600 ? 12 : 6,
+    cursor: enabled ? 'pointer' : 'default',
+    disabled: !enabled
   };
 
   return (
-    <Container style={styles} disabled={!!post.hide} onClick={() => navigate('any')}>
+    <Container as='button' style={styles} onClick={() => enabled ? onClick(post) : undefined}>
       {post.hide && (
         <span>
           <Lock width={25} height={25} stroke='#fff' strokeWidth={2} />

@@ -9,17 +9,18 @@ import { api, cloudinary } from "@services";
 
 import { steps, schema, schemaProps } from "./constants";
 import { NewCategory, Header, Div } from "./styles";
-import { CategoryProps, UserProps } from "@global/interface";
+import { CategoryProps, PostProps, UserProps } from "@global/interface";
 
 type FieldName = keyof schemaProps;
 
 type Props = {
+  post?: PostProps;
   users: UserProps[];
   category: CategoryProps[]
 };
 
-export default function Register({ users, category }: Props) {
-  const { control, handleSubmit, setValue, reset, trigger } = useForm({
+export default function Register({ post, users, category }: Props) {
+  const { control, handleSubmit, setValue, reset, trigger, getValues } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -60,8 +61,9 @@ export default function Register({ users, category }: Props) {
           reset({ file: '', categories: [], description: '', title: '', })
           setModal(false);
         })
+        .catch(err => alert(err))
     } catch (err) {
-      console.log(err);
+      alert(err);
     } finally {
       setLoading(false);
     }

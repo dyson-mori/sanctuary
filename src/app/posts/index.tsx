@@ -27,7 +27,7 @@ export default function Post({ posts, users, user }: Props) {
     <>
       <Header users={users} user={user} />
       <Container>
-        <Masonry posts={posts} navigate={navigate} />
+        <Masonry posts={posts} />
       </Container>
     </>
   );
