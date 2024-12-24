@@ -75,7 +75,7 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
         type={`file`}
         name={`file-${type}`}
         id={`file-${type}`}
-        accept={type === 'video' ? "video/mp4, video/webp" : "image/*"}
+        accept={type === 'video' ? "video/*" : "image/*"}
         onChange={handleFile}
       />
     </Container>

@@ -20,7 +20,7 @@ export async function GET() {
   //   return NextResponse.json(false, { status: 404, statusText: 'session not found!' });
   // };
 
-  // const verifys = await prisma.user.findFirst({
+  // const verify_token = await prisma.user.findFirst({
   //   where: {
   //     id: token?.value ?? undefined
   //   }
@@ -32,11 +32,6 @@ export async function GET() {
     },
     include: {
       hide: true,
-      // hide: {
-      //   where: {
-      //     post_id: token?.value
-      //   }
-      // },
       user: {
         select: {
           nickname: true,
@@ -51,17 +46,13 @@ export async function GET() {
   });
 
   const find_to_hide = post.map((row) => {
-    const verify = row.hide.find(r => {
-      if (r.user_id === token?.value) return true;
-      if (!token?.value && r.user_id) return true;
-
-      return false
-    });
+    const block = token?.value === row.user_id ? false : !!row.hide.find(el => el.user_id !== token?.value);
 
     return {
       ...row,
-      url_video: verify?.id ? 'so_0.001/e_blur:800,c_fit,h_700,w_700/c_pad/q_auto:low/' + row.url_video : row.url_video,
-      hide: !!verify
+      url_video: block ? 'e_blur:800/' + row.url_video : row.url_video,
+      pre_video: block ? 'e_blur:800/' + row.pre_video : row.pre_video,
+      hide: block
     }
   })
 
