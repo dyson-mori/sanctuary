@@ -12,22 +12,21 @@ import { Container } from './styles';
 
 interface Props {
   posts: PostProps[];
-  users: UserProps[];
   user: UserProps;
 };
 
-export default function Post({ posts, users, user }: Props) {
+export default function Post({ posts, user }: Props) {
   const route = useRouter();
 
-  const navigate = () => {
-    return route.push(`/s`);
+  const navigate = (data: PostProps) => {
+    return route.push(`/${data.id}`);
   };
 
   return (
     <>
-      <Header users={users} user={user} />
+      <Header user={user} />
       <Container>
-        <Masonry posts={posts} navigate={navigate} />
+        <Masonry posts={posts ?? []} onClick={navigate} />
       </Container>
     </>
   );

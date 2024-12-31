@@ -6,32 +6,28 @@ import { Button } from "../button";
 
 import { Container } from "./styles";
 
-type CategoryFilter = {
+type OptionsProps = {
   id: string;
   name: string;
+  selected: boolean;
 };
 
 type Props = {
+  options: OptionsProps[];
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  categories: CategoryFilter[];
-  onChange: (a: CategoryFilter[]) => void;
+  onChange: (a: OptionsProps[]) => void;
 };
 
-export const Tags: FC<Props> = ({ icon: Icon, categories, onChange }) => {
+export const Tags: FC<Props> = ({ icon: Icon, options, onChange }) => {
   const theme = useTheme();
 
   const [open, setopen] = useState(false);
-  const [selected, setSelected] = useState([] as CategoryFilter[]);
+  const [selected, setSelected] = useState(options);
 
-  const handleSelect = async (row: CategoryFilter) => {
-    const found = selected.find(item => item.id === row.id);
-
-    if (found) {
-      const t = selected.filter(item => item.id !== row.id)
-      return setSelected(t)
-    };
-
-    return setSelected(prev => [...prev, row]);
+  const handleSelect = async (row: OptionsProps) => {
+    setSelected(prev => prev.map(select =>
+      select.id === row.id ? { ...select, selected: !row.selected } : select
+    ));
   };
 
   const styles: CSSProperties = {
@@ -39,17 +35,17 @@ export const Tags: FC<Props> = ({ icon: Icon, categories, onChange }) => {
     flexWrap: 'wrap',
   };
 
-  useEffect(() => onChange(selected), [selected])
+  useEffect(() => onChange(selected.filter(r => !!r.selected)), [selected]);
 
   return (
     <>
       <Container type="button" onClick={() => setopen(true)}>
-        <p>{selected.length}</p>
+        <p>{selected.filter(e => e.selected).length}</p>
         <Icon width={21} height={21} stroke={theme.colors.white} strokeWidth={2} />
       </Container>
+
       <Modal open={open} onClickOutside={setopen} style={styles}>
-        {categories.map((row, index) => {
-          const find = selected.find(({ id }) => row.id === id);
+        {selected.map((row, index) => {
           const style = {
             flexGrow: 1,
             margin: 2,
@@ -58,7 +54,7 @@ export const Tags: FC<Props> = ({ icon: Icon, categories, onChange }) => {
           };
 
           return (
-            <Button key={index} variant={find ? "selected" : "select"} type="button" style={style} onClick={() => handleSelect(row)}>
+            <Button key={index} variant={row.selected ? "selected" : "select"} type="button" style={style} onClick={() => handleSelect(row)}>
               {row?.name.replace('_', ' ')}
             </Button>
           )

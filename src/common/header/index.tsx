@@ -11,8 +11,9 @@ import { Logo } from '@svg';
 
 import { Container, Logo as LogoStyled, Nav } from './styles';
 
-import Users from './creator';
-import Settings from './settings';
+// import Users from './creator';
+// import Settings from './settings';
+import Authentication from './auth';
 
 const links = [
   {
@@ -31,10 +32,10 @@ const links = [
 
 interface Props {
   user: UserProps;
-  users: UserProps[];
+  // users: UserProps[];
 };
 
-export const Header: FC<Props> = ({ user, users }) => {
+export const Header: FC<Props> = ({ user }) => {
   const theme = useTheme();
   const path = usePathname();
 
@@ -55,7 +56,7 @@ export const Header: FC<Props> = ({ user, users }) => {
                 href={{ pathname: row.path }}
                 style={{
                   color: theme.colors[path === row.path ? 'primary' : 'text'],
-                  fontWeight: path === row.path ? 700 : 500
+                  fontWeight: path === row.path ? 700 : 400
                 }}
               >
                 {row.name}
@@ -64,8 +65,9 @@ export const Header: FC<Props> = ({ user, users }) => {
           }
         </Nav>
 
-        <Users users={users} />
-        <Settings user={user} />
+        {/* <Users users={users} />
+        <Settings /> */}
+        <Authentication user={user} />
       </Container>
 
     </Suspense>

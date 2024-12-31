@@ -11,11 +11,11 @@ export const cloudinary = {
     const upload = await v2.uploader
       .upload(
         fileUri, {
-        invalidate: true,
-        resource_type: "auto",
-        filename_override: fileName,
+          invalidate: true,
+          resource_type: "auto",
+          filename_override: fileName,
+          use_filename: true,
           folder: `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER}${folder ? '/' + folder : ''}`,
-        use_filename: true,
       });
 
     const pre_image =

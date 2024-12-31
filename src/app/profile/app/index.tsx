@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
+
 import Image from "next/image";
 
-import { CategoryProps, UserProps } from "@global/interface";
+import { CategoryProps, PostProps, UserProps } from "@global/interface";
 import { useWindowSize } from "@hooks";
 import { capitalizeFirstLetter } from "@utils";
 import { Masonry } from "@common";
@@ -19,6 +21,16 @@ interface Props {
 
 export default function AppProfile({ user, users, category }: Props) {
   const { width, height } = useWindowSize();
+
+  const [post, setPost] = useState({
+    post: {} as PostProps | undefined,
+    modal: false as boolean
+  });
+
+  function handleModalWithData(modal: boolean, post: PostProps | undefined) {
+    setPost({ modal, post })
+    // setData(post);
+  };
 
   return (
     <Container>
@@ -50,12 +62,12 @@ export default function AppProfile({ user, users, category }: Props) {
           {/* <Options></Options> */}
 
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <Masonry posts={user.post} navigate={console.log} />
+            <Masonry posts={user.post} onClick={evt => handleModalWithData(true, evt)} />
           </div>
         </Content>
       </Article>
 
-      <Register users={users} category={category} />
+      <Register modal={post} onClick={handleModalWithData} users={users} category={category} />
 
     </Container>
   )

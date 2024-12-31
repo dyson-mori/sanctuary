@@ -20,7 +20,11 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
   const handleFile = (evt) => {
     const reader = new FileReader();
 
-    setFile(evt.target.files![0])
+    setFile(evt.target.files![0]);
+
+    // if (evt.target.files![0].file >= 4565117) {
+    //   onChange()
+    // };
 
     reader.readAsDataURL(evt.target.files![0]);
     reader.onloadend = () => onChange(reader.result as string);
@@ -47,9 +51,12 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
 
         {type === 'video' && value && (
           <div className="preview">
-            <video src={value} style={{ opacity: disable ? .5 : 1 }} />
+            {/* <video>
+              <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + value} type='video/webm' />
+            </video> */}
+            <video autoPlay={false} src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + value} style={{ opacity: disable ? .5 : 1 }} />
             <div className="preview-description">
-              <h4>{file.name}</h4>
+              <h4>{file.name ?? value.split('/')[2]}</h4>
               <p>{formatBytes(file.size, 2)}</p>
             </div>
           </div>
@@ -75,7 +82,7 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
         type={`file`}
         name={`file-${type}`}
         id={`file-${type}`}
-        accept={type === 'video' ? "video/mp4, video/webp" : "image/*"}
+        accept={type === 'video' ? "video/*" : "image/*"}
         onChange={handleFile}
       />
     </Container>

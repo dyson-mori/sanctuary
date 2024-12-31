@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { PostProps } from '@global/interface';
 
 import { Container, Controller, Timeline } from './styles';
+import { convertUrlToBlob } from '@utils';
 // import { useWindowSize } from '@hooks';
 
 interface Props {
@@ -19,29 +20,6 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
   const timelineRef = useRef<HTMLDivElement>(null);
 
   // const size = useWindowSize();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (videoRef.current && entry.isIntersecting) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.play();
-      };
-
-      if (videoRef.current && !entry.isIntersecting) {
-        videoRef.current.pause();
-      }
-    }, {
-      root: null,
-      rootMargin: '0px',
-      threshold: .5
-    })
-
-    if (videoRef.current) observer.observe(videoRef.current);
-
-    return () => {
-      if (videoRef.current) observer.unobserve(videoRef.current);
-    }
-  }, []);
 
   // console.log(videoRef.current?.clientHeight);
 
@@ -100,10 +78,37 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
     };
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(async ([entry]) => {
+      if (videoRef.current) {
+        videoRef.current.src = await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/' + posts.url_video);
+      };
+
+      if (videoRef.current && entry.isIntersecting && videoRef.current.src) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play();
+      };
+
+      if (videoRef.current && !entry.isIntersecting) {
+        videoRef.current.pause();
+      }
+    }, {
+      root: null,
+      rootMargin: '0px',
+      threshold: .5
+    })
+
+    if (videoRef.current) observer.observe(videoRef.current);
+
+    return () => {
+      if (videoRef.current) observer.unobserve(videoRef.current);
+    }
+  }, []);
+
   return (
     <Container ref={ref}>
       <video ref={videoRef} width={posts.width >= posts.height ? '99%' : 'auto'} height='auto' muted loop playsInline onTimeUpdate={timeUpdate}>
-        <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + posts.url_video} type='video/webm' />
+        <source type='video/webm' />
       </video>
 
       <Controller>

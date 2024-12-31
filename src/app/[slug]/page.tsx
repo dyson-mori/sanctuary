@@ -9,10 +9,12 @@ export const metadata: Metadata = {
   description: 'The official Next.js Learn Dashboard built with App Router.',
 };
 
-import Search from './app';
+import App from './app';
 
-export default async function MainSearch() {
-  const data = await api.search.list();
+export default async function MainSearch({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
-  return <Search posts={data} />
+  const data = await api.search.list(slug);
+
+  return <App posts={data} />
 };

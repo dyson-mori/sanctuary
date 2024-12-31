@@ -1,16 +1,12 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-export const Container = styled.button`
+export const Container = styled.div`
   position: relative;
 
   border: 0;
   background-color: transparent;
 
   margin-bottom: 5px;
-
-  ${({ disabled }) => css`
-    cursor: ${disabled ? 'default' : 'pointer'};
-  `};
 
   overflow: hidden;
 

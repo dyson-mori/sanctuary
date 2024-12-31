@@ -35,3 +35,6 @@ sanctuary will be an open source project for the community
   ssh-keygen -f ~/.ssh/id_rsa -y
   &&
   ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+
+## Pix
+  - fazendo o pix o video é liberado

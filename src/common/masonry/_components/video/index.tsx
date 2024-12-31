@@ -7,26 +7,27 @@ import { Lock } from '@svg';
 import { convertUrlToBlob } from '@utils';
 
 interface Props {
-  show: boolean;
+  // show: boolean;
   post: PostProps;
+  enabled: boolean;
   size: {
     width: number;
     height: number;
   };
-  navigate: (id: string) => void;
+  onClick?: (data: PostProps) => void;
 };
 
-export const PostVideo = ({ post, show, size, navigate }: Props) => {
+export const PostVideo = ({ post, enabled, size, onClick }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(async ([entry]) => {
 
       if (videoRef.current) {
-        videoRef.current.src = await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.url_video);
+        videoRef.current.src = await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/' + post.pre_video);
       };
 
-      if (videoRef.current && entry.isIntersecting && show) {
+      if (videoRef.current && entry.isIntersecting && !!videoRef.current.src) {
         videoRef.current.play();
       };
 
@@ -44,17 +45,26 @@ export const PostVideo = ({ post, show, size, navigate }: Props) => {
     return () => {
       if (videoRef.current) observer.unobserve(videoRef.current);
     }
-  }, [show]);
+  }, []);
 
   const styles = {
     width: size.width <= 600 ? size.width / 2.1 : size.width / 6.2,
     height: post.height / post.width * (size.width <= 600 ? size.width / 2.1 : size.width / 6.2),
-    borderRadius: size.width <= 600 ? 12 : 6
+    borderRadius: size.width <= 600 ? 12 : 6,
+    cursor: enabled && !post.pre_video.includes('e_blur:800/') ? 'pointer' : 'default',
+    disabled: !enabled
   };
 
+  function handleClick() {
+    if (enabled && !post.pre_video.includes('e_blur:800/')) {
+      // @ts-expect-error: ignore
+      onClick(post)
+    }
+  }
+
   return (
-    <Container style={styles} disabled={!!post.hide} onClick={() => navigate('any')}>
-      {post.hide && (
+    <Container as='button' style={styles} onClick={handleClick}>
+      {post.pre_video.includes('e_blur:800/') && (
         <span>
           <Lock width={25} height={25} stroke='#fff' strokeWidth={2} />
         </span>

@@ -4,11 +4,18 @@ export const Container = styled.main`
   display: flex;
 
   justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
 
   width: auto;
+`;
 
-  padding: 5px;
+export const Content = styled.section`
+  display: flex;
+
+  flex-wrap: wrap;
+
+  width: 100%;
+  height: 100%;
 `;
 
 export const Footer = styled.footer`
@@ -16,7 +23,7 @@ export const Footer = styled.footer`
 
   bottom: 0;
 
-  height: 70px;
+  /* height: 70px; */
 
   display: flex;
 
@@ -24,8 +31,6 @@ export const Footer = styled.footer`
   align-items: center;
 
   width: 100%;
-
-  background-color: #ffffff1a;
 
   backdrop-filter : blur(1px);
 `;

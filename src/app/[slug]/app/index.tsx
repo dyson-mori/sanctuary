@@ -5,11 +5,11 @@ import React, { useRef } from 'react';
 import { PostProps } from '@global/interface';
 
 import TargetVideo from '../_components/video';
-import { HeaderAside } from '../_components/header';
+// import { HeaderAside } from '../_components/header';
 
-import { About, Container, Feed } from './styles';
-import { SectionTag } from '../_components/tags';
-import { Comments } from '../_components/comments';
+import { Container, Feed } from './styles';
+// import { SectionTag } from '../_components/tags';
+// import { Comments } from '../_components/comments';
 
 interface Props {
   posts: PostProps[];
@@ -47,18 +47,18 @@ export default function Search({ posts }: Props) {
         {posts.map((item, index) =>
           <TargetVideo
             posts={item}
-        // @ts-expect-error: ksoa
+            // @ts-expect-error: ksoa
             ref={ref => postRef.current[index] = ref}
             key={index}
           />
         )}
       </Feed>
 
-      <About>
+      {/* <About>
         <HeaderAside posts={posts} />
         <SectionTag tags={posts[0].categories} />
         <Comments comments={[]} />
-      </About>
+      </About> */}
 
     </Container>
   );

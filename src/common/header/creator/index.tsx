@@ -22,7 +22,7 @@ export default function Creator({ users }: ModalProps) {
   const [search, setSearch] = useState('');
   const [modal, setModal] = useState(false);
 
-  const filter = users.filter(f => f.nickname.includes(search.toLowerCase()));
+  const filter = users?.filter(f => f.nickname.includes(search.toLowerCase())) ?? [];
 
   function handleCreator() {
     // route.push(`/creators/${name}`)

@@ -14,6 +14,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
   return (
     <ThemeProvider theme={themes[storage ? 'dark' : 'light']}>
+
       <Notification>
         <html lang="en">
           <body className={`${montserrat.variable} ${montserrat_alternates.variable} ${my_soul.variable}`}>
