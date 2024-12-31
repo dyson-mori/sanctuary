@@ -51,9 +51,12 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
 
         {type === 'video' && value && (
           <div className="preview">
-            <video src={value} style={{ opacity: disable ? .5 : 1 }} />
+            {/* <video>
+              <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + value} type='video/webm' />
+            </video> */}
+            <video autoPlay={false} src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + value} style={{ opacity: disable ? .5 : 1 }} />
             <div className="preview-description">
-              <h4>{file.name}</h4>
+              <h4>{file.name ?? value.split('/')[2]}</h4>
               <p>{formatBytes(file.size, 2)}</p>
             </div>
           </div>

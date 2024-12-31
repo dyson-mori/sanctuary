@@ -8,11 +8,12 @@ interface Props {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   next?: object;
   body?: object;
-
+  param?: string;
 };
 
-export const fetcher = async ({ url, method, next, body }: Props) => {
-  const res = await fetch(`${process.env.NEXTBASE_URL}${url}`, {
+export const fetcher = async ({ url, method, next, body, param }: Props) => {
+  const p = param ? `?postId=${param}` : '';
+  const res = await fetch(`${process.env.NEXTBASE_URL}${url}${p}`, {
     method,
     next,
     // cache: 'no-store',
@@ -29,7 +30,7 @@ export const fetcher = async ({ url, method, next, body }: Props) => {
     return console.log(res.statusText)
   };
 
-  if (method === 'POST') {
+  if (method === 'POST' || method === 'PUT') {
     revalidatePath(url)
   };
 

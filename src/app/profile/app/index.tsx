@@ -22,7 +22,15 @@ interface Props {
 export default function AppProfile({ user, users, category }: Props) {
   const { width, height } = useWindowSize();
 
-  const [post, setPost] = useState({} as PostProps | undefined);
+  const [post, setPost] = useState({
+    post: {} as PostProps | undefined,
+    modal: false as boolean
+  });
+
+  function handleModalWithData(modal: boolean, post: PostProps | undefined) {
+    setPost({ modal, post })
+    // setData(post);
+  };
 
   return (
     <Container>
@@ -54,12 +62,12 @@ export default function AppProfile({ user, users, category }: Props) {
           {/* <Options></Options> */}
 
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <Masonry posts={user.post} onClick={setPost} />
+            <Masonry posts={user.post} onClick={evt => handleModalWithData(true, evt)} />
           </div>
         </Content>
       </Article>
 
-      <Register post={post} users={users} category={category} />
+      <Register modal={post} onClick={handleModalWithData} users={users} category={category} />
 
     </Container>
   )

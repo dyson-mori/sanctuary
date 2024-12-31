@@ -5,22 +5,30 @@ CREATE TABLE "users" (
     "lastname" TEXT NOT NULL,
     "nickname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "photo" TEXT NOT NULL,
+    "photo" TEXT,
+    "banner" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "post" (
+CREATE TABLE "posts" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "description" CHAR(80) NOT NULL,
-    "cloudinary_video" TEXT NOT NULL DEFAULT '{}',
+    "description" TEXT NOT NULL,
+    "width" INTEGER NOT NULL,
+    "height" INTEGER NOT NULL,
+    "pre_video" TEXT NOT NULL,
+    "pre_image" TEXT NOT NULL,
+    "url_video" TEXT NOT NULL,
+    "public_id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "post_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "posts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -39,6 +47,7 @@ CREATE TABLE "Hide" (
     "post_id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Hide_pkey" PRIMARY KEY ("id")
 );
@@ -62,15 +71,6 @@ CREATE TABLE "Like" (
 );
 
 -- CreateTable
-CREATE TABLE "Save" (
-    "id" TEXT NOT NULL,
-    "post_id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Save_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "_CategoryToPost" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL,
@@ -82,7 +82,10 @@ CREATE TABLE "_CategoryToPost" (
 CREATE UNIQUE INDEX "users_id_key" ON "users"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "post_id_key" ON "post"("id");
+CREATE UNIQUE INDEX "users_nickname_key" ON "users"("nickname");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "posts_id_key" ON "posts"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "category_id_key" ON "category"("id");
@@ -109,34 +112,19 @@ CREATE UNIQUE INDEX "Like_id_key" ON "Like"("id");
 CREATE INDEX "Like_post_id_idx" ON "Like"("post_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Save_id_key" ON "Save"("id");
-
--- CreateIndex
-CREATE INDEX "Save_post_id_idx" ON "Save"("post_id");
-
--- CreateIndex
 CREATE INDEX "_CategoryToPost_B_index" ON "_CategoryToPost"("B");
 
 -- AddForeignKey
-ALTER TABLE "post" ADD CONSTRAINT "post_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Hide" ADD CONSTRAINT "Hide_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Hide" ADD CONSTRAINT "Hide_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Hide" ADD CONSTRAINT "Hide_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "View" ADD CONSTRAINT "View_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Like" ADD CONSTRAINT "Like_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Save" ADD CONSTRAINT "Save_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "_CategoryToPost" ADD CONSTRAINT "_CategoryToPost_A_fkey" FOREIGN KEY ("A") REFERENCES "category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_CategoryToPost" ADD CONSTRAINT "_CategoryToPost_B_fkey" FOREIGN KEY ("B") REFERENCES "post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_CategoryToPost" ADD CONSTRAINT "_CategoryToPost_B_fkey" FOREIGN KEY ("B") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;

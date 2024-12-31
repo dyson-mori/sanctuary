@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma db push && next build",
-    "start": "npx prisma db push && next start",
+    "build": "npx prisma db push --force-reset && next build",
+    "start": "npx prisma db push --force-reset && next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@prisma/client": "^6.0.1",
     "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
     "cloudinary": "^2.5.1",
     "next": "15.1.0",
     "next-plugin-svgr": "^1.1.10",

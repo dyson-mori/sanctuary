@@ -12,14 +12,14 @@ import { serverActionCookie } from "@utils";
 
 import Register from "../_components/register";
 
-import { Container, Footer } from "./styles";
+import { Container, Content, Footer } from "./styles";
 
 type Props = {
   categories: CategoryProps[];
-  users: UserProps[];
+  user: UserProps;
 };
 
-export default function Categories({ categories, users }: Props) {
+export default function Categories({ categories, user }: Props) {
   const theme = useTheme();
   const route = useRouter();
 
@@ -48,18 +48,20 @@ export default function Categories({ categories, users }: Props) {
 
   return (
     <>
-      <Header users={users} user={users[0]} />
+      <Header user={user} />
 
       <Container>
-        {categories.map((row, index) => {
-          const find = !!selected.find(({ id }) => row.id === id);
+        <Content>
+          {categories.map((row, index) => {
+            const find = !!selected.find(({ id }) => row.id === id);
 
-          return (
-            <Button key={index} variant={find ? "selected" : "select"} disabled={row._count.post === 0} style={{ height: 40, margin: 2, flexGrow: 1 }} onClick={() => handleSelect(row)}>
-              {row?.name.replace('_', ' ')} - {row._count.post}
-            </Button>
-          )
-        })}
+            return (
+              <Button key={index} variant={find ? "selected" : "select"} disabled={row._count.post === 0} style={{ height: 40, margin: 2, flexGrow: 1 }} onClick={() => handleSelect(row)}>
+                {row?.name.replace('_', ' ')} - {row._count.post}
+              </Button>
+            )
+          })}
+        </Content>
         <Footer>
           <Button
             disabled={selected.length === 0}

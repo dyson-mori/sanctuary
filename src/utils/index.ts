@@ -22,6 +22,7 @@ export function formatBytes(bytes, decimals = 2) {
 };
 
 export async function convertUrlToBlob(url: string) {
+
   // try {
   // Fazendo a requisição para obter os dados do vídeo
   const response = await fetch(url);

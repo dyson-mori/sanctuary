@@ -1,65 +1,90 @@
-import { NextResponse } from "next/server";
-// import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
-// import { PostProps } from "@global/interface";
 import { prisma } from "@services";
 
-export async function GET() {
-  // const coo = await cookies();
-  // const value = coo.get('search')?.value as string;
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const post_id = url.searchParams.get("id");
 
-  // let find = {} as PostProps;
+  const cookie = await cookies();
+  const token = cookie.get('auth-token');
 
-  // if (value.slice(0, 3).startsWith('id=')) {
-  //   const found = await prisma.post.findFirst({
-  //     where: {
-  //       id: value.slice(0, 3).endsWith('id=') ? value.slice(3, value.length) : undefined
-  //     },
-  //     include: {
-  //       participant: {
-  //         select: {
-  //           id: true,
-  //           name: true,
-  //           photo: true,
-  //           public: true
-  //         }
-  //       },
-  //       categories: {
-  //         select: {
-  //           name: true
-  //         }
-  //       },
-  //     }
-  //   });
-
-  //   // find = found;
-  // };
-
-  const post = await prisma.post.findMany({
-    orderBy: {
-      createdAt: 'desc',
+  const found = await prisma.post.findFirst({
+    where: {
+      id: post_id ?? undefined
     },
-    // where: {
-    //   NOT: {
-    //     id: find?.id ?? undefined
-    //   },
-    //   categories: {
-    //     some: {
-    //       name: {
-    //         in: find?.categories.slice(0, 3).map(({ name }) => name) ?? value.slice(5, value.length).split(",").map(item => item.trim())
-    //       }
-    //     }
-    //   }
-    // },
     include: {
+      user: {
+        select: {
+          id: true,
+          nickname: true
+        }
+      },
+      private: {
+        select: {
+          user_id: true
+        }
+      },
       categories: {
         select: {
           name: true
         }
       },
     }
+  });
+
+  const post = await prisma.post.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+    where: {
+      NOT: {
+        id: found?.id,
+      },
+      categories: {
+        some: {
+          name: {
+            in: found?.categories.slice(0, 3).map(({ name }) => name)
+          }
+        }
+      }
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          nickname: true
+        }
+      },
+      private: {
+        select: {
+          user_id: true
+        }
+      },
+      categories: {
+        select: {
+          name: true
+        }
+      },
+    }
+  });
+
+  const find_to_hide = post.map(row => {
+    let priv = false;
+    const find = row.private.find(el => el.user_id === token?.value);
+
+    priv = !find?.user_id
+
+    if (token?.value === row.user.id) {
+      priv = false
+    };
+
+    return {
+      ...row,
+      url_video: priv ? `${'e_blur:800/' + row.url_video}` : row.url_video,
+    }
   })
 
-  return NextResponse.json(post, { status: 201, statusText: 'success' });
-  // return NextResponse.json(find ? [find, ...post] : post, { status: 201, statusText: 'success' });
+  return NextResponse.json([found, ...find_to_hide], { status: 201, statusText: 'success' });
 };

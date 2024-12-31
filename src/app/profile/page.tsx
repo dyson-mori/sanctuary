@@ -7,7 +7,7 @@ import { api } from "@services";
 import App from './app'
 
 export const metadata: Metadata = {
-  title: 'sanctuary | creators',
+  title: 'sanctuary | profile',
   description: 'sanctuary.com'
 };
 

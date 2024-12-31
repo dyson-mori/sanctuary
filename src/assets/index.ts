@@ -22,6 +22,7 @@ import { ReactComponent as Link } from './link.svg';
 import { ReactComponent as Google } from './google.svg';
 import { ReactComponent as Lock } from './lock.svg';
 import { ReactComponent as Times } from './times.svg';
+import { ReactComponent as Text } from './text.svg';
 
 export {
   Add,
@@ -47,5 +48,6 @@ export {
   Link,
   Google,
   Lock,
-  Times
+  Times,
+  Text
 }

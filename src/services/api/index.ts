@@ -4,19 +4,20 @@ import { ApiProps } from './types'
 
 export const api: ApiProps = {
   user: {
-    list: () => fetcher({ url: '/users', method: 'GET' }),
+    list: () => fetcher({ url: '/user', method: 'GET' }),
   },
   auth: {
-    find: () => fetcher({ url: '/auth', method: 'GET' }),
-    auth: (body) => fetcher({ url: '/auth', method: 'POST', body })
+    find: () => fetcher({ url: '/user/auth', method: 'GET' }),
+    auth: (body) => fetcher({ url: '/user/auth', method: 'POST', body })
   },
   post: {
-    list: () => fetcher({ url: '/post', method: 'GET' }),
+    list: () => fetcher({ url: '/post', method: 'GET', next: { tags: ['post'] } }),
     create: (body) => fetcher({ url: '/post', method: 'POST', body }),
+    update: (param, body) => fetcher({ url: '/post', method: 'PUT', body, param }),
   },
 
   search: {
-    list: () => fetcher({ url: '/search', method: 'GET' }),
+    list: (id) => fetcher({ url: `/search?id=${id}`, method: 'GET' }),
   },
 
   category: {
