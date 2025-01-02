@@ -7,7 +7,7 @@ v2.config({
 });
 
 export const cloudinary = {
-  upload: async (fileUri: string, fileName: string, folder?: 'creator' | null) => {
+  upload: async (fileUri: string, fileName: string) => {
     const upload = await v2.uploader
       .upload(
         fileUri, {
@@ -15,7 +15,7 @@ export const cloudinary = {
           resource_type: "auto",
           filename_override: fileName,
           use_filename: true,
-          folder: `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER}${folder ? '/' + folder : ''}`,
+          upload_preset: 'sanctuary',
       });
 
     const pre_image =

@@ -26,7 +26,7 @@ export default function Post({ posts, user }: Props) {
     <>
       <Header user={user} />
       <Container>
-        <Masonry posts={posts ?? []} onClick={navigate} />
+        <Masonry posts={posts} onClick={navigate} />
       </Container>
     </>
   );
