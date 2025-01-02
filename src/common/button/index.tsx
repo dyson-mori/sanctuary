@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 
 import { Container, Loading } from './styles';
 
-export type Variant = 'primary' | 'select' | 'selected' | 'error';
+export type Variant = 'primary' | 'select' | 'selected' | 'error' | 'loading';
 
 type ButtonProps = {
   variant?: Variant;
@@ -16,9 +16,9 @@ const loading_css = (
 );
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ loading, variant = 'primary', children, ...rest }, ref) => (
-    <Container ref={ref} variant={variant} disabled={loading} {...rest}>
-      {loading ? loading_css : children}
+  ({ variant = 'primary', children, ...rest }, ref) => (
+    <Container ref={ref} variant={variant} disabled={variant === 'loading'} {...rest}>
+      {variant === 'loading' ? loading_css : children}
     </Container>
   )
 );

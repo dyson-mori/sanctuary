@@ -6,7 +6,7 @@ import { useClickOutside } from "@hooks";
 interface Props {
   as?: 'form',
   open: boolean;
-  onClickOutside: (b: boolean) => void;
+  onClickOutside?: (b: boolean) => void;
   children: ReactNode;
   style?: CSSProperties;
   onSubmit?: () => void;
@@ -20,7 +20,11 @@ export const Modal: FC<Props> = ({ open, onClickOutside, children, ...rest }) =>
     opacity: open ? 1 : 0,
   };
 
-  useClickOutside(contentRef, () => onClickOutside(false));
+  useClickOutside(contentRef, () => {
+    if (!!onClickOutside) {
+      onClickOutside(false)
+    }
+  });
 
   return (
     <Container style={content_style}>

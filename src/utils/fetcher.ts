@@ -9,9 +9,10 @@ interface Props {
   next?: object;
   body?: object;
   param?: string;
+  header?: object;
 };
 
-export const fetcher = async ({ url, method, next, body, param }: Props) => {
+export const fetcher = async ({ url, method, next, body, param, header }: Props) => {
   const p = param ? `?postId=${param}` : '';
   const res = await fetch(`${process.env.NEXTBASE_URL}${url}${p}`, {
     method,
@@ -20,7 +21,8 @@ export const fetcher = async ({ url, method, next, body, param }: Props) => {
     cache: 'no-cache',
     // @ts-expect-error: ignore header type
     headers: {
-      'Content-type': 'application/json',
+      ...header,
+      // 'Content-type': 'application/json',
       Cookie: await cookies()
     },
     body: JSON.stringify(body)

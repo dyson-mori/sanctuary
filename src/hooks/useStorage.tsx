@@ -5,7 +5,9 @@ type Response = [
   Dispatch<SetStateAction<boolean>>
 ];
 
-export function useStorage<T>(key: '@preview-videos' | '@dark-mode', initialState: T): Response {
+type Key = '@preview-videos' | '@dark-mode' | '@language';
+
+export function useStorage<T>(key: Key, initialState: T): Response {
   const [state, setState] = useState(() => {
     if (typeof window === "undefined") return;
 

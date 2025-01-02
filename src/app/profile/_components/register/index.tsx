@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input, Modal, Button, Upload, Tags } from "@common";
 import { Description, Upload as UplaodSvg, Tag, Lock, Text } from "@svg";
-import { api, cloudinary } from "@services";
+import { api } from "@services";
 
 import { steps, schema, schemaProps } from "./constants";
 import { NewCategory, Header, Div } from "./styles";
@@ -28,7 +28,7 @@ export default function Register({ modal, users, category, onClick }: Props) {
     resolver: yupResolver(schema)
   });
 
-  const [loading, setLoading] = useState(false);
+  const [variant, setVariant] = useState<'primary' | 'loading' | 'error'>('primary');
   const [currentStep, setCurrentStep] = useState(0);
 
   const categories = category.map(r => ({
@@ -44,57 +44,29 @@ export default function Register({ modal, users, category, onClick }: Props) {
   }));
 
   const processForm: SubmitHandler<schemaProps> = async (data: schemaProps) => {
-    setLoading(true);
+    setVariant('loading');
 
     if (modal.post?.id) {
-      let fileObj = {} as {
-        pre_image: string;
-        pre_video: string;
-        url_video: string;
-        public_id: string;
-        width: number;
-        height: number;
-      };
-
-      if (modal.post.pre_video !== data.file) {
-        fileObj = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
-      };
-
       return await api.post.update(modal.post.id, {
+        file: data.file,
         title: data.title,
-        // title: data.title.replace('\ ', ''),
         description: data.description,
-
-        pre_image: fileObj.pre_image,
-        pre_video: fileObj.pre_video,
-        url_video: fileObj.url_video,
-        width: fileObj.width,
-        height: fileObj.height,
-        public_id: fileObj.public_id,
-
         categories: data.categories as CategoryProps[],
         // @ts-expect-error: ignore
         private: data.private
       }).then(() => {
         reset({ file: '', categories: [], description: '', title: '', })
         onClick(false, {} as PostProps);
-        setLoading(false);
+        setVariant('primary');
       })
         .catch(err => alert(err))
     }
 
     try {
-      const video = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
-
       await api.post.create({
+        file: data.file,
         title: data.title,
         description: data.description,
-        pre_image: video.pre_image,
-        pre_video: video.pre_video,
-        url_video: video.url_video,
-        width: video.width,
-        height: video.height,
-        public_id: video.public_id,
         categories: data.categories as CategoryProps[],
         // @ts-expect-error: ignore
         private: data.private
@@ -103,11 +75,15 @@ export default function Register({ modal, users, category, onClick }: Props) {
           reset({ file: '', categories: [], description: '', title: '', })
           onClick(false, {} as PostProps);
         })
-        .catch(err => alert(err))
+        .catch(err => {
+          alert(err)
+          setVariant('error');
+        })
     } catch (err) {
-      alert(err);
+      alert(JSON.stringify(err));
+      setVariant('error');
     } finally {
-      setLoading(false);
+      setVariant('primary');
     }
   };
 
@@ -194,31 +170,10 @@ export default function Register({ modal, users, category, onClick }: Props) {
               <div style={{ width: 5 }} />
               <Tags icon={Lock} options={users_options} onChange={handlePrivate} />
             </Div>
-
-            {/* <div style={{ height: 10 }} />
-
-            <Controller
-              name="collaborators"
-              control={control}
-              render={({ field: { value, onChange } }) =>
-                <Select icon={Collaborators} width="full" value={value ? value.label : ''} placeholder="only they can see (optional)" select={select} onChange={onChange} />
-              }
-            /> */}
-
-            {/* <div style={{ height: 10 }} />
-            <Controller
-              name="collaborators"
-              control={control}
-              render={({ field: { value, onChange } }) =>
-                <Select icon={Collaborators} width="full" value={value ? value.label : ''} placeholder="collaborators (optional)" select={select} onChange={onChange} />
-              }
-            /> */}
-
-            {/* <div style={{ height: 20 }} /> */}
           </>
         )}
 
-        <Button type="button" loading={loading} style={{ height: 40 }} onClick={next}>
+        <Button type="button" variant={variant} style={{ height: 40 }} onClick={next}>
           {currentStep === 0 ? 'next' : modal.post?.id ? 'update' : 'register'}
         </Button>
       </Modal>

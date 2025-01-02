@@ -1,12 +1,9 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
 
-import Image from 'next/image';
-
 import { PostProps } from '@global/interface';
 
 import { Container, Controller, Timeline } from './styles';
-import { convertUrlToBlob } from '@utils';
-// import { useWindowSize } from '@hooks';
+// import { convertUrlToBlob } from '@utils';
 
 interface Props {
   posts: PostProps;
@@ -19,11 +16,7 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
   const videoRef = useRef<HTMLVideoElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
 
-  // const size = useWindowSize();
-
-  // console.log(videoRef.current?.clientHeight);
-
-  const handleTimelineUpdate = (e: MouseEvent) => {
+  function handleTimelineUpdate(e: MouseEvent) {
     const rect = timelineRef.current!.getBoundingClientRect()
     const percent = Math.min(
       Math.max(0, e.x - rect.x),
@@ -38,7 +31,7 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
     }
   };
 
-  const timeUpdate = (event: React.SyntheticEvent) => {
+  function timeUpdate(event: React.SyntheticEvent) {
     const videoElement = event.target as HTMLVideoElement;
     const total = (videoElement.currentTime / videoElement.duration);
     return timelineRef.current?.style.setProperty("--progress-position", String(total))
@@ -76,15 +69,9 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
         if (isScrubbing) handleTimelineUpdate(e)
       })
     };
-  }, []);
 
-  useEffect(() => {
     const observer = new IntersectionObserver(async ([entry]) => {
-      if (videoRef.current) {
-        videoRef.current.src = await convertUrlToBlob('https://res.cloudinary.com/dyrtdrnky/video/upload/' + posts.url_video);
-      };
-
-      if (videoRef.current && entry.isIntersecting && videoRef.current.src) {
+      if (videoRef.current && entry.isIntersecting && posts.url_video) {
         videoRef.current.currentTime = 0;
         videoRef.current.play();
       };
@@ -107,8 +94,18 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
 
   return (
     <Container ref={ref}>
-      <video ref={videoRef} width={posts.width >= posts.height ? '99%' : 'auto'} height='auto' muted loop playsInline onTimeUpdate={timeUpdate}>
-        <source type='video/webm' />
+      <video
+        ref={videoRef}
+        width={posts.width >= posts.height ? '99%' : 'auto'}
+        height='auto'
+        muted
+        loop
+        playsInline
+        onTimeUpdate={timeUpdate}
+        controlsList='nodownload'
+        onContextMenu={e => e.preventDefault()}
+      >
+        <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + posts.url_video} type='video/webm' />
       </video>
 
       <Controller>
@@ -119,7 +116,7 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
         </Timeline>
       </Controller>
 
-      <Image
+      {/* <Image
         style={{
           position: 'absolute',
           objectFit: 'cover',
@@ -133,7 +130,7 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
         width={50}
         height={50}
         alt={'item.creator.name'}
-      />
+      /> */}
     </Container>
   )
 })
