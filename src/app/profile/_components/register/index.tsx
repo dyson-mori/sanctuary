@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input, Modal, Button, Upload, Tags } from "@common";
 import { Description, Upload as UplaodSvg, Tag, Lock, Text } from "@svg";
-import { api, cloudinary } from "@services";
+import { api } from "@services";
 
 import { steps, schema, schemaProps } from "./constants";
 import { NewCategory, Header, Div } from "./styles";
