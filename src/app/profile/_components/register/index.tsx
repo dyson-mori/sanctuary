@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input, Modal, Button, Upload, Tags } from "@common";
 import { Description, Upload as UplaodSvg, Tag, Lock, Text } from "@svg";
-import { api } from "@services";
+import { api, cloudinary } from "@services";
 
 import { steps, schema, schemaProps } from "./constants";
 import { NewCategory, Header, Div } from "./styles";
@@ -46,45 +46,46 @@ export default function Register({ modal, users, category, onClick }: Props) {
   const processForm: SubmitHandler<schemaProps> = async (data: schemaProps) => {
     setVariant('loading');
 
-    if (modal.post?.id) {
-      return await api.post.update(modal.post.id, {
-        file: data.file,
-        title: data.title,
-        description: data.description,
-        categories: data.categories as CategoryProps[],
-        // @ts-expect-error: ignore
-        private: data.private
-      }).then(() => {
+    // if (modal.post?.id) {
+    //   return await api.post.update(modal.post.id, {
+    //     file: data.file,
+    //     title: data.title,
+    //     description: data.description,
+    //     categories: data.categories as CategoryProps[],
+    //     // @ts-expect-error: ignore
+    //     private: data.private
+    //   }).then(() => {
+    //     reset({ file: '', categories: [], description: '', title: '', })
+    //     onClick(false, {} as PostProps);
+    //     setVariant('primary');
+    //   })
+    //     .catch(err => alert(err))
+    // };
+
+    const video = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
+
+    await api.post.create({
+      pre_image: video.pre_image,
+      pre_video: video.pre_video,
+      url_video: video.url_video,
+      width: video.width,
+      height: video.height,
+      public_id: video.public_id,
+      title: data.title,
+      description: data.description,
+      categories: data.categories as CategoryProps[],
+      // @ts-expect-error: ignore
+      private: data.private
+    })
+      .then(() => {
         reset({ file: '', categories: [], description: '', title: '', })
         onClick(false, {} as PostProps);
         setVariant('primary');
       })
-        .catch(err => alert(err))
-    }
-
-    try {
-      await api.post.create({
-        file: data.file,
-        title: data.title,
-        description: data.description,
-        categories: data.categories as CategoryProps[],
-        // @ts-expect-error: ignore
-        private: data.private
+      .catch(err => {
+        alert(err)
+        setVariant('error');
       })
-        .then(() => {
-          reset({ file: '', categories: [], description: '', title: '', })
-          onClick(false, {} as PostProps);
-        })
-        .catch(err => {
-          alert(err)
-          setVariant('error');
-        })
-    } catch (err) {
-      alert(JSON.stringify(err));
-      setVariant('error');
-    } finally {
-      setVariant('primary');
-    }
   };
 
   const next = async () => {
