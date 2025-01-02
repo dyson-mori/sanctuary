@@ -25,3 +25,12 @@ export const Container = styled.button`
     color: #fff;
   }
 `;
+
+
+export const Content = styled.div`
+  display: flex;
+
+  width: 100%;
+
+  flex-wrap: wrap;
+`;

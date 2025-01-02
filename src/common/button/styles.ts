@@ -51,6 +51,12 @@ export const Container = styled.button<{ variant: Variant }>`
       color: ${theme.colors.white};
       font-weight: 600;
     `};
+
+    ${variant === 'loading' && css`
+      background-color: ${theme.colors.primary};
+      color: ${theme.colors.white};
+      width: 250px;
+    `};
   `};
 `;
 

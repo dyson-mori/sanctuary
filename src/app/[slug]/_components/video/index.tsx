@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
 
-import Image from 'next/image';
+// import Image from 'next/image';
 
 import { PostProps } from '@global/interface';
 
@@ -119,7 +119,7 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
         </Timeline>
       </Controller>
 
-      <Image
+      {/* <Image
         style={{
           position: 'absolute',
           objectFit: 'cover',
@@ -133,7 +133,7 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
         width={50}
         height={50}
         alt={'item.creator.name'}
-      />
+      /> */}
     </Container>
   )
 })

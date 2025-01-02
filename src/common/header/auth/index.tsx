@@ -2,6 +2,8 @@
 
 import { FC, Fragment, useState } from 'react';
 
+import Image from 'next/image';
+
 import { useTheme } from 'styled-components';
 
 import { Controller, useForm } from "react-hook-form";
@@ -16,9 +18,7 @@ import { User, Lock, Logo } from '@svg';
 import { custom_revalidate, serverActionCookie } from '@utils';
 import { UserProps } from '@global/interface';
 
-import { Button as ButtonStyled } from './styles';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { ButtonLink, Button as ButtonStyled } from './styles';
 
 const schema = yup.object({
   nickname: yup.string().required(),
@@ -29,7 +29,6 @@ type schemaProps = yup.InferType<typeof schema>;
 
 const Authentication: FC<{ user: UserProps }> = ({ user }) => {
   const themes = useTheme();
-  const route = useRouter();
 
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema)
@@ -37,17 +36,14 @@ const Authentication: FC<{ user: UserProps }> = ({ user }) => {
 
   const [modal, setModal] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-  const [variant, setVariant] = useState<'primary' | 'error'>('primary');
+  const [variant, setVariant] = useState<'primary' | 'loading' | 'error'>('primary');
 
   const submit = async (data: schemaProps) => {
-    setLoading(true);
-    setVariant('primary');
+    setVariant('loading');
 
     const user = await api.auth.auth(data);
 
     if (!user) {
-      setLoading(false);
       setVariant('error');
       return console.log(user)
     };
@@ -55,28 +51,23 @@ const Authentication: FC<{ user: UserProps }> = ({ user }) => {
     await serverActionCookie('auth-token', user);
 
     setModal(false);
-    setLoading(false);
     setVariant('primary');
     custom_revalidate('/post');
-  };
-
-  const handleButton = () => {
-    if (!!user) {
-      return route.push('/profile')
-    }
-    return setModal(true);
+    custom_revalidate('/auth');
   };
 
   return (
     <Fragment>
-
-      <ButtonStyled onClick={handleButton}>
-        {
-          user ?
-            <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + user.photo} width={25} height={25} alt='photo' style={{ borderRadius: 50 }} /> :
-            <User width={22} height={22} stroke={themes.colors.primary} strokeWidth={1.5} />
-        }
-      </ButtonStyled>
+      {
+        user ?
+          <ButtonLink href='/profile'>
+            <Image src={'https://res.cloudinary.com/dyrtdrnky/image/upload/' + user.photo} width={25} height={25} alt='photo' style={{ borderRadius: 50 }} />
+          </ButtonLink>
+          :
+          <ButtonStyled onClick={() => setModal(true)}>
+            <User width={22} height={22} strokeWidth={1.5} />
+          </ButtonStyled>
+      }
 
       <Modal as='form' open={modal} onClickOutside={setModal} style={{ padding: '40px 0' }} onSubmit={handleSubmit(submit)}>
         <Logo id="logo" width={60} height={60} stroke={themes.colors.primary} strokeWidth={10} />
@@ -107,7 +98,7 @@ const Authentication: FC<{ user: UserProps }> = ({ user }) => {
 
         <div style={{ height: 5 }} />
 
-        <Button type="submit" variant={variant} loading={loading} disabled={loading}>
+        <Button type="submit" variant={variant}>
           {variant === 'error' ? 'fail' : 'login'}
         </Button>
       </Modal>
