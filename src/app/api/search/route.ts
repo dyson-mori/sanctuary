@@ -72,9 +72,19 @@ export async function GET(request: NextRequest) {
 
   const find_to_hide = post.map(row => {
     let priv = false;
-    const find = row.private.find(el => el.user_id === token?.value);
+    const find = !!row.private.find(el => el.user_id === token?.value);
 
-    priv = !find?.user_id
+    if (row.private.length > 0 && !token?.value) {
+      priv = true
+    };
+
+    if (find && priv === false) {
+      priv = false
+    };
+
+    if (!find && row.private.length > 0) {
+      priv = true
+    };
 
     if (token?.value === row.user.id) {
       priv = false
@@ -82,7 +92,7 @@ export async function GET(request: NextRequest) {
 
     return {
       ...row,
-      url_video: priv ? `${'e_blur:800/' + row.url_video}` : row.url_video,
+      pre_video: priv ? `${'e_blur:800/' + row.pre_video}` : row.pre_video,
     }
   })
 
