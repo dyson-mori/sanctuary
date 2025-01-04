@@ -37,6 +37,7 @@ export async function GET() {
           description: true,
           height: true,
           pre_video: true,
+          pre_image: true,
           categories: true,
           private: {
             select: {
