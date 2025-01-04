@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input, Modal, Button, Upload, Tags } from "@common";
 import { Description, Upload as UplaodSvg, Tag, Lock, Text } from "@svg";
-import { api } from "@services";
+import { api, cloudinary } from "@services";
 
 import { steps, schema, schemaProps } from "./constants";
 import { NewCategory, Header, Div } from "./styles";
@@ -62,8 +62,15 @@ export default function Register({ modal, users, category, onClick }: Props) {
         .catch(err => alert(err))
     };
 
+    const video = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'))
+
     await api.post.create({
-      file: data.file,
+      width: video.width,
+      height: video.height,
+      pre_image: video.pre_image,
+      pre_video: video.pre_video,
+      url_video: video.url_video,
+      public_id: video.public_id,
       title: data.title,
       description: data.description,
       categories: data.categories as CategoryProps[],
@@ -132,7 +139,7 @@ export default function Register({ modal, users, category, onClick }: Props) {
             name="file"
             control={control}
             render={({ field: { value, onChange } }) =>
-              <Upload type="video" label='Choose a Video' value={value} onChange={onChange} disable={false} />
+              <Upload type="video" label='maximum limit of 5 mb' value={value} onChange={onChange} disable={false} />
             }
           />
         )}

@@ -3,19 +3,34 @@ import { cookies } from "next/headers";
 
 import { PostProps } from "@global/interface";
 
-import { cloudinary, prisma } from "@services";
+import { prisma } from "@services";
 
 export async function POST(request: NextRequest) {
   const cookie = await cookies();
   const token = cookie.get('auth-token');
 
-  const { file, title, description, categories, private: priv } = await request.json() as PostProps & { file: string };
+  const { title,
+    description,
+    categories,
+    width,
+    height,
+    pre_image,
+    pre_video,
+    url_video,
+    public_id,
+    private: priv
+  } = await request.json() as PostProps & { file: string };
 
   if (!token) {
     return NextResponse.json(false, { status: 401, statusText: 'token' })
   };
 
-  const video = await cloudinary.upload(file, title.replaceAll(' ', '_'));
+  // const video = await cloudinary.upload(file, title.replaceAll(' ', '_'));
+
+  // if (!video) {
+  //   return NextResponse.json(false, { status: 401, statusText: 'upload not work' })
+  // };
+
   const verify = await prisma.user.findFirst({
     where: {
       id: token!.value
@@ -31,12 +46,12 @@ export async function POST(request: NextRequest) {
       title,
       description,
       user_id: token!.value,
-      pre_image: video.pre_image,
-      pre_video: video.pre_video,
-      url_video: video.url_video,
-      width: video.width,
-      height: video.height,
-      public_id: video.public_id,
+      pre_image,
+      pre_video,
+      url_video,
+      width,
+      height,
+      public_id,
       categories: {
         connect: categories.map(({ id }) => ({ id }))
       },
