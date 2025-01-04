@@ -2,7 +2,7 @@ import { useWindowSize } from "@hooks";
 
 import { PostProps } from "@global/interface";
 
-import { PostVideo } from "./_components/video";
+import { PostVideo } from "./video";
 
 import { Column } from "./styles";
 

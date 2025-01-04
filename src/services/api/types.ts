@@ -15,6 +15,7 @@ export type ApiProps = {
     list: () => Promise<PostProps[]>;
     create: (body: CreatePostProps) => Promise<boolean>;
     update: (param: string, body: CreatePostProps) => Promise<boolean>;
+    delete: (id: string) => Promise<boolean>;
   };
   search: {
     list: (id: string) => Promise<PostProps[]>;

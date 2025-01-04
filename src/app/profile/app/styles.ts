@@ -62,28 +62,37 @@ export const Article = styled.article`
 
   justify-content: space-evenly;
 
-  width: 100%;
-  min-height: 50vh;
-
   margin-top: 10px;
-`;
 
-export const Content = styled.section`
-  display: flex;
+  section {
+    display: flex;
 
-  width: 100%;
+    align-items: center;
+    flex-direction: column;
 
-  flex-direction: column;
+    width: calc(100% / 6);
+  }
 `;
 
 export const Options = styled.div`
+  position: relative;
+
   display: flex;
-
   justify-content: center;
+  align-items: center;
 
-  width: 100%;
+  .options {
+    position: absolute;
 
-  margin: 10px 0px;
+    width: 100%;
+    display: flex;
+    
+    justify-content: space-around;
+
+    button {
+      color: #fff;
+    }
+  };
 `;
 
 // import Link from "next/link";

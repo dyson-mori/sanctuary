@@ -1,9 +1,11 @@
 import { FC, useState } from "react";
-import { Image as ImageSvg, Video } from "@svg";
 
-import { Container } from "./styles";
 import { useTheme } from "styled-components";
+
+import { Image as ImageSvg, Video } from "@svg";
 import { formatBytes } from "@utils";
+
+import { Container, Preview } from "./styles";
 
 interface UploadProps {
   type: 'video' | 'image',
@@ -14,20 +16,25 @@ interface UploadProps {
 };
 
 export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange }) => {
-  const [file, setFile] = useState({} as File);
+  const [file, setFile] = useState({
+    file: {} as File,
+    preview: null as string | null,
+    status: '' as 'loading' | 'done'
+  });
+
   const theme = useTheme();
 
   const handleFile = (evt) => {
     const reader = new FileReader();
-
-    setFile(evt.target.files![0]);
-
-    // if (evt.target.files![0].file >= 4565117) {
-    //   onChange()
+    // if (evt.target.files![0].size >= bytes / Math.pow(1024, i)) {
+    //   setFile({ file: {}, status: 'error' });
     // };
 
     reader.readAsDataURL(evt.target.files![0]);
-    reader.onloadend = () => onChange(reader.result as string);
+    reader.onloadend = () => {
+      setFile({ file: evt.target.files![0], preview: reader.result as string, status: 'done' });
+      onChange(reader.result as string)
+    };
   };
 
   return (
@@ -38,6 +45,7 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
           zIndex: 0,
           height: !value ? 200 : 'auto',
           alignItems: !value ? 'center' : 'start',
+          // borderColor: file.status === 'error' ? 'red' : ''
         }}
       >
 
@@ -50,24 +58,23 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
         )}
 
         {type === 'video' && value && (
-          <div className="preview">
-            {/* <video>
-              <source src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + value} type='video/webm' />
-            </video> */}
-            <video autoPlay={false} src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + value} style={{ opacity: disable ? .5 : 1 }} />
+          <Preview>
+            <video autoPlay={false} style={{ opacity: disable ? .5 : 1 }}>
+              <source src={file.preview ?? 'https://res.cloudinary.com/dyrtdrnky/video/upload/' + value} type='video/webm' />
+            </video>
             <div className="preview-description">
-              <h4>{file.name ?? value.split('/')[2]}</h4>
-              <p>{formatBytes(file.size, 2)}</p>
+              <h4>{file.file.name ?? value.split('/')[2]}</h4>
+              <p>{formatBytes(file.file.size, 2)}</p>
             </div>
-          </div>
+          </Preview>
         )}
 
         {type === 'image' && value && (
           <div className="preview">
             <img src={value} style={{ opacity: disable ? .5 : 1 }} />
             <div className="preview-description">
-              <h4>{file.name}</h4>
-              <p>{formatBytes(file.size, 2)}</p>
+              <h4>{file.file.name}</h4>
+              <p>{formatBytes(file.file.size, 2)}</p>
             </div>
           </div>
         )}

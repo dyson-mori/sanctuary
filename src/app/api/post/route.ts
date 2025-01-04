@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { prisma } from "@services";
+import { cloudinary, prisma } from "@services";
 
 export async function GET() {
   const cookie = await cookies();
@@ -61,7 +61,7 @@ export * from './put';
 
 export async function DELETE(request: NextRequest) {
   const url = new URL(request.url);
-  const post_id = url.searchParams.get("post_id");
+  const post_id = url.searchParams.get("postId");
 
   const admin = await prisma.post.delete({
     where: {
@@ -73,7 +73,9 @@ export async function DELETE(request: NextRequest) {
 
   if (!admin.id) {
     return NextResponse.json(false, { status: 401, statusText: 'this post cannot deleted' })
-  }
+  };
+
+  await cloudinary.destroy(admin.public_id, "video");
 
   return NextResponse.json(true, { status: 201, statusText: 'deleted' })
 };

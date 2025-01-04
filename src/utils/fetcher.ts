@@ -32,7 +32,7 @@ export const fetcher = async ({ url, method, next, body, param, header }: Props)
     return console.log(res.statusText)
   };
 
-  if (method === 'POST' || method === 'PUT') {
+  if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
     revalidatePath(url)
   };
 

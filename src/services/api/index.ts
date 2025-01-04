@@ -14,6 +14,7 @@ export const api: ApiProps = {
     list: () => fetcher({ url: '/post', method: 'GET', next: { tags: ['post'] } }),
     create: (body) => fetcher({ url: '/post', method: 'POST', body }),
     update: (param, body) => fetcher({ url: '/post', method: 'PUT', body, param }),
+    delete: (param) => fetcher({ url: '/post', method: 'DELETE', param })
   },
 
   search: {
