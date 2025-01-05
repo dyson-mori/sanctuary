@@ -174,7 +174,7 @@ export default function Register({ post, users, category, onClick }: Props) {
                 }
               />
               <div style={{ width: 5 }} />
-              <Tags title="categories" icon={Tag} options={categories} onChange={evt => setValue('categories', evt)} />
+              <Tags icon={Tag} options={categories} onChange={evt => setValue('categories', evt)} />
             </Div>
 
             <div style={{ height: 10 }} />
@@ -188,7 +188,7 @@ export default function Register({ post, users, category, onClick }: Props) {
                 }
               />
               <div style={{ width: 5 }} />
-              <Tags title="private content for" icon={Lock} options={users_options} onChange={handlePrivate} />
+              <Tags icon={Lock} options={users_options} onChange={handlePrivate} />
             </Div>
           </>
         )}
