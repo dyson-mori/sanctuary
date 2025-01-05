@@ -38,3 +38,9 @@ sanctuary will be an open source project for the community
 
 ## Pix
   - fazendo o pix o video é liberado
+
+## To Do
+  [] melhorar a renderização dos videos
+    - existe uma demora a cada scroll dado pelo usuário
+
+  [] melhorar o timeline de cada video

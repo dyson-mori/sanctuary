@@ -13,7 +13,7 @@ export const Container = styled.button<{ variant: Variant }>`
 
   margin: 5px;
   padding: 5px 10px;
-  height: 50px;
+  height: 40px;
 
   cursor: pointer;
 

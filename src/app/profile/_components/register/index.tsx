@@ -3,58 +3,62 @@ import { useEffect, useState } from "react";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { api, cloudinary } from "@services";
 import { Input, Modal, Button, Upload, Tags } from "@common";
 import { Description, Upload as UplaodSvg, Tag, Lock, Text } from "@svg";
-import { api, cloudinary } from "@services";
+
+import { CategoryProps, PostProps, UserProps } from "@global/interface";
 
 import { steps, schema, schemaProps } from "./constants";
 import { NewCategory, Header, Div } from "./styles";
-import { CategoryProps, PostProps, UserProps } from "@global/interface";
 
 type FieldName = keyof schemaProps;
 
 type Props = {
-  modal: {
-    post: PostProps | undefined;
-    modal: boolean;
-  };
-  onClick: (modal: boolean, post: PostProps | undefined) => void;
+  post?: PostProps;
   users: UserProps[];
   category: CategoryProps[];
+  onClick: (post?: PostProps) => void;
 };
 
-export default function Register({ modal, users, category, onClick }: Props) {
+export default function Register({ post, users, category, onClick }: Props) {
   const { control, handleSubmit, setValue, reset, trigger } = useForm({
     resolver: yupResolver(schema)
   });
 
-  const [variant, setVariant] = useState<'primary' | 'loading' | 'error'>('primary');
+  const [modal, setModal] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [variant, setVariant] = useState<'primary' | 'loading' | 'error'>('primary');
 
   const categories = category.map(r => ({
     id: r.id,
     name: r.name,
-    selected: !!modal.post?.categories?.find(cat => cat.id === r.id)
+    selected: !!post?.categories?.find(cat => cat.id === r.id)
   }));
 
   const users_options = users.map(r => ({
     id: r.id,
     name: r.nickname,
-    selected: !!modal.post?.private?.find(cat => cat.user.id === r.id)
+    selected: !!post?.private?.find(cat => cat.user.id === r.id)
   }));
+
+  function handleCloseModal() {
+    onClick(undefined);
+    setModal(false);
+  };
 
   const processForm: SubmitHandler<schemaProps> = async (data: schemaProps) => {
     setVariant('loading');
 
     let prefix = {} as PostProps;
 
-    if (modal.post?.id) {
-      if (modal.post.pre_video !== data.file) {
-        await cloudinary.destroy(modal.post.public_id, 'video');
+    if (post?.id) {
+      if (post.pre_video !== data.file) {
+        await cloudinary.destroy(post.public_id, 'video');
         prefix = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
       };
 
-      return await api.post.update(modal.post.id, {
+      return await api.post.update(post.id, {
         width: prefix.width,
         height: prefix.height,
         pre_image: prefix.pre_image,
@@ -68,11 +72,10 @@ export default function Register({ modal, users, category, onClick }: Props) {
         // @ts-expect-error: ignore
         private: data.private
       }).then(() => {
-        reset({ file: '', categories: [], description: '', title: '', })
-        onClick(false, {} as PostProps);
+        handleCloseModal()
         setVariant('primary');
       })
-        .catch(err => alert(err))
+        .catch(() => setVariant('error'))
     };
 
     const video = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
@@ -84,6 +87,7 @@ export default function Register({ modal, users, category, onClick }: Props) {
       pre_video: video.pre_video,
       url_video: video.url_video,
       public_id: video.public_id,
+
       title: data.title,
       description: data.description,
       categories: data.categories as CategoryProps[],
@@ -92,16 +96,13 @@ export default function Register({ modal, users, category, onClick }: Props) {
     })
       .then(() => {
         reset({ file: '', categories: [], description: '', title: '', })
-        onClick(false, {} as PostProps);
+        handleCloseModal()
         setVariant('primary');
       })
-      .catch(err => {
-        alert(err)
-        setVariant('error');
-      })
+      .catch(() => setVariant('error'))
   };
 
-  const next = async () => {
+  async function next() {
     const fields = steps[currentStep].fields;
     const output = await trigger(fields as FieldName[], { shouldFocus: true });
 
@@ -112,7 +113,7 @@ export default function Register({ modal, users, category, onClick }: Props) {
     return setCurrentStep(step => step + 1);
   };
 
-  const handlePrivate = (evt: { id: string, name: string }[]) => {
+  function handlePrivate(evt: { id: string, name: string }[]) {
     const build = evt.map(row => ({
       user: {
         id: row.id,
@@ -122,23 +123,28 @@ export default function Register({ modal, users, category, onClick }: Props) {
     setValue('private', build)
   };
 
+  function handleClose() {
+    handleCloseModal();
+    setModal(false);
+  };
+
   useEffect(() => {
     setCurrentStep(0);
-    setValue('file', modal.post?.pre_video ?? '');
-    setValue('title', modal.post?.title ?? '');
-    setValue('description', modal.post?.description ?? '');
-    setValue('categories', modal.post?.categories ?? []);
+    setValue('file', post?.pre_video ?? '');
+    setValue('title', post?.title ?? '');
+    setValue('description', post?.description ?? '');
+    setValue('categories', post?.categories ?? []);
     // @ts-expect-error: ignore
-    setValue('private', modal.post?.private ?? []);
-  }, [modal.modal]);
+    setValue('private', post?.private ?? []);
+  }, [post?.id]);
 
   return (
     <>
-      <NewCategory onClick={() => onClick(true, undefined)}>
+      <NewCategory onClick={() => setModal(true)}>
         <UplaodSvg width={25} height={25} stroke='white' strokeWidth={2} />
       </NewCategory>
 
-      <Modal as="form" open={modal.modal} onClickOutside={evt => onClick(evt, undefined)} style={{ padding: '30px 25px', maxWidth: 450 }}>
+      <Modal as="form" open={!!post?.id || modal} onClickOutside={handleClose} style={{ padding: '30px 25px', maxWidth: 450 }}>
         <Header>
           <UplaodSvg width={25} height={25} strokeWidth={2} />
           <div className="label">
@@ -168,7 +174,7 @@ export default function Register({ modal, users, category, onClick }: Props) {
                 }
               />
               <div style={{ width: 5 }} />
-              <Tags icon={Tag} options={categories} onChange={evt => setValue('categories', evt)} />
+              <Tags title="categories" icon={Tag} options={categories} onChange={evt => setValue('categories', evt)} />
             </Div>
 
             <div style={{ height: 10 }} />
@@ -182,13 +188,13 @@ export default function Register({ modal, users, category, onClick }: Props) {
                 }
               />
               <div style={{ width: 5 }} />
-              <Tags icon={Lock} options={users_options} onChange={handlePrivate} />
+              <Tags title="private content for" icon={Lock} options={users_options} onChange={handlePrivate} />
             </Div>
           </>
         )}
 
         <Button type="button" variant={variant} style={{ height: 40 }} onClick={next}>
-          {currentStep === 0 ? 'next' : modal.post?.id ? 'update' : 'register'}
+          {currentStep === 0 ? 'next' : post?.id ? 'update' : 'register'}
         </Button>
       </Modal>
     </>

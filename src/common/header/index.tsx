@@ -25,8 +25,8 @@ const links = [
     name: 'Categories'
   },
   // {
-  //   path: '/creators',
-  //   name: 'Creators'
+  //   path: '/donate',
+  //   name: 'Donate Us'
   // }
 ];
 
