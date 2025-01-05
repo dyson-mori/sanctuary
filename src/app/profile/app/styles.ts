@@ -83,46 +83,25 @@ export const Options = styled.div`
 
   .options {
     position: absolute;
+    bottom: 0;
 
     width: 100%;
     display: flex;
-    
+
     justify-content: space-around;
 
     button {
-      color: #fff;
-    }
+      padding: 10px;
+    };
+
+    ${({ theme }) => css`
+      button > svg {
+        stroke: ${theme.colors.primary};
+      };
+
+      button:nth-child(2) > svg {
+        stroke: ${theme.colors.error};
+      }
+    `};
   };
-`;
-
-// import Link from "next/link";
-
-// import styled, { css } from "styled-components";
-
-// export const Container = styled.main`
-//   display: flex;
-// `;
-
-export const Upload = styled.button`
-  position: absolute;
-
-  padding: 0;
-  margin: 0;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  bottom: 20px;
-  right: 20px;
-
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-
-  ${({ theme }) => css`
-    box-shadow: ${theme.box.shadow.default};
-    background-color: ${theme.colors.primary};
-  `};
 `;

@@ -23,6 +23,8 @@ import { ReactComponent as Google } from './google.svg';
 import { ReactComponent as Lock } from './lock.svg';
 import { ReactComponent as Times } from './times.svg';
 import { ReactComponent as Text } from './text.svg';
+import { ReactComponent as Pen } from './pen.svg';
+import { ReactComponent as Trash } from './trash.svg';
 
 export {
   Add,
@@ -49,5 +51,7 @@ export {
   Google,
   Lock,
   Times,
-  Text
+  Text,
+  Pen,
+  Trash
 }

@@ -30,40 +30,6 @@ export const cloudinary = {
       .catch(err => err)
   },
 
-  // upload: async (fileUri: string, fileName: string) => {
-  //   const upload = await v2.uploader
-  //     .upload(
-  //       fileUri, {
-  //         invalidate: true,
-  //         resource_type: "auto",
-  //         filename_override: fileName,
-  //         use_filename: true,
-  //         upload_preset: 'sanctuary',
-  //     });
-
-  //   const pre_image =
-  //     upload.secure_url
-  //       .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', '')
-  //       .replace('mp4', 'webp');
-
-  //   const pre_video =
-  //     upload.secure_url
-  //       .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', 'du_2.0/')
-  //       .replace('mp4', 'webm');
-
-  //   const url_video =
-  //     upload.secure_url
-  //       .replace('https://res.cloudinary.com/dyrtdrnky/video/upload/', '')
-  //       .replace('mp4', 'webm');
-
-  //   return {
-  //     ...upload,
-  //     pre_image,
-  //     pre_video,
-  //     url_video
-  //   };
-  // },
-
   uploadImage: async (fileUri: string, fileName: string, folder?: 'creator' | null) => {
     const data = await v2.uploader
     // const { secure_url, width, height, public_id } = await v2.uploader

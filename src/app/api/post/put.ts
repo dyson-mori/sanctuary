@@ -11,7 +11,18 @@ export async function PUT(request: NextRequest) {
   const cookie = await cookies();
   const token = cookie.get('auth-token');
 
-  const { title, description, categories, pre_image, pre_video, url_video, width, height, public_id, private: priv } = await request.json() as PostProps;
+  const {
+    title,
+    description,
+    categories,
+    width,
+    height,
+    pre_image,
+    pre_video,
+    url_video,
+    public_id,
+    private: priv
+  } = await request.json() as PostProps;
 
   const verify = await prisma.post.findFirst({
     where: {
@@ -43,9 +54,6 @@ export async function PUT(request: NextRequest) {
       public_id,
 
       categories: {
-        // deleteMany: {
-        //   OR: verify?.categories.map(({ id }) => ({ id }))
-        // },
         set: categories.map(({ id }) => ({
           id
         }))
@@ -64,9 +72,9 @@ export async function PUT(request: NextRequest) {
     }
   });
 
-  // if (!update.id) {
-  //   return NextResponse.json(false, { status: 401, statusText: 'this post cannot updated' })
-  // };
+  if (!update.id) {
+    return NextResponse.json(false, { status: 401, statusText: 'this post cannot updated' })
+  };
 
   return NextResponse.json(update, { status: 201, statusText: 'updated' })
 };

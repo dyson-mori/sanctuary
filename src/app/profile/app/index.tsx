@@ -12,6 +12,7 @@ import Register from "../_components/register";
 
 import { Banner, Container, Article, Options } from "./styles";
 import Delete from "../_components/delete";
+import { Pen, Trash } from "@svg";
 
 interface Props {
   user: UserProps;
@@ -33,7 +34,6 @@ export default function AppProfile({ user, users, category }: Props) {
 
   function handleModalWithData(modal: boolean, post: PostProps | undefined) {
     setPost({ modal, post })
-    // setData(post);
   };
 
   return (
@@ -75,8 +75,12 @@ export default function AppProfile({ user, users, category }: Props) {
                   }}
                 />
                 <div className="options">
-                  <button onClick={() => handleModalWithData(true, row)}>Edit</button>
-                  <button onClick={() => setRemove(row)}>Delete</button>
+                  <button onClick={() => handleModalWithData(true, row)}>
+                    <Pen width={25} height={25} strokeWidth={2} />
+                  </button>
+                  <button onClick={() => setRemove(row)}>
+                    <Trash width={25} height={25} strokeWidth={2} />
+                  </button>
                 </div>
               </Options>
             )}

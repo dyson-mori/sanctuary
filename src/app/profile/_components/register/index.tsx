@@ -46,9 +46,22 @@ export default function Register({ modal, users, category, onClick }: Props) {
   const processForm: SubmitHandler<schemaProps> = async (data: schemaProps) => {
     setVariant('loading');
 
+    let prefix = {} as PostProps;
+
     if (modal.post?.id) {
+      if (modal.post.pre_video !== data.file) {
+        await cloudinary.destroy(modal.post.public_id, 'video');
+        prefix = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
+      };
+
       return await api.post.update(modal.post.id, {
-        file: data.file,
+        width: prefix.width,
+        height: prefix.height,
+        pre_image: prefix.pre_image,
+        pre_video: prefix.pre_video,
+        url_video: prefix.url_video,
+        public_id: prefix.public_id,
+
         title: data.title,
         description: data.description,
         categories: data.categories as CategoryProps[],
@@ -62,7 +75,7 @@ export default function Register({ modal, users, category, onClick }: Props) {
         .catch(err => alert(err))
     };
 
-    const video = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'))
+    const video = await cloudinary.upload(data.file, data.title.replaceAll(' ', '_'));
 
     await api.post.create({
       width: video.width,
@@ -139,7 +152,7 @@ export default function Register({ modal, users, category, onClick }: Props) {
             name="file"
             control={control}
             render={({ field: { value, onChange } }) =>
-              <Upload type="video" label='maximum limit of 5 mb' value={value} onChange={onChange} disable={false} />
+              <Upload type="video" label='maximum limit of ?? mb' value={value} onChange={onChange} disable={false} />
             }
           />
         )}
