@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
 
     return {
       ...row,
-      pre_video: priv ? `${'e_blur:800/' + row.pre_video}` : row.pre_video,
+      url_video: priv ? `${'e_blur:800/' + row.url_video}` : row.url_video,
     }
   })
 

@@ -9,7 +9,8 @@ export async function POST(request: NextRequest) {
   const cookie = await cookies();
   const token = cookie.get('auth-token');
 
-  const { title,
+  const {
+    title,
     description,
     categories,
     width,
@@ -19,17 +20,11 @@ export async function POST(request: NextRequest) {
     url_video,
     public_id,
     private: priv
-  } = await request.json() as PostProps & { file: string };
+  } = await request.json() as PostProps;
 
   if (!token) {
     return NextResponse.json(false, { status: 401, statusText: 'token' })
   };
-
-  // const video = await cloudinary.upload(file, title.replaceAll(' ', '_'));
-
-  // if (!video) {
-  //   return NextResponse.json(false, { status: 401, statusText: 'upload not work' })
-  // };
 
   const verify = await prisma.user.findFirst({
     where: {
