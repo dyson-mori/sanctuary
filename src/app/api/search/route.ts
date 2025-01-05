@@ -5,14 +5,16 @@ import { prisma } from "@services";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
-  const post_id = url.searchParams.get("id");
+  const search = url.searchParams.get("id");
+
+  const tags = search?.includes('tags=') ? search!.replace('tags=', '').split(',') : null;
 
   const cookie = await cookies();
   const token = cookie.get('auth-token');
 
   const found = await prisma.post.findFirst({
     where: {
-      id: post_id ?? undefined
+      id: search ?? undefined
     },
     include: {
       user: {
@@ -27,6 +29,11 @@ export async function GET(request: NextRequest) {
         }
       },
       categories: {
+        orderBy: {
+          post: {
+            _count: 'desc'
+          }
+        },
         select: {
           name: true
         }
@@ -40,12 +47,12 @@ export async function GET(request: NextRequest) {
     },
     where: {
       NOT: {
-        id: found?.id,
+        id: found?.id ?? undefined,
       },
       categories: {
         some: {
           name: {
-            in: found?.categories.slice(0, 3).map(({ name }) => name)
+            in: found?.categories.slice(0, 3).map(({ name }) => name) ?? tags!.map(name => name)
           }
         }
       }
@@ -93,8 +100,8 @@ export async function GET(request: NextRequest) {
     return {
       ...row,
       url_video: priv ? `${'e_blur:800/' + row.url_video}` : row.url_video,
-    }
-  })
+    };
+  });
 
-  return NextResponse.json([found, ...find_to_hide], { status: 201, statusText: 'success' });
+  return NextResponse.json(tags ? post : [found, ...find_to_hide], { status: 201, statusText: 'success' });
 };

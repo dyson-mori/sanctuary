@@ -4,13 +4,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { useTheme } from "styled-components";
-
 import { Header, Button } from "@common";
 import { CategoryProps, UserProps } from "@global/interface";
-import { serverActionCookie } from "@utils";
 
-import Register from "../_components/register";
+// import Register from "../_components/register";
 
 import { Container, Content, Footer } from "./styles";
 
@@ -20,11 +17,10 @@ type Props = {
 };
 
 export default function Categories({ categories, user }: Props) {
-  const theme = useTheme();
   const route = useRouter();
 
   const [selected, setSelected] = useState([] as CategoryProps[]);
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
   
   const handleSelect = async (row: CategoryProps) => {
     // navigator.clipboard.writeText(row.id)
@@ -41,9 +37,8 @@ export default function Categories({ categories, user }: Props) {
     return setSelected(prev => [...prev, row]);
   };
 
-  const handleSearch = async () => {
-    serverActionCookie('search', `tags=${selected.map(({ name }) => name).toString()}`);
-    return route.push('/search');
+  function handleSearch() {
+    route.push(`/tags=${selected.map(({ name }) => name).toString()}`);
   };
 
   return (
@@ -62,23 +57,15 @@ export default function Categories({ categories, user }: Props) {
             )
           })}
         </Content>
+
         <Footer>
-          <Button
-            disabled={selected.length === 0}
-            style={{
-              height: 40,
-              width: '20%',
-              backgroundColor: theme.colors.primary,
-              color: theme.colors.white,
-            }}
-            onClick={handleSearch}
-          >
+          <Button disabled={selected.length === 0} variant="primary" onClick={handleSearch}>
             Search
           </Button>
         </Footer>
       </Container>
 
-      <Register modal={modal} setModal={setModal} />
+      {/* <Register modal={modal} setModal={setModal} /> */}
     </>
   )
 };

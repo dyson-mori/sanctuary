@@ -4,7 +4,9 @@ import { useTheme } from "styled-components";
 import { Modal } from "../modal";
 import { Button } from "../button";
 
-import { Container, Content } from "./styles";
+import { Container, Content, Title } from "./styles";
+import { Input } from "../input";
+import { Tag } from "@svg";
 
 type OptionsProps = {
   id: string;
@@ -22,6 +24,7 @@ export const Tags: FC<Props> = ({ icon: Icon, options, onChange }) => {
   const theme = useTheme();
 
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(options);
 
   const handleSelect = async (row: OptionsProps) => {
@@ -40,8 +43,12 @@ export const Tags: FC<Props> = ({ icon: Icon, options, onChange }) => {
       </Container>
 
       <Modal open={open}>
+        <Title>
+          <Input icon={Tag} name="categories" placeholder="search categories" onChange={e => setSearch(e.target.value)} />
+        </Title>
+
         <Content>
-          {selected.map((row, index) => {
+          {selected.filter(e => e.name.includes(search.toLowerCase())).map((row, index) => {
             const style = {
               flexGrow: 1,
               margin: 2,
@@ -51,7 +58,7 @@ export const Tags: FC<Props> = ({ icon: Icon, options, onChange }) => {
 
             return (
               <Button key={index} variant={row.selected ? "selected" : "select"} type="button" style={style} onClick={() => handleSelect(row)}>
-                {row?.name.replace('_', ' ')}
+                {row?.name.replaceAll('_', ' ')}
               </Button>
             )
           })}

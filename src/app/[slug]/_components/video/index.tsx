@@ -76,6 +76,10 @@ const TargetVideo = forwardRef(({ posts }: Props, ref: React.ForwardedRef<HTMLEl
         videoRef.current.play();
       };
 
+      if (videoRef.current?.muted) {
+        videoRef.current.muted = false
+      };
+
       if (videoRef.current && !entry.isIntersecting) {
         videoRef.current.pause();
       }

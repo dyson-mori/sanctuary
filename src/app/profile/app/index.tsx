@@ -4,15 +4,15 @@ import { useState } from "react";
 
 import Image from "next/image";
 
-import { CategoryProps, PostProps, UserProps } from "@global/interface";
+import { Pen, Trash } from "@svg";
 import { useWindowSize } from "@hooks";
 import { capitalizeFirstLetter } from "@utils";
+import { CategoryProps, PostProps, UserProps } from "@global/interface";
 
 import Register from "../_components/register";
+import Delete from "../_components/delete";
 
 import { Banner, Container, Article, Options } from "./styles";
-import Delete from "../_components/delete";
-import { Pen, Trash } from "@svg";
 
 interface Props {
   user: UserProps;
@@ -25,16 +25,8 @@ export default function AppProfile({ user, users, category }: Props) {
 
   const dimension = size.width <= 600 ? 2 : 6;
 
-  const [post, setPost] = useState({
-    post: {} as PostProps | undefined,
-    modal: false as boolean
-  });
-
-  const [remove, setRemove] = useState(undefined as PostProps | undefined);
-
-  function handleModalWithData(modal: boolean, post: PostProps | undefined) {
-    setPost({ modal, post })
-  };
+  const [edited, setEdited] = useState<PostProps | undefined>(undefined);
+  const [remove, setRemove] = useState<PostProps | undefined>(undefined);
 
   return (
     <Container>
@@ -75,7 +67,7 @@ export default function AppProfile({ user, users, category }: Props) {
                   }}
                 />
                 <div className="options">
-                  <button onClick={() => handleModalWithData(true, row)}>
+                  <button onClick={() => setEdited(row)}>
                     <Pen width={25} height={25} strokeWidth={2} />
                   </button>
                   <button onClick={() => setRemove(row)}>
@@ -88,8 +80,8 @@ export default function AppProfile({ user, users, category }: Props) {
         ))}
       </Article>
 
-      <Register modal={post} onClick={handleModalWithData} users={users} category={category} />
-      <Delete data={remove} setClose={() => setRemove(undefined)} />
+      <Register post={edited} onClick={setEdited} users={users} category={category} />
+      <Delete data={remove} setClose={setRemove} />
 
     </Container>
   )

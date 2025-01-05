@@ -14,7 +14,6 @@ export const Container = styled.section`
   scroll-snap-align: start;
 
   video {
-    /* width: calc(100% / 1.01); */
     height: calc(100% / 1.01);
     border-radius: 9px;
     z-index: 1;

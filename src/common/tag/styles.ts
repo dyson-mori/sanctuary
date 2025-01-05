@@ -26,6 +26,21 @@ export const Container = styled.button`
   }
 `;
 
+export const Title = styled.div`
+  display: flex;
+
+  width: 100%;
+
+  justify-content: center;
+
+  padding: 10px 0 20px 0;
+
+  ${({ theme }) => css`
+    h4 {
+      color: ${theme.colors.granite_gray};
+    };
+  `};
+`;
 
 export const Content = styled.div`
   display: flex;
