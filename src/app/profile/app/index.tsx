@@ -16,11 +16,15 @@ import { Banner, Container, Article, Options } from "./styles";
 
 interface Props {
   user: UserProps;
-  users: UserProps[];
+  // users: UserProps[];
   category: CategoryProps[];
 };
 
-export default function AppProfile({ user, users, category }: Props) {
+export default function AppProfile({
+  user,
+  // users,
+  category
+}: Props) {
   const size = useWindowSize();
 
   const dimension = size.width <= 600 ? 2 : 6;
@@ -80,7 +84,7 @@ export default function AppProfile({ user, users, category }: Props) {
         ))}
       </Article>
 
-      <Register post={edited} onClick={setEdited} users={users} category={category} />
+      <Register post={edited} onClick={setEdited} category={category} />
       <Delete data={remove} setClose={setRemove} />
 
     </Container>

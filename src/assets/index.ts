@@ -26,6 +26,10 @@ import { ReactComponent as Text } from './text.svg';
 import { ReactComponent as Pen } from './pen.svg';
 import { ReactComponent as Trash } from './trash.svg';
 
+import { ReactComponent as Database } from './repo/database.svg';
+
+import PlanOne from './first_plan.png';
+
 export {
   Add,
   Key,
@@ -53,5 +57,8 @@ export {
   Times,
   Text,
   Pen,
-  Trash
+  Trash,
+
+  PlanOne,
+  Database
 }
