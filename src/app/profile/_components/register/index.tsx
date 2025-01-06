@@ -5,9 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { api, cloudinary } from "@services";
 import { Input, Modal, Button, Upload, Tags } from "@common";
-import { Description, Upload as UplaodSvg, Tag, Lock, Text } from "@svg";
+import { Description, Upload as UplaodSvg, Tag, Text } from "@svg";
 
-import { CategoryProps, PostProps, UserProps } from "@global/interface";
+import { CategoryProps, PostProps } from "@global/interface";
 
 import { steps, schema, schemaProps } from "./constants";
 import { NewCategory, Header, Div } from "./styles";
@@ -16,12 +16,17 @@ type FieldName = keyof schemaProps;
 
 type Props = {
   post?: PostProps;
-  users: UserProps[];
+  // users: UserProps[];
   category: CategoryProps[];
   onClick: (post?: PostProps) => void;
 };
 
-export default function Register({ post, users, category, onClick }: Props) {
+export default function Register({
+  post,
+  // users,
+  category,
+  onClick
+}: Props) {
   const { control, handleSubmit, setValue, reset, trigger } = useForm({
     resolver: yupResolver(schema)
   });
@@ -36,11 +41,11 @@ export default function Register({ post, users, category, onClick }: Props) {
     selected: !!post?.categories?.find(cat => cat.id === r.id)
   }));
 
-  const users_options = users.map(r => ({
-    id: r.id,
-    name: r.nickname,
-    selected: !!post?.private?.find(cat => cat.user.id === r.id)
-  }));
+  // const users_options = users.map(r => ({
+  //   id: r.id,
+  //   name: r.nickname,
+  //   selected: !!post?.private?.find(cat => cat.user.id === r.id)
+  // }));
 
   function handleCloseModal() {
     onClick(undefined);
@@ -113,15 +118,15 @@ export default function Register({ post, users, category, onClick }: Props) {
     return setCurrentStep(step => step + 1);
   };
 
-  function handlePrivate(evt: { id: string, name: string }[]) {
-    const build = evt.map(row => ({
-      user: {
-        id: row.id,
-        name: row.name
-      }
-    }));
-    setValue('private', build)
-  };
+  // function handlePrivate(evt: { id: string, name: string }[]) {
+  //   const build = evt.map(row => ({
+  //     user: {
+  //       id: row.id,
+  //       name: row.name
+  //     }
+  //   }));
+  //   setValue('private', build)
+  // };
 
   function handleClose() {
     handleCloseModal();
@@ -187,8 +192,8 @@ export default function Register({ post, users, category, onClick }: Props) {
                   <Input icon={Description} defaultValue={value} placeholder="description" onChange={onChange} />
                 }
               />
-              <div style={{ width: 5 }} />
-              <Tags icon={Lock} options={users_options} onChange={handlePrivate} />
+              {/* <div style={{ width: 5 }} /> */}
+              {/* <Tags icon={Lock} options={users_options} onChange={handlePrivate} /> */}
             </Div>
           </>
         )}

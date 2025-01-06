@@ -17,6 +17,7 @@ export const Container = styled.div`
 
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 
     width: 100%;
     height: 100%;
@@ -24,6 +25,10 @@ export const Container = styled.div`
     backdrop-filter: blur(10px);
 
     z-index: 1;
+  };
+
+  span > p {
+    margin-top: 5px;
   }
 
   button {

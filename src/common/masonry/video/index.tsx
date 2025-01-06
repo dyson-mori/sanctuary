@@ -59,13 +59,14 @@ export const PostVideo = ({ post, enabled, size, onClick }: Props) => {
       // @ts-expect-error: ignore
       onClick(post)
     }
-  }
+  };
 
   return (
     <Container as='button' style={styles} onClick={handleClick}>
       {post.pre_video.includes('e_blur:800/') && (
         <span>
           <Lock width={25} height={25} stroke='#fff' strokeWidth={2} />
+          <p>$2</p>
         </span>
       )}
       <video

@@ -1,4 +1,4 @@
-import { FC, Fragment, Suspense } from 'react';
+import { FC, Suspense } from 'react';
 
 import Link from 'next/link';
 

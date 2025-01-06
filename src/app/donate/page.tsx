@@ -1,23 +1,20 @@
 import { Suspense } from "react";
-
 import type { Metadata } from "next";
 
 import { api } from "@services";
 
-import App from './app'
+import App from './app';
 
 export const metadata: Metadata = {
-  title: 'sanctuary | profile',
+  title: 'sanctuary | donate',
   description: 'sanctuary.com'
 };
 
-export default async function ProfilePage() {
+export default async function Posts() {
   const user = await api.auth.find();
-  const category = await api.category.list();
-
   return (
     <Suspense fallback={<>Loading...</>}>
-      <App user={user} category={category} />
+      <App user={user} />
     </Suspense>
   );
 }
