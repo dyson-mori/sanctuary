@@ -27,6 +27,7 @@ import { ReactComponent as Pen } from './pen.svg';
 import { ReactComponent as Trash } from './trash.svg';
 
 import { ReactComponent as Database } from './repo/database.svg';
+import { ReactComponent as Warning } from './repo/warning.svg';
 
 import PlanOne from './first_plan.png';
 
@@ -60,5 +61,6 @@ export {
   Trash,
 
   PlanOne,
-  Database
+  Database,
+  Warning
 }

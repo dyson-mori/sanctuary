@@ -92,11 +92,11 @@ const Authentication: FC<{ user: UserProps }> = ({ user }) => {
           }
         />
 
-        {/* <div style={{ height: 10 }} />
+        <div style={{ height: 10 }} />
 
-        <Link href='/register' style={{ textAlign: 'end', width: '100%' }}>I dont have an account yet</Link> */}
+        <button style={{ textAlign: 'end', width: '80%', fontSize: 13 }}>criar uma conta</button>
 
-        <div style={{ height: 5 }} />
+        <div style={{ height: 10 }} />
 
         <Button type="submit" variant={variant}>
           {variant === 'error' ? 'fail' : 'login'}

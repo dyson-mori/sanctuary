@@ -5,11 +5,11 @@ type Response = [
   Dispatch<SetStateAction<boolean>>
 ];
 
-type Key = '@preview-videos' | '@dark-mode' | '@language';
+type Key = '@preview-videos' | '@dark-mode' | '@language' | '@warning';
 
 export function useStorage<T>(key: Key, initialState: T): Response {
   const [state, setState] = useState(() => {
-    if (typeof window === "undefined") return;
+    // if (typeof window === "undefined") return;
 
     const storageValue = localStorage.getItem(key);
 

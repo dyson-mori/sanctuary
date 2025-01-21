@@ -9,6 +9,8 @@ const DynamicPageWithNoSSR = dynamic(() => import('./posts'), {
   ssr: true
 });
 
+import Warning from "./posts/warning";
+
 export const metadata: Metadata = {
   title: 'sanctuary',
   description: 'sanctuary.com'
@@ -20,6 +22,7 @@ export default async function Posts() {
 
   return (
     <Suspense fallback={<>Loading...</>}>
+      <Warning />
       <DynamicPageWithNoSSR posts={post} user={user} />
     </Suspense>
   );
