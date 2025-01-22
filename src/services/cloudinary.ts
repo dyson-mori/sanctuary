@@ -23,9 +23,9 @@ export const cloudinary = {
         width,
         height,
         public_id,
-        pre_image: secure_url.replace(prefix, '').replace('mp4', 'webp'),
-        pre_video: secure_url.replace(prefix, 'du_2.0/').replace('mp4', 'webm'),
-        url_video: secure_url.replace(prefix, '').replace('mp4', 'webm')
+        pre_image: secure_url.replaceAll(prefix, '').replaceAll('mp4', 'webp').replaceAll('mov', 'webp'),
+        pre_video: secure_url.replaceAll(prefix, 'du_2.0/').replaceAll('mp4', 'webm').replaceAll('mov', 'webm'),
+        url_video: secure_url.replaceAll(prefix, '').replaceAll('mp4', 'webm').replaceAll('mov', 'webm')
       }))
       .catch(err => err)
   },
@@ -45,9 +45,9 @@ export const cloudinary = {
 
     const url_pre_image =
       data.secure_url
-        .replace('https://res.cloudinary.com/dyrtdrnky/image/upload/', '')
-        .replace('png', 'webp')
-        .replace('jpg', 'webp')
+        .replaceAll('https://res.cloudinary.com/dyrtdrnky/image/upload/', '')
+        .replaceAll('png', 'webp')
+        .replaceAll('jpg', 'webp')
 
     return {
       secure_url: data.secure_url,

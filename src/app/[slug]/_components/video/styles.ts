@@ -26,9 +26,9 @@ export const Controller = styled.div`
 
   align-items: center;
 
-  bottom: 0;
+  bottom: 5px;
 
-  width: 370px;
+  width: 500px;
   height: 50px;
 
   background-color: #0000001a;

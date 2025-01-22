@@ -19,6 +19,7 @@ import { custom_revalidate, serverActionCookie } from '@utils';
 import { UserProps } from '@global/interface';
 
 import { ButtonLink, Button as ButtonStyled } from './styles';
+import Link from 'next/link';
 
 const schema = yup.object({
   nickname: yup.string().required(),
@@ -94,7 +95,7 @@ const Authentication: FC<{ user: UserProps }> = ({ user }) => {
 
         <div style={{ height: 10 }} />
 
-        <button style={{ textAlign: 'end', width: '80%', fontSize: 13 }}>criar uma conta</button>
+        <Link href='/register' style={{ textAlign: 'end', width: '80%', fontSize: 13 }}>criar uma conta</Link>
 
         <div style={{ height: 10 }} />
 

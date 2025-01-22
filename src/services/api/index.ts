@@ -5,10 +5,11 @@ import { ApiProps } from './types'
 export const api: ApiProps = {
   user: {
     list: () => fetcher({ url: '/user', method: 'GET' }),
+    create: (body) => fetcher({ url: '/user', method: 'POST', body })
   },
   auth: {
     find: () => fetcher({ url: '/user/auth', method: 'GET', next: { tags: ['auth'] } }),
-    auth: (body) => fetcher({ url: '/user/auth', method: 'POST', body })
+    auth: (body) => fetcher({ url: '/user/auth', method: 'POST', body }),
   },
   post: {
     list: () => fetcher({ url: '/post', method: 'GET', next: { tags: ['post'] } }),

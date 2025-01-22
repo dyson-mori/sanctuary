@@ -6,6 +6,7 @@ type CreatePostProps = Omit<PostProps, 'updatedAt' | 'createdAt' | 'id' | 'user'
 export type ApiProps = {
   user: {
     list: () => Promise<UserProps[]>;
+    create: (body: Pick<User, 'nickname' | 'password'>) => Promise<string | null>;
   },
   auth: {
     find: () => Promise<UserProps>;

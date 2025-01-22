@@ -9,8 +9,8 @@ import { Container, Preview } from "./styles";
 
 interface UploadProps {
   type: 'video' | 'image',
-  value: string;
-  disable: boolean;
+  value?: string;
+  disable?: boolean;
   label: string;
   onChange: (a: string) => void
 };

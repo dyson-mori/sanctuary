@@ -22,8 +22,8 @@ export async function GET() {
     select: {
       // id: true,
       nickname: true,
-      firstname: true,
-      lastname: true,
+      // firstname: true,
+      // lastname: true,
       photo: true,
       banner: true,
       post: {

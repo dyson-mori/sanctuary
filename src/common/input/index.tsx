@@ -17,7 +17,7 @@ export const Input: React.FC<InputProps> = ({ icon: Icon, width, ...rest }) => {
   };
 
   return (
-    <Container style={styles}>
+    <Container id='container-input' style={styles}>
       <span>
         <Icon width={21} height={21} stroke={theme.colors.primary} strokeWidth={2} />
       </span>

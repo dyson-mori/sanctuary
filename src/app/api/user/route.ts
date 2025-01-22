@@ -46,19 +46,19 @@ export async function GET() {
 };
 
 export async function POST(request: NextRequest) {
-  const { firstname, lastname, nickname, password, banner, photo } = await request.json() as User;
+  const { nickname, password, banner, photo } = await request.json() as User;
 
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   const data = await prisma.user.create({
     data: {
-      firstname,
-      lastname,
+      // firstname,
+      // lastname,
       nickname,
       password: hashedPassword,
-      banner,
-      photo,
+      // banner,
+      // photo,
     }
   });
 

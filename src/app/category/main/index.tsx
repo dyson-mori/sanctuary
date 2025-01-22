@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Header, Button } from "@common";
 import { CategoryProps, UserProps } from "@global/interface";
 
-// import Register from "../_components/register";
+import Register from "../_components/register";
 
 import { Container, Content, Footer } from "./styles";
 
@@ -20,7 +20,7 @@ export default function Categories({ categories, user }: Props) {
   const route = useRouter();
 
   const [selected, setSelected] = useState([] as CategoryProps[]);
-  // const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
   
   const handleSelect = async (row: CategoryProps) => {
     // navigator.clipboard.writeText(row.id)
@@ -65,7 +65,7 @@ export default function Categories({ categories, user }: Props) {
         </Footer>
       </Container>
 
-      {/* <Register modal={modal} setModal={setModal} /> */}
+      <Register modal={modal} setModal={setModal} />
     </>
   )
 };
