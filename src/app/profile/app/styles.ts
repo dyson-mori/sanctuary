@@ -69,8 +69,6 @@ export const Article = styled.article`
 
     align-items: center;
     flex-direction: column;
-
-    width: calc(100% / 6);
   }
 `;
 
@@ -80,6 +78,10 @@ export const Options = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin-bottom: 7px;
+
+  width: 100%;
 
   .options {
     position: absolute;

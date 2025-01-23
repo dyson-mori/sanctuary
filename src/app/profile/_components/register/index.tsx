@@ -21,12 +21,7 @@ type Props = {
   onClick: (post?: PostProps) => void;
 };
 
-export default function Register({
-  post,
-  // users,
-  category,
-  onClick
-}: Props) {
+export default function Register({ post, category, onClick }: Props) {
   const { control, handleSubmit, setValue, reset, trigger } = useForm({
     resolver: yupResolver(schema)
   });
@@ -163,7 +158,7 @@ export default function Register({
             name="file"
             control={control}
             render={({ field: { value, onChange } }) =>
-              <Upload type="video" label='maximum limit of ?? mb' value={value} onChange={onChange} disable={false} />
+              <Upload type="video" label='maximum limit of 30 mb' value={value} onChange={onChange} disable={false} />
             }
           />
         )}

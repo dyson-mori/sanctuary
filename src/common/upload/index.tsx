@@ -27,7 +27,7 @@ export const Upload: FC<UploadProps> = ({ type, value, disable, label, onChange 
   const handleFile = (evt) => {
     const reader = new FileReader();
     // if (evt.target.files![0].size >= bytes / Math.pow(1024, i)) {
-    //   setFile({ file: {}, status: 'error' });
+    //   setFile({ file: {}, status: 'error', });
     // };
 
     reader.readAsDataURL(evt.target.files![0]);

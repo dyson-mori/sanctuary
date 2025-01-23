@@ -20,17 +20,41 @@ interface Props {
   category: CategoryProps[];
 };
 
-export default function AppProfile({
-  user,
-  // users,
-  category
-}: Props) {
-  const size = useWindowSize();
+const dimension = [
+  {
+    max_width: 500,
+    colunm: 2,
+    size: 2.2
+  },
+  {
+    max_width: 600,
+    colunm: 3,
+    size: 3.2
+  },
+  {
+    max_width: 800,
+    colunm: 4,
+    size: 4.2
+  },
+  {
+    max_width: 1000,
+    colunm: 5,
+    size: 5.2
+  },
+  {
+    max_width: 10000,
+    colunm: 6,
+    size: 6.2
+  }
+];
 
-  const dimension = size.width <= 600 ? 2 : 6;
+export default function AppProfile({ user, category }: Props) {
+  const size = useWindowSize();
 
   const [edited, setEdited] = useState<PostProps | undefined>(undefined);
   const [remove, setRemove] = useState<PostProps | undefined>(undefined);
+
+  const colunm = dimension.find(el => size.width <= el.max_width)!;
 
   return (
     <Container>
@@ -57,18 +81,16 @@ export default function AppProfile({
       </Banner>
 
       <Article>
-        {Array.from({ length: dimension }).map((_, index) => (
+        {Array.from({ length: colunm.colunm }).map((_, index) => (
           <section key={index}>
-            {user.post.map((row, i) => i % dimension === index &&
+            {user.post.map((row, i) => i % colunm.colunm === index &&
               <Options key={i}>
                 <Image
                   src={'https://res.cloudinary.com/dyrtdrnky/video/upload/' + row.pre_image}
-                  width={size.width <= 600 ? size.width / 2.1 : size.width / 6.2}
-                  height={row.height / row.width * (size.width <= 600 ? size.width / 2.1 : size.width / 6.2)}
+                  width={size.width / colunm.size}
+                  height={row.height / row.width * (size.width / colunm.size)}
                   alt={i.toString()}
-                  style={{
-                    borderRadius: 6
-                  }}
+                  style={{ borderRadius: 6 }}
                 />
                 <div className="options">
                   <button onClick={() => setEdited(row)}>

@@ -6,9 +6,5 @@ export const Column = styled.section`
   align-items: center;
   flex-direction: column;
 
-  width: calc(100% / 6);
-
-  @media only screen and (max-width: 600px) {
-    width: 100%;
-  };
+  width: 100%;
 `;

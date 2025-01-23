@@ -8,6 +8,11 @@ import { convertUrlToBlob } from '@utils';
 
 interface Props {
   // show: boolean;
+  dimension: {
+    colunm: number;
+    max_width: number;
+    size: number;
+  };
   post: PostProps;
   enabled: boolean;
   size: {
@@ -17,7 +22,7 @@ interface Props {
   onClick?: (data: PostProps) => void;
 };
 
-export const PostVideo = ({ post, enabled, size, onClick }: Props) => {
+export const PostVideo = ({ post, enabled, size, dimension, onClick }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -47,9 +52,9 @@ export const PostVideo = ({ post, enabled, size, onClick }: Props) => {
   }, []);
 
   const styles = {
-    width: size.width <= 600 ? size.width / 2.1 : size.width / 6.2,
-    height: post.height / post.width * (size.width <= 600 ? size.width / 2.1 : size.width / 6.2),
-    borderRadius: size.width <= 600 ? 12 : 6,
+    width: size.width / dimension.size,
+    height: post.height / post.width * size.width / dimension.size,
+    borderRadius: 6,
     cursor: enabled && !post.pre_video.includes('e_blur:800/') ? 'pointer' : 'default',
     disabled: !enabled
   };
