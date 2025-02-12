@@ -18,6 +18,10 @@ import Authentication from './auth';
 const links = [
   {
     path: '/',
+    name: 'Maps'
+  },
+  {
+    path: '/posts',
     name: 'Posts'
   },
   {

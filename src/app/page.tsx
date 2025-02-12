@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 import { api } from "@services";
 
-const DynamicPageWithNoSSR = dynamic(() => import('./posts'), {
+const DynamicPageWithNoSSR = dynamic(() => import('./maps'), {
   ssr: true
 });
 
@@ -15,12 +15,13 @@ export const metadata: Metadata = {
 };
 
 export default async function Posts() {
-  const post = await api.post.list();
+  // const post = await api.post.list();
   const user = await api.auth.find();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <DynamicPageWithNoSSR posts={post} user={user} />
+      <DynamicPageWithNoSSR user={user} />
+      {/* <DynamicPageWithNoSSR posts={post} user={user} /> */}
     </Suspense>
   );
 }
