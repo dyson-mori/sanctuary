@@ -18,10 +18,8 @@ model User {
 
   firstname String
   lastname  String
-  nickname  String  @unique
+  nickname  String @unique
   password  String
-  photo     String?
-  banner    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -30,6 +28,59 @@ model User {
   private Private[]
 
   @@map("users")
+}
+
+model Employee {
+  id String @id @unique @default(uuid())
+
+  name        String
+  description String
+  files       String  @default("[]")
+  price       Decimal
+
+  lat String
+  lng String
+
+  partnership Partnership[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("maps")
+}
+
+model Motel {
+  id String @id @unique @default(uuid())
+
+  name        String
+  description String
+  files       String  @default("[]")
+  price       Decimal
+
+  lat String
+  lng String
+
+  partnership Partnership[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("motel")
+}
+
+model Partnership {
+  id String @id @unique @default(uuid())
+
+  employee_id String
+  motel_id    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  employee Employee @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  motel    Motel    @relation(fields: [motel_id], references: [id])
+
+  @@index([employee_id, motel_id])
 }
 
 model Post {

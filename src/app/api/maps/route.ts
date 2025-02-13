@@ -20,7 +20,8 @@ export async function GET(request: NextRequest) {
     },
     {
       urls: [
-        'https://res.cloudinary.com/dyrtdrnky/image/upload/v1739385566/sanctuary/011b7baf375ff3c1b3dde39f08ba7c7f_kyfeyq.jpg'
+        'https://res.cloudinary.com/dyrtdrnky/video/upload/v1736029189/sanctuary/jaiane_lima_swrtxf.jpg',
+        'https://res.cloudinary.com/dyrtdrnky/image/upload/v1739385566/sanctuary/011b7baf375ff3c1b3dde39f08ba7c7f_kyfeyq.jpg',
       ],
       name: "fabi",
       lat: -19.939521,
