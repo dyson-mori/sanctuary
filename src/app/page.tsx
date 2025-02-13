@@ -17,11 +17,12 @@ export const metadata: Metadata = {
 export default async function Posts() {
   // const post = await api.post.list();
   const user = await api.auth.find();
+  const maps = await api.maps.list();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      <DynamicPageWithNoSSR user={user} />
+      <DynamicPageWithNoSSR user={user} maps={maps} />
       {/* <DynamicPageWithNoSSR posts={post} user={user} /> */}
     </Suspense>
   );
-}
+};

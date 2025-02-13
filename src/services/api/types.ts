@@ -7,6 +7,9 @@ export type ApiProps = {
   user: {
     list: () => Promise<UserProps[]>;
   },
+  maps: {
+    list: () => Promise<any[]>;
+  },
   auth: {
     find: () => Promise<UserProps>;
     auth: (body: Pick<User, 'nickname' | 'password'>) => Promise<string | null>;

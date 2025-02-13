@@ -7,6 +7,8 @@ export const Container = styled.header`
 
   padding: 0 25px;
 
+  z-index: 10;
+
   ${({ theme }) => css`
     background-color: ${theme.header.background};
     box-shadow: ${theme.header.box_shadow};
@@ -42,11 +44,11 @@ export const Nav = styled.nav`
 
   width: 100%;
 
-    a {
-      padding: 10px;
-      font-size: 13px;
-      text-decoration: none;
-    };
+  a {
+    padding: 10px;
+    font-size: 13px;
+    text-decoration: none;
+  };
   
 
   @media only screen and (max-width: 600px) {

@@ -21,13 +21,17 @@ const links = [
     name: 'Maps'
   },
   {
+    path: '/videos',
+    name: 'Videos'
+  },
+  {
     path: '/posts',
     name: 'Posts'
   },
-  {
-    path: '/category',
-    name: 'Categories'
-  },
+  // {
+  //   path: '/category',
+  //   name: 'Categories'
+  // },
   // {
   //   path: '/donate',
   //   name: 'Donate Us'
@@ -60,7 +64,7 @@ export const Header: FC<Props> = ({ user }) => {
                 href={{ pathname: row.path }}
                 style={{
                   color: theme.colors[path === row.path ? 'primary' : 'text'],
-                  fontWeight: path === row.path ? 700 : 400
+                  fontWeight: path === row.path ? 600 : 400
                 }}
               >
                 {row.name}

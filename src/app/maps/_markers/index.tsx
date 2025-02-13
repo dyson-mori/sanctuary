@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import { MarkerClusterer, Marker } from "@googlemaps/markerclusterer";
@@ -9,7 +10,7 @@ import { Container } from "./styles";
 
 type Props = {
   points: {
-    url: string;
+    urls: string[];
     key: string;
     name: string;
     lat: number;
@@ -20,6 +21,7 @@ type Props = {
 const Markers = ({ points }: Props) => {
   const map = useMap();
   const clusterer = useRef<MarkerClusterer | null>(null);
+  const route = useRouter();
 
   const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
 
@@ -50,13 +52,17 @@ const Markers = ({ points }: Props) => {
     });
   };
 
+  function handleSelect(selected) {
+    route.push(`/maps/${selected}`);
+  };
+
   return (
     <>
       {points.map((point) => (
-        <AdvancedMarker ref={marker => setMarkerRef(marker, point.key)} position={point} key={point.key}>
+        <AdvancedMarker ref={marker => setMarkerRef(marker, point.key)} position={point} key={point.key} onClick={() => handleSelect(point.name)}>
           <Container>
             <Image
-              src={point.url}
+              src={point.urls[0]}
               width={100}
               height={150}
               alt={point.name}

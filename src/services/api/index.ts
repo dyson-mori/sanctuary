@@ -6,6 +6,11 @@ export const api: ApiProps = {
   user: {
     list: () => fetcher({ url: '/user', method: 'GET' }),
   },
+
+  maps: {
+    list: () => fetcher({ url: '/maps', method: 'GET' }),
+  },
+
   auth: {
     find: () => fetcher({ url: '/user/auth', method: 'GET', next: { tags: ['auth'] } }),
     auth: (body) => fetcher({ url: '/user/auth', method: 'POST', body })

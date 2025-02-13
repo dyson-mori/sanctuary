@@ -8,23 +8,24 @@ import Global from "@global/styles";
 import { useStorage } from "@hooks";
 
 import Notification from "../context/notification";
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const [storage] = useStorage('@dark-mode', false);
 
   return (
     <ThemeProvider theme={themes[storage ? 'dark' : 'light']}>
+      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+        <Notification>
+          <html lang="en">
+            <body className={`${montserrat.variable} ${montserrat_alternates.variable} ${my_soul.variable}`}>
+              {children}
+            </body>
+          </html>
 
-      <Notification>
-        <html lang="en">
-          <body className={`${montserrat.variable} ${montserrat_alternates.variable} ${my_soul.variable}`}>
-            {children}
-          </body>
-        </html>
-
-        <Global />
-      </Notification>
-
+          <Global />
+        </Notification>
+      </APIProvider>
     </ThemeProvider>
   );
 };
