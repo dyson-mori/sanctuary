@@ -18,20 +18,12 @@ import Authentication from './auth';
 const links = [
   {
     path: '/',
-    name: 'Maps'
-  },
-  {
-    path: '/videos',
-    name: 'Videos'
-  },
-  {
-    path: '/posts',
     name: 'Posts'
   },
-  // {
-  //   path: '/category',
-  //   name: 'Categories'
-  // },
+  {
+    path: '/category',
+    name: 'Categories'
+  },
   // {
   //   path: '/donate',
   //   name: 'Donate Us'

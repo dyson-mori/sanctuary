@@ -17,7 +17,7 @@ export default createGlobalStyle`
   };
 
   p, h1, h2, h3, h4, input, label, button {
-    font-family: var(--font-montserrat-alternates), sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
   };
 
   button {
