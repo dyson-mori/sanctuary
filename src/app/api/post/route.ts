@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { Category, Video } from "@prisma/client";
 // import { PostProps } from "@global/interface";
@@ -24,17 +24,24 @@ import prisma from "@services/prisma";
 //   "819", "918", "273", "372", "384", "483", "695", "596",
 // ];
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const header = await request.headers.get('authorization');
+
   const videos = await prisma.video.findMany({
     orderBy: {
       createdAt: 'desc'
     }
   });
 
-  const data = videos.map(item => ({
-    preview: `http://localhost:3030/cdn/preview/${item.isPrivate}/${item.cdn_id}.mp4`,
-    ...item,
-  }));
+  const data = videos.map(item => {
+    const isPrivate = header === "123-987-456-852" ? false : item.isPrivate;
+
+    return {
+      ...item,
+      preview: `http://localhost:3030/cdn/preview/${isPrivate}/${item.cdn_id}.mp4`,
+      isPrivate,
+    }
+  });
 
   return NextResponse.json(data, { status: 200 });
 };

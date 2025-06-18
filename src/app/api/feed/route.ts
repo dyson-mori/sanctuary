@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@services/prisma";
 
 export async function GET(request: NextRequest) {
-  const header = await request.headers.get('authorization')
+  const header = await request.headers.get('authorization');
 
   const videos = await prisma.video.findMany({
     where: {
