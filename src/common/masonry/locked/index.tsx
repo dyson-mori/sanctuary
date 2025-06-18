@@ -1,6 +1,7 @@
 import { Lock } from "@svg";
 
 import { PostProps } from "@global/interface";
+import { format } from "@utils/format";
 
 import { Container, ButtonCard } from "./styles";
 
@@ -17,7 +18,7 @@ export default function Locked({ data }: LockedProps) {
   return (
     <Container>
       <Lock width={25} height={25} stroke='#fff' strokeWidth={2} />
-      <p>R$ {data.price}</p>
+      <p>{format.money(data.price)}</p>
     </Container>
   );
 };
