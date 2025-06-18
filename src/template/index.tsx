@@ -2,29 +2,25 @@
 
 import Global from "@global/styles";
 
-import { UserProps } from "@global/interface";
 import { ThemeProvider } from "@context/themeContext";
-// import { PlayProvider } from "@context/autoPlayContext";
+import { PlayProvider } from "@context/autoPlayContext";
+import { HeaderProps } from "@global/interface";
 
 import Header from "./header";
 
 type TemplateProps = {
   children: React.ReactNode;
-  // user: UserProps;
-  // data: {
-  //   title: string;
-  //   param: string;
-  // }[];
+  header: HeaderProps[];
 };
 
-export default function Template({ children }: TemplateProps) {
+export default function Template({ header, children }: TemplateProps) {
   return (
     <ThemeProvider>
-      {/* <PlayProvider> */}
-      {/* <Header data={data} user={user} /> */}
-      {children}
-      <Global />
-      {/* </PlayProvider> */}
+      <PlayProvider>
+        <Header header={header} />
+        {children}
+        <Global />
+      </PlayProvider>
     </ThemeProvider>
   )
 }

@@ -5,13 +5,13 @@ import { Fragment, useState } from 'react';
 import { Switch } from '@common';
 
 import { useTheme } from '@context/themeContext';
-import { Sun, Settings as SettingsSvg } from '@svg';
+import { usePlay } from '@context/autoPlayContext';
+import { Sun, Settings as SettingsSvg, Moon } from '@svg';
 
 import { Container, Card, Button } from './styles';
-import { usePlay } from '@context/autoPlayContext';
 
 export default function Settings() {
-  const { toggleTheme } = useTheme();
+  const { themeName, toggleTheme } = useTheme();
   const { autoPlay, togglePlay } = usePlay();
 
   const [modal, setModal] = useState(false);
@@ -30,13 +30,16 @@ export default function Settings() {
             <h4>Appearance</h4>
             <p>choose the look that suits you best.</p>
           </div>
-          <Sun width={25} height={25} stroke='#EB5B00' strokeWidth={1} />
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', width: 40 }}>
+            <Sun style={{ position: 'absolute', opacity: themeName === 'light' ? 1 : 0, transition: '0.3s' }} width={25} height={25} fill='#EB5B00' strokeWidth={1} />
+            <Moon style={{ position: 'absolute', opacity: themeName === 'dark' ? 1 : 0, transition: '0.3s' }} width={25} height={25} fill='#EB5B00' strokeWidth={1} />
+          </div>
         </Card>
 
         <Card>
           <div className='info'>
             <h4>Preview Videos</h4>
-            <p>choose the look that suits you best.</p>
+            <p>enable video preview?</p>
           </div>
           <Switch value={autoPlay} setCheck={togglePlay} />
         </Card>

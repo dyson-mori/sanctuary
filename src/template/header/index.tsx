@@ -1,21 +1,19 @@
 import { usePathname } from "next/navigation";
 
-import { UserProps } from '@global/interface';
+// import { UserProps } from '@global/interface';
 
 import { Container, LogoSvg, Navigations, Li } from "./styles";
+import { HeaderProps } from "@global/interface";
 
-import Authentication from "./auth";
+// import Authentication from "./auth";
 import Settings from "./settings";
 
 type Props = {
-  user: UserProps;
-  data: {
-    title: string;
-    param: string;
-  }[];
+  // user: UserProps;
+  header: HeaderProps[];
 };
 
-export default function Header({ data, user }: Props) {
+export default function Header({ header }: Props) {
   const param = usePathname();
 
   return (
@@ -23,7 +21,7 @@ export default function Header({ data, user }: Props) {
       <LogoSvg />
       <Navigations>
         {
-          data.map(row => (
+          header.map(row => (
             <Li key={row.param} href={{ pathname: row.param }} $selected={param === row.param}>
               {row.title}
             </Li>
@@ -31,7 +29,7 @@ export default function Header({ data, user }: Props) {
         }
       </Navigations>
       <Settings />
-      <Authentication user={user} />
+      {/* <Authentication user={user} /> */}
     </Container>
   )
 }
