@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 // import { PostProps } from "@global/interface";
 
 import data from '../mock.json';
+import prisma from "@services/prisma";
 
 function shuffleArray(array: []) {
   const shuffled = [...array]; // cria uma cópia para não modificar o original
@@ -23,17 +24,26 @@ function shuffleArray(array: []) {
 //   "819", "918", "273", "372", "384", "483", "695", "596",
 // ];
 
-export function GET() {
-  // const filter = data.products.filter(e => e.width !== 0);
+export async function GET() {
+  const videos = await prisma.video.findMany();
 
-  // const response = shuffleArray(filter);
-
-  const addingIds = data.products.map(item => ({
-    preview: `http://localhost:3030/cdn/preview/${item.isPrivate}/${item.id}.mp4`,
+  const data = videos.map(item => ({
+    preview: `http://localhost:3030/cdn/preview/${item.isPrivate}/${item.cdn_id}.mp4`,
     ...item,
   }));
 
-  return NextResponse.json(shuffleArray(addingIds as []));
+  return NextResponse.json(data, { status: 200 });
+  // return NextResponse.json(shuffleArray(addingIds as []));
 };
 
-export async function POST() { };
+export async function POST(request: NextResponse) {
+  const { cdn_id, url, width, height, isPrivate } = await request.json();
+
+  await prisma.video.create({
+    data: {
+      url, width, height, isPrivate, cdn_id
+    }
+  });
+
+  return NextResponse.json(true, { status: 201, statusText: 'video created!' });
+};

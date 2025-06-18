@@ -2,7 +2,8 @@ import fetcher from "@utils/fetcher";
 
 const api = {
   posts: {
-    list: () => fetcher({ method: 'GET', url: '/post', cache: 'force-cache' }),
+    list: () => fetcher({ method: 'GET', url: '/post' }),
+    create: (body: object) => fetcher({ method: 'POST', url: '/post', body }),
   },
   category: {
     list: () => fetcher({ method: 'GET', url: '/category', cache: 'force-cache' }),

@@ -7,11 +7,13 @@ import axios from "axios";
 import { Button } from "@common";
 
 import { Container } from "./styles";
+import api from "@services/api";
 
 export default function UploadScreen() {
   const [file, setFile] = useState<File | null>(null);
   const [progress, setProgress] = useState<number>(0);
   const [message, setMessage] = useState('');
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const handleUpload = async () => {
     if (!file) return;
@@ -30,7 +32,13 @@ export default function UploadScreen() {
     });
 
     setMessage('Upload finalizado com sucesso!');
-    console.log(res.data);
+
+    const result = await api.posts.create({
+      ...res.data,
+      isPrivate
+    });
+
+    console.log(result);
   };
 
   return (
@@ -56,6 +64,7 @@ export default function UploadScreen() {
         onChange={(e) => setFile(e.target.files?.[0] ?? null)}
       />
 
+      <Button variant="success" onClick={() => setIsPrivate(!isPrivate)}>{isPrivate ? 'yes' : 'no'}</Button>
       <Button onClick={handleUpload} disabled={!file}>Upload</Button>
     </Container>
   )
