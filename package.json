@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^6.10.0",
     "axios": "^1.10.0",
     "hls.js": "^1.6.4",
     "next": "15.3.2",
@@ -24,6 +25,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "prisma": "^6.10.0",
     "typescript": "^5",
     "url-loader": "^4.1.1"
   }
