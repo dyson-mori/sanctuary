@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
 
+import { Category, Video } from "@prisma/client";
 // import { PostProps } from "@global/interface";
 
-import data from '../mock.json';
 import prisma from "@services/prisma";
 
-function shuffleArray(array: []) {
-  const shuffled = [...array]; // cria uma cópia para não modificar o original
+// function shuffleArray(array: []) {
+//   const shuffled = [...array]; // cria uma cópia para não modificar o original
 
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // troca os elementos
-  };
+//   for (let i = shuffled.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // troca os elementos
+//   };
 
-  return shuffled;
-}
+//   return shuffled;
+// }
 
 // const ids = [
 //   "123", "321", "456", "654", "789", "987", "147", "741",
@@ -25,7 +25,11 @@ function shuffleArray(array: []) {
 // ];
 
 export async function GET() {
-  const videos = await prisma.video.findMany();
+  const videos = await prisma.video.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  });
 
   const data = videos.map(item => ({
     preview: `http://localhost:3030/cdn/preview/${item.isPrivate}/${item.cdn_id}.mp4`,
@@ -33,15 +37,24 @@ export async function GET() {
   }));
 
   return NextResponse.json(data, { status: 200 });
-  // return NextResponse.json(shuffleArray(addingIds as []));
 };
 
 export async function POST(request: NextResponse) {
-  const { cdn_id, url, width, height, isPrivate } = await request.json();
+  const { cdn_id, url, width, height, isPrivate, price, categories } = await request.json() as Video & { categories: Category[] };
 
   await prisma.video.create({
     data: {
-      url, width, height, isPrivate, cdn_id
+      url,
+      width,
+      height,
+      isPrivate,
+      cdn_id,
+      price,
+      categories: {
+        connect: categories.map(item => ({
+          id: item.id
+        }))
+      }
     }
   });
 

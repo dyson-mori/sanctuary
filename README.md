@@ -1,4 +1,14 @@
-# sanctuary
+# Sanctuary
+
+## 🐳 Starting a PostgreSQL Database Container
+```bash
+docker run --name prisma-db \
+  -e POSTGRES_PASSWORD=852-963-741-751-953-153-759 \
+  -e POSTGRES_USER=prisma_user \
+  -e POSTGRES_DB=prisma_db \
+  -p 5432:5432 \
+  -d postgres
+```
 
 {
   "products": [

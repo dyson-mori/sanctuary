@@ -3,13 +3,13 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 // import dynamic from "next/dynamic";
 
-// import api from "@services/api";
+import api from "@services/api";
+
+import Screen from './app';
 
 // const DynamicPageWithNoSSR = dynamic(() => import('./app'), {
 //   ssr: true
 // });
-
-// import Screen from './app';
 
 export const metadata: Metadata = {
   title: 'sanctuary | feed',
@@ -17,11 +17,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Feed() {
-  // const { data } = await api.feed.list();
+  const { data } = await api.feed.list();
 
   return (
     <Suspense fallback={<>Loading...</>}>
-      {/* <Screen post={data} /> */}
+      <Screen post={data} />
     </Suspense>
   );
 };

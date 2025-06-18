@@ -14,7 +14,6 @@ export const Container = styled.div`
   overflow: hidden;
 
   video {
-    width: 97%;
     height: 95%;
     border-radius: 3px;
   };
