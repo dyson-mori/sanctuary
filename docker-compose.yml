@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  frontend:
+    container_name: sanctuary
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - SANCTUARY_API_URL=http://host.docker.internal:3000/api
+      - NODE_ENV=production
+    networks:
+      - app-network
+    # env_file:
+    #   - .env
+
+networks:
+  app-network:
