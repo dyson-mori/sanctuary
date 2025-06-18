@@ -1,40 +1,35 @@
-# Etapa 1: build
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
-# Instala dependências necessárias
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache openssl
 
-# Cria diretório de trabalho
 WORKDIR /app
 
-# Copia os arquivos de dependência e instala
-COPY package.json package-lock.json* pnpm-lock.yaml* ./
-RUN npm install
+COPY package.json yarn.lock ./
 
-# Copia o restante da aplicação
+RUN yarn
+
 COPY . .
 
-# Gera build de produção
-RUN npm run build
+RUN npx prisma generate
+RUN yarn build
 
-# Etapa 2: produção
-FROM node:20-alpine AS runner
+# Production stage
+FROM node:18-alpine
 
-# Instala dependências do sistema (caso precise de ffmpeg ou outros)
-RUN apk add --no-cache ffmpeg
+RUN apk add --no-cache openssl
 
 WORKDIR /app
-
-ENV NODE_ENV production
-
-# Copia apenas arquivos necessários da etapa de build
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/yarn.lock ./
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/next.config.ts ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
 
-# Expõe a porta do Next.js
-EXPOSE 3000
+# RUN npx prisma generate
+RUN yarn --only=production
 
-# Inicia o app Next.js
-CMD ["npm", "start"]
+EXPOSE 3030
+
+CMD ["yarn", "start"]
