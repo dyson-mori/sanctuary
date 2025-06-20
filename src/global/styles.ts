@@ -27,9 +27,9 @@ export default createGlobalStyle`
     background-color: transparent;
   };
 
-  /* input[type="file"] {
+  input[type="file"] {
     display: none;
-  } */
+  }
 
   video::-internal-media-controls-download-button {
     display:none;
