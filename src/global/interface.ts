@@ -29,7 +29,7 @@ export type CategoryProps = {
   id: string;
   title: string;
   _count: {
-    post: number;
+    video: number;
   }
 };
 

@@ -27,7 +27,7 @@ export default function Categories({ data }: Props) {
     // navigator.clipboard.writeText(row.id)
     //   .then(() => setSelected(prev => [...prev, row]))
 
-    if (row?._count.post === 0) return;
+    if (row?._count.video === 0) return;
 
     const found = selected.find(item => item.id === row.id);
 
@@ -60,11 +60,11 @@ export default function Categories({ data }: Props) {
               <Button
                 key={index}
                 variant={variant}
-                disabled={row._count.post === 0}
+                disabled={row._count.video === 0}
                 style={{ height: 40, margin: 2, flexGrow: 1 }}
                 onClick={() => handleSelect(row)}
               >
-                {row?.title.replace('_', ' ')} - {row._count.post}
+                {row?.title.replace('_', ' ')} - {row._count.video}
               </Button>
             )
           })}
