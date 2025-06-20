@@ -11,6 +11,8 @@ import { ReactComponent as ChatSquare } from './chat-square.svg';
 import { ReactComponent as CloseCircle } from './close-circle.svg';
 import { ReactComponent as Heart } from './heart-bold.svg';
 import { ReactComponent as HeartBold } from './heart.svg';
+import { ReactComponent as MP4 } from './mp4.svg';
+import { ReactComponent as Upload } from './upload.svg';
 
 export {
   Lock,
@@ -25,5 +27,7 @@ export {
   ChatSquare,
   CloseCircle,
   Heart,
-  HeartBold
+  HeartBold,
+  MP4,
+  Upload
 }
