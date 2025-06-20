@@ -28,7 +28,7 @@ export default function FeedApp({ post }: Props) {
         </Section>
       ))}
 
-      <Feed.Like post={data ? data : post[0]} />
+      {/* <Feed.Like post={data ? data : post[0]} /> */}
       <Feed.Comment post={data ? data : post[0]} handleOpenChatMessage={setIsChatCommentOpen} />
 
     </Container>

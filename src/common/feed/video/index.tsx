@@ -20,14 +20,14 @@ export default function Video({ post, setTargetPost }: Props) {
     if (video && post.url.endsWith('.m3u8')) {
       if (Hls.isSupported()) {
         hls = new Hls();
-        hls.loadSource(post.url);
+        hls.loadSource(`http://localhost:3030/cdn${post.url}`);
         hls.attachMedia(video);
       } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = post.url;
+        video.src = `http://localhost:3030/cdn${post.url}`;
       }
     } else {
       // Caso não seja .m3u8, aplica normalmente
-      videoRef.current!.src = post.url;
+      videoRef.current!.src = `http://localhost:3030/cdn${post.url}`;
     }
 
     const observer = new IntersectionObserver(async ([entry]) => {
@@ -63,7 +63,7 @@ export default function Video({ post, setTargetPost }: Props) {
         playsInline
         onContextMenu={e => e.preventDefault()}
         controlsList="nodownload"
-      // controls
+        // controls
       >
         Your browser does not support the video tag.
       </video>

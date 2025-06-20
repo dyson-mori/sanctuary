@@ -14,6 +14,15 @@ type Props = {
 };
 
 export default function Comment({ post, handleOpenChatMessage }: Props) {
+  const test = {
+    ...post,
+    categories: [],
+    comments: [],
+    _count: {
+      comments: 0
+    }
+  };
+
   const [open, setOpen] = useState(false);
 
   const container: CSSProperties = {
@@ -39,7 +48,7 @@ export default function Comment({ post, handleOpenChatMessage }: Props) {
     <>
       <ButtonComment style={button} onClick={handleChatMessage}>
         <ChatSquare width={20} height={20} strokeWidth={2} />
-        <p>{post._count.comments}</p>
+        <p>{test._count.comments}</p>
       </ButtonComment>
 
       <Container style={container}>
@@ -59,13 +68,13 @@ export default function Comment({ post, handleOpenChatMessage }: Props) {
         </div>
 
         <div className="tags">
-          {post.categories.map(e => (
+          {test.categories.map(e => (
             <span key={e.title}>#{e.title}</span>
           ))}
         </div>
 
         <Content>
-          {post.comments.map((el, index) => (
+          {test.comments.map((el, index) => (
             <Fragment key={index}>
               <div className="comment">
                 <Image className="avatar" src={el.user.photo ?? ''} width={35} height={35} alt={el.content} />

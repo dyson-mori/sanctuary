@@ -36,7 +36,14 @@ export default function UploadScreen() {
 
     const result = await api.posts.create({
       ...res.data,
-      isPrivate
+      isPrivate,
+      price: 12.50,
+      categories: [
+        { id: "cmc29i6em0002boa4r4xbmby4" },
+        { id: "cmc29i6en0005boa4x024xsjq" },
+        { id: "cmc29i6en0007boa4awgspj7i" },
+        { id: "cmc29i6en000gboa4qm05m5em" },
+      ]
     });
 
     console.log(result);
