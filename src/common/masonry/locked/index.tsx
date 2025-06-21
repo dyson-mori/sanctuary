@@ -18,7 +18,7 @@ export default function Locked({ data }: LockedProps) {
   return (
     <Container>
       <Lock width={25} height={25} stroke='#fff' strokeWidth={2} />
-      <p>{format.money(data.price)}</p>
+      <p>R$ {format.money(data.price)}</p>
     </Container>
   );
 };

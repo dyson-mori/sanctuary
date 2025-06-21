@@ -13,6 +13,7 @@ import { ReactComponent as Heart } from './heart-bold.svg';
 import { ReactComponent as HeartBold } from './heart.svg';
 import { ReactComponent as MP4 } from './mp4.svg';
 import { ReactComponent as Upload } from './upload.svg';
+import { ReactComponent as Money } from './money.svg';
 
 export {
   Lock,
@@ -29,5 +30,6 @@ export {
   Heart,
   HeartBold,
   MP4,
-  Upload
+  Upload,
+  Money
 }

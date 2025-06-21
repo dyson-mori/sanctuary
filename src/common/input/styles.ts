@@ -14,18 +14,27 @@ export const Container = styled.div<{ variant: Variant }>`
 
   ${({ theme, variant }) => css`
     box-shadow: ${theme.box.shadow.default};
-
+    
     ${variant === 'primary' && css`
       box-shadow: ${theme.box.shadow.input};
     `};
 
     border-radius: ${theme.border.small};
+
+    input {
+      background-color: ${theme.colors.background_modal};
+      color: ${theme.colors.text};
+    };
+
+    span {
+      background-color: ${theme.colors.background_modal};
+    }
   `};
 
   span {
     min-width: 50px;
     height: 50px;
-    background-color: #fff;
+    /* background-color: #fff; */
   };
 
   span > svg {
@@ -52,7 +61,7 @@ export const Container = styled.div<{ variant: Variant }>`
 
     border: 0;
 
-    background-color: #fff;
+    /* background-color: #fff; */
 
     align-items: center;
     justify-content: center;

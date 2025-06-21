@@ -2,6 +2,8 @@ import { Suspense } from "react";
 
 import type { Metadata } from "next";
 
+import api from "@services/api";
+
 import Screen from './app';
 
 export const metadata: Metadata = {
@@ -10,9 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Upload() {
+  const { data } = await api.category.list();
+
   return (
     <Suspense fallback={<p>loading</p>}>
-      <Screen />
+      <Screen categories={data} />
     </Suspense>
   );
 };

@@ -4,6 +4,9 @@ import prisma from "@services/prisma";
 
 export async function GET() {
   const category = await prisma.category.findMany({
+    orderBy: {
+      title: 'asc'
+    },
     include: {
       _count: {
         select: {
@@ -19,7 +22,7 @@ export async function POST(request: NextRequest) {
   const data = await request.json();
 
   await prisma.category.createMany({
-    data,
+    data
   });
 
   return NextResponse.json(true, { status: 201, statusText: 'categories created!' })

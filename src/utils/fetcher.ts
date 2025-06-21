@@ -24,7 +24,7 @@ const fetcher = async ({ method, url, cache, body }: FetchProps) => {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": "123-987-456-852"
+        // "Authorization": "123-987-456-852"
         // ...(token?.value ? { 'Authorization': token.value } : undefined),
         // ...(token?.value ? { Cookie: cookie.toString() } : undefined)
       },

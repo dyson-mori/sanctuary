@@ -7,21 +7,29 @@ export const Container = styled.main`
   justify-content: center;
   flex-direction: column;
 
-  gap: 5rem;
+  /* gap: 5rem; */
 
   height: 100%;
 `;
 
-export const Content = styled.div`
+export const Form = styled.form`
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 10px;
+`;
+
+export const UploadStyled = styled.div`
   display: flex;
 
   align-items: center;
 
-  width: 35%;
   height: 90px;
   padding: 5px 10px;
 
-  border-radius: 9px;
+  ${({ theme }) => css`
+    box-shadow: ${theme.box.shadow.input};
+    border-radius: ${theme.border.small};
+  `};
 
   .title {
     display: flex;
@@ -50,4 +58,18 @@ export const Content = styled.div`
 
 export const SubContent = styled.div`
   width: 100%;
+`;
+
+export const Categories = styled.section`
+  display: flex;
+
+  justify-content: center;
+
+  height: auto;
+
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+  };
 `;
