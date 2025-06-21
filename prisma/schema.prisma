@@ -22,7 +22,7 @@ model Video {
   url       String
   width     Int
   height    Int
-  price     Decimal
+  price     Decimal @default(0.0)
   isPrivate Boolean
 
   createdAt DateTime @default(now())
@@ -35,14 +35,12 @@ model Video {
 
 model Category {
   id String @id @unique @default(cuid())
-  // video_id String
 
   title String @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // video Video @relation(fields: [video_id], references: [id], onDelete: Cascade)
   video Video[]
 
   @@map("category")
