@@ -34,7 +34,7 @@ export default function Video({ post, setTargetPost }: Props) {
       if (!video) return;
 
       if (entry.isIntersecting) {
-        await video.play();
+        // await video.play();
         setTargetPost(post);
       } else {
         video.pause();
@@ -63,7 +63,7 @@ export default function Video({ post, setTargetPost }: Props) {
         playsInline
         onContextMenu={e => e.preventDefault()}
         controlsList="nodownload"
-        // controls
+        controls
       >
         Your browser does not support the video tag.
       </video>

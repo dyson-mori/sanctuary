@@ -24,9 +24,7 @@ export default function Post({ posts }: Props) {
 
   function navigate(post: PostProps) {
     if (post.isPrivate) return setPayment(post);
-
-    return serverActionCookie('search', post.id)
-      .then(() => route.push(`/feed`))
+    return route.push(`/feed?id=${post.id}`);
   };
 
   // const handleMore = async () => {

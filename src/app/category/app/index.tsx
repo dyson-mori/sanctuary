@@ -39,8 +39,10 @@ export default function Categories({ data }: Props) {
   };
 
   function handleSearch() {
-    return serverActionCookie('search', `tags=${selected.map(({ title }) => title).toString()}`)
-      .then(() => route.push(`/feed`))
+    route.push(`/feed?tags=${selected.map(({ title }) => title.replace(' ', '_')).toString()}`);
+
+    // return serverActionCookie('search', `tags=${selected.map(({ title }) => title).toString()}`)
+    //   .then(() => route.push(`/feed`))
   };
 
   return (

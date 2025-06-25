@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
-export const serverActionCookie = async (name: 'search' | 'auth-token', value: string) => {
+export const serverActionCookie = async (name: 'tags' | 'id', value: string) => {
   const coo = await cookies();
 
   if (value === 'clean') {

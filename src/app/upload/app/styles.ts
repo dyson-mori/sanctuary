@@ -7,53 +7,34 @@ export const Container = styled.main`
   justify-content: center;
   flex-direction: column;
 
-  /* gap: 5rem; */
-
-  height: 100%;
+  height: 90%;
 `;
 
 export const Form = styled.form`
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
   margin-bottom: 10px;
+
+  .row {
+    display: flex;
+    gap: 10px;
+  };
 `;
 
-export const UploadStyled = styled.div`
+export const Progress = styled.div`
   display: flex;
+  width: 100%;
+  height: 3px;
 
-  align-items: center;
+  background-color: #d9d9d9;
+  border-radius: 9px;
 
-  height: 90px;
-  padding: 5px 10px;
+  margin-bottom: 10px;
 
-  ${({ theme }) => css`
-    box-shadow: ${theme.box.shadow.input};
-    border-radius: ${theme.border.small};
-  `};
-
-  .title {
-    display: flex;
-
-    justify-content: space-between;
-    width: 100%;
-
-    margin-bottom: 10px;
-  };
-
-  label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  span {
     height: 100%;
-    gap: 10px;
-    cursor: pointer;
-  };
-
-  ${({ theme }) => css`
-    background-color: ${theme.colors.background_modal};
-    color: ${theme.colors.text};
-  `};
+    background-color: ${({ theme }) => theme.colors.success};
+  }
 `;
 
 export const SubContent = styled.div`
@@ -72,4 +53,30 @@ export const Categories = styled.section`
     flex-wrap: wrap;
     height: auto;
   };
+`;
+
+export const ButtonTag = styled.button`
+  display: flex;
+  position: relative;
+
+  justify-content: center;
+  align-items: center;  
+
+  min-width: 50px;
+  height: 50px;
+
+  cursor: pointer;
+
+  ${({ theme }) => css`
+    background-color: ${theme.colors.primary};
+    border-radius: ${theme.border.small};
+  `}
+
+  p {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+
+    color: #fff;
+  }
 `;

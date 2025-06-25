@@ -20,7 +20,7 @@ const api = {
     create: (value: object) => new Promise(() => !!value) //fetcher({ method: 'POST', url: '/user', body }),
   },
   feed: {
-    list: () => fetcher({ method: 'GET', url: '/feed' })
+    list: (param?: string) => fetcher({ method: 'GET', url: param ?? '/feed' })
   },
 }
 
